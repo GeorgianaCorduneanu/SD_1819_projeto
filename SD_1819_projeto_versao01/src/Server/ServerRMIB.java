@@ -13,23 +13,44 @@ import java.rmi.registry.Registry;
 import java.rmi.server.*;
 import java.util.Scanner;
 
-public class ServerRMI extends UnicastRemoteObject implements ServerRMI_I {
+public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     private static String location_s;
     static ClienteRMI_I cliente;
-    public ServerRMI() throws RemoteException{super();}
+    public ServerRMIB() throws RemoteException{super();}
 
-    public static void main(String args[]){
+    public static void main(String args[]) throws RemoteException {
         String frase;
+        boolean check_principal = true;
         String server_ip = "localhost";
         int server_port = 7000;
         String nome = "msg";
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
-        //antes do programa terminar
+        ServerRMI_I s_inter_principal=null;
 
+        //encontrar servio
+        try {
+            s_inter_principal = (ServerRMI_I) Naming.lookup(location_s);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        while(check_principal){
+            assert s_inter_principal != null;
+            try {
+                check_principal = s_inter_principal.check_server_p();
+            }catch (IOException e){
+                System.out.println("*** Secundario Server Ativo ***");
+                check_principal = false;
+                break;
+            }
+            System.out.println("Principal Server Alive");
+        }
         //para escrever no cliente
-
         try {
             ServerRMI server = new ServerRMI();
             Naming.rebind(location_s, server);
@@ -85,5 +106,6 @@ public class ServerRMI extends UnicastRemoteObject implements ServerRMI_I {
     public boolean check_server_p() throws RemoteException {
         return true;
     }
+
 
 }

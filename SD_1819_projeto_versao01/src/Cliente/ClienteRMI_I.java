@@ -9,4 +9,7 @@ public interface ClienteRMI_I extends Remote {
     public String getPasse() throws RemoteException;
     public void setNome(String a) throws RemoteException;
     public void setPasse(String a) throws RemoteException;
+    public void check_registar(boolean b) throws RemoteException;
+    public void check_login(boolean b) throws RemoteException;
+    public String tooString() throws RemoteException;
 }
