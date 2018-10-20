@@ -76,10 +76,11 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
                         }
                         break;
                     }
+                    break;
                 case "registar":
                     try {
                         cliente = registar_cliente(frase_chave_valor[1], frase_chave_valor[2]);
-                        System.out.println("a enviar para segvidor");
+                        System.out.println("a enviar para servidor");
                         try {
                             server_i.subscribe(location_s, (ClienteRMI_I) cliente);
                         }catch (IOException e) {
