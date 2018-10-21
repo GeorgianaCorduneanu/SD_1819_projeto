@@ -1,7 +1,6 @@
 package Server;
 
 import Cliente.ClienteRMI_I;
-
 import java.rmi.*;
 
 public interface ServerRMI_I extends Remote {

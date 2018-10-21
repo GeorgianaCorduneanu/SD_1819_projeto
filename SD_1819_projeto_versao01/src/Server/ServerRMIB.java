@@ -11,7 +11,6 @@ import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
-import java.util.Scanner;
 
 public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     private static String location_s;
