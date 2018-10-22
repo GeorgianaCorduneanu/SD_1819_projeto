@@ -30,35 +30,15 @@ public class MulticastServer extends Thread {
     public void run(){
         MulticastSocket socket= null;
         System.out.println("O servidor Multicast nr "+this.getName() + " está a correr!!");
-        Connection connection = null;
         String [] mensagem_cortada;
-        String bd_hostname = "localhost";
-        String bd_name = "base_dados_2018_bd";
-        String bd_port = "3306";
-        String bd_user = "root";
-        String bd_password = "bd";
-        // register your mysql jdbc driver with the java application
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        String connection_url = "jdbc:mysql://"+ bd_hostname + ":"+ bd_port +";database=" + bd_name + ";user=" + bd_user +";password=" + bd_password;
-        String schema;
+        Connection connection = getConnection(); //obter a conexão com a base de dados
+
         int id;
         try {
             socket = new MulticastSocket(PORT);
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             socket.joinGroup(group);
-            //aqui fazemos a conexao com a base de dados
-            try {
-                connection = DriverManager.getConnection(connection_url);
-                //connection = DriverManager.getConnection("jdbc:mysql://localhost/","root","bd");
-                schema = connection.getSchema();
-                System.out.println("Successful connection - Schema: " + schema);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+
             while (true) {
                 byte[] buffer = new byte[256];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
@@ -85,6 +65,38 @@ public class MulticastServer extends Thread {
         } finally {
             socket.close();
         }
+    }
+    public Connection getConnection(){
+        Connection  connection = null;
+        String bd_hostname = "127.0.0.1";
+        String bd_name = "base_dados_2018_bd";
+        String bd_port = "3306";
+        String bd_user = "root";
+        String bd_password = "bd";
+        // register your mysql jdbc driver with the java application
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        String connection_url = "jdbc:mysql://"+ bd_hostname + ":"+ bd_port +"/" + bd_name + "?useSSL=false&autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        String schema;
+        //aqui fazemos a conexao com a base de dados
+        try {
+            //fazer a conexão do servidor base de dados com java
+            //connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/base_dados_2018_bd?useSSL=false&autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","bd");
+            connection = DriverManager.getConnection(connection_url, bd_user, bd_password);
+            System.out.println("Successful connection with server");
+            //obter a base de dados que tem no servidor
+            //schema = connection.getSchema(); //nao sei porque nao fucniona com schema, acho que
+            //e porque esta versao do java nao suporta shema
+            //mas funciona com getCatalog()
+            schema = connection.getCatalog();
+            System.out.println("Successful connection - Schema: " + schema);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 }
 
