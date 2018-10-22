@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.rmi.*;
 
@@ -14,6 +16,7 @@ import java.rmi.*;
 public class MulticastServer extends Thread {
     private String MULTICAST_ADDRESS = "224.3.2.1";
     private int PORT = 5000;
+    private Connection connection;
 
     public static void main(String[] args) {
         MulticastServer server = new MulticastServer();
@@ -31,7 +34,7 @@ public class MulticastServer extends Thread {
         MulticastSocket socket= null;
         System.out.println("O servidor Multicast nr "+this.getName() + " está a correr!!");
         String [] mensagem_cortada;
-        Connection connection = getConnection(); //obter a conexão com a base de dados
+        this.connection = getConnection(); //obter a conexão com a base de dados
 
         int id;
         try {
@@ -53,6 +56,8 @@ public class MulticastServer extends Thread {
                     case 1: // registo
                         System.out.println("Registo! A enviar utilizador para arraylist!\n"+"Utilizador: "+mensagem_cortada[1] + ", passoword: "+mensagem_cortada[2]);
                         //Aqui confirmam-se duplos e adicionam-se os registos na bd
+                        //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
+                        insere_dados(mensagem_cortada, 1);
                         break;
                     case 2: //login
                         //aqui confirmam-se os dados do utilizador e sqldatabase
@@ -65,6 +70,34 @@ public class MulticastServer extends Thread {
         } finally {
             socket.close();
         }
+    }
+    public void insere_dados(String [] mensagem, int numero_tabela){
+        //criar um statement para inserir dados na bd
+        Statement statement;
+       /* try {
+           // statement = connection.prepareStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        switch (numero_tabela){
+            case 1: //registo
+                //insere-se o codigo em sql
+                // statement.executeUpdate(Select nome from);
+                break;
+            case 2: //artista
+                //insere-se o codigo em sql
+                // statement.executeUpdate();
+
+                break;
+            case 3: //musica
+                //insere-se o codigo em sql
+                // statement.executeUpdate();
+                break;
+                default:
+                    System.out.println("Not a correct number for table");
+                  break;
+        }
+
     }
     public Connection getConnection(){
         Connection  connection = null;
