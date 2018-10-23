@@ -14,25 +14,39 @@ import java.rmi.server.*;
 
 public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     private static String location_s;
+    private static String server_ip = "localhost";
+    private static int server_port = 7000;
     static ClienteRMI_I cliente;
     public ServerRMIB() throws RemoteException{super();}
 
     public static void main(String args[]) throws RemoteException {
-        String frase;
-        boolean check_principal = true;
-        String server_ip = "localhost";
-        int server_port = 7000;
         String nome = "msg";
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
-        InputStreamReader input = new InputStreamReader(System.in);
-        BufferedReader reader = new BufferedReader(input);
-        ServerRMI_I s_inter_principal=null;
 
         //encontrar servio
+        check_servidor();
+
+        //para escrever no cliente
+        write_on_server();
+
+    }
+    public static void imprime(String a, String ip, int port){
+        System.out.print(">>> ");
+        try {
+            System.out.print(cliente.getNome() + ":"+cliente.getPasse());
+            cliente.say_hello_to_server(a, ip, port);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void check_servidor(){
+        boolean check_principal = true;
+        ServerRMI_I s_inter_principal=null;
         try {
             s_inter_principal = (ServerRMI_I) Naming.lookup(location_s);
         } catch (NotBoundException e) {
-            e.printStackTrace();
+            System.out.println(e);
+            return;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
@@ -49,9 +63,14 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
             }
             System.out.println("Principal Server Alive");
         }
-        //para escrever no cliente
+
+    }
+    public static void write_on_server(){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase;
         try {
-            ServerRMI server = new ServerRMI();
+            ServerRMIB server = new ServerRMIB();
             Naming.rebind(location_s, server);
             System.out.println("Hello Server ready!!");
             frase = reader.readLine();
@@ -66,15 +85,6 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
             System.out.println("Exception on main ServerRMI ->>> " + e.getMessage());
         } catch (IOException e) {
             System.out.println("Exception on main ServerRMI ->>> " + e.getMessage());
-        }
-    }
-    public static void imprime(String a, String ip, int port){
-        System.out.print(">>> ");
-        try {
-            System.out.print(cliente.getNome() + ":"+cliente.getPasse());
-            cliente.say_hello_to_server(a, ip, port);
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 

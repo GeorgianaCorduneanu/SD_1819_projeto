@@ -97,8 +97,8 @@ public class MulticastServer extends Thread {
                     System.out.println("Not a correct number for table");
                   break;
         }
-
     }
+
     public Connection getConnection(){
         Connection  connection = null;
         String bd_hostname = "127.0.0.1";
