@@ -6,7 +6,10 @@ import Cliente.ClienteRMI_I;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.MulticastSocket;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -14,15 +17,18 @@ import java.rmi.server.*;
 
 public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     private static String location_s;
-    private static String server_ip = "localhost";
+    private static String server_ip = "127.0.0.1";
     private static int server_port = 7000;
+    private static String MULTICAST_ADDRESS;
     static ClienteRMI_I cliente;
     public ServerRMIB() throws RemoteException{super();}
 
     public static void main(String args[]) throws RemoteException {
+        String MULTICAST_ADDRESS = "224.3.2.1";
         String nome = "msg";
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
-
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\out\\production\\SD_1819_projeto_versao01\\policy.all");
+        System.setSecurityManager(new RMISecurityManager());
         //encontrar servio
         check_servidor();
 
@@ -96,9 +102,27 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     @Override
     public void subscribe(String nome, ClienteRMI_I c_i) throws RemoteException {
         boolean check=true;
+        int multicast_port = 5000;
+        String MULTICAST_ADDRESS = "224.3.2.1";
         //mandar info a multicast buscar base de dados e adicionar registo
         System.out.println("Em Registar " + nome + " (" + c_i.tooString() + ") " + " verify: " + check);
         cliente = c_i;
+        MulticastSocket socket = null;
+        try {
+            socket = new MulticastSocket();  // create socket without binding it (only for sending)
+            String message = "1;"+ c_i.getNome()+";" +c_i.getPasse();
+            byte[] buffer = message.getBytes();
+            socket.setLoopbackMode(true);//true quando envia
+            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
+            socket.send(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            socket.close();
+        }
+
+
         c_i.check_registar(check);
     }
 

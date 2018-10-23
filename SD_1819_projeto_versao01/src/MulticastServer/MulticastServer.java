@@ -83,6 +83,7 @@ public class MulticastServer extends Thread {
             case 1: //registo
                 //insere-se o codigo em sql
                 // statement.executeUpdate(Select nome from);
+                System.out.println(mensagem[1] + " : " + mensagem[2]);
                 break;
             case 2: //artista
                 //insere-se o codigo em sql

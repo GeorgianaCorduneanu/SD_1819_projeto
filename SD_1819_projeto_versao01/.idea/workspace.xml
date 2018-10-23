@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/MulticastServer/MulticastServer.java" line="85" mnemonic="8" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="9035676a-9cf2-4c1d-a147-f96166bf0d81" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -43,41 +46,45 @@
     <session id="833798454">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="10" />
+          <entry key="project.open.time.122" value="1" />
           <entry key="project.open.time.141" value="1" />
           <entry key="project.open.time.146" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.47" value="1" />
+          <entry key="project.open.time.52" value="1" />
           <entry key="project.open.time.54" value="1" />
           <entry key="project.open.time.68" value="1" />
           <entry key="project.open.time.70" value="1" />
           <entry key="project.open.time.82" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="13" />
+          <entry key="java" value="16" />
           <entry key="sql" value="3" />
+          <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="13" />
+          <entry key="JAVA" value="16" />
+          <entry key="PLAIN_TEXT" value="1" />
           <entry key="Scratch" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="2864" />
+          <entry key="java" value="3274" />
           <entry key="sql" value="46" />
           <entry key="txt" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2864" />
+          <entry key="JAVA" value="3274" />
           <entry key="PLAIN_TEXT" value="18" />
           <entry key="Scratch" value="46" />
         </counts>
@@ -93,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MulticastServer/MulticastServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1599">
-              <caret line="98" column="9" selection-start-line="98" selection-start-column="9" selection-end-line="98" selection-end-column="9" />
+            <state relative-caret-position="1207">
+              <caret line="81" column="31" selection-start-line="81" selection-start-column="31" selection-end-line="81" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -105,8 +112,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Server/ServerRMIB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+            <state relative-caret-position="111">
+              <caret line="31" column="2" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Cliente/ClienteRMI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
         </entry>
@@ -135,11 +151,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Server/ServerRMI_I.java" />
-        <option value="$PROJECT_DIR$/src/Cliente/ClienteRMI.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/33477ed8-e2f6-4dfa-8022-aceef88e651f/console_1.sql" />
         <option value="$PROJECT_DIR$/src/teste.java" />
         <option value="$PROJECT_DIR$/src/Server/ServerRMI.java" />
         <option value="$PROJECT_DIR$/src/MulticastServer/MulticastServer.java" />
+        <option value="$PROJECT_DIR$/src/Cliente/policy.all.txt" />
+        <option value="$PROJECT_DIR$/src/Cliente/ClienteRMI.java" />
         <option value="$PROJECT_DIR$/src/Server/ServerRMIB.java" />
       </list>
     </option>
@@ -222,8 +239,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -233,7 +250,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540294844101" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540324805219" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -320,8 +337,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.ServerRMIB" />
-        <item itemvalue="Application.MulticastServer" />
         <item itemvalue="Application.ClienteRMI" />
+        <item itemvalue="Application.MulticastServer" />
         <item itemvalue="Application.ServerRMI" />
         <item itemvalue="Application.teste" />
       </list>
@@ -343,30 +360,33 @@
       <workItem from="1540209491249" duration="2867000" />
       <workItem from="1540223000450" duration="5378000" />
       <workItem from="1540292256312" duration="2824000" />
+      <workItem from="1540308510831" duration="5799000" />
+      <workItem from="1540320536109" duration="4028000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25528000" />
+    <option name="totallyTimeSpent" value="35355000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15658094" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16111952" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection Results" weight="0.32923076" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.29846153" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3353846" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3353846" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32923076" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3276923" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3276923" />
@@ -403,41 +423,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cliente/ClienteRMI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/33477ed8-e2f6-4dfa-8022-aceef88e651f/console.sql" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ec6760a3-744b-4972-a92f-14e97f6be545/console.sql" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/33477ed8-e2f6-4dfa-8022-aceef88e651f/console_1.sql" />
     <entry file="file://$PROJECT_DIR$/src/teste.java" />
-    <entry file="file://$PROJECT_DIR$/src/Server/ServerRMI.java">
+    <entry file="file://$PROJECT_DIR$/src/Server/ServerRMI.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/security/AccessControlContext.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="32" column="34" lean-forward="true" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="281">
+          <caret line="471" column="33" selection-start-line="471" selection-start-column="33" selection-end-line="471" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MulticastServer/MulticastServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1599">
-          <caret line="98" column="9" selection-start-line="98" selection-start-column="9" selection-end-line="98" selection-end-column="9" />
+        <state relative-caret-position="1207">
+          <caret line="81" column="31" selection-start-line="81" selection-start-column="31" selection-end-line="81" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cliente/policy.all.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/security/AccessController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="829">
+          <caret line="883" column="32" selection-start-line="883" selection-start-column="28" selection-end-line="883" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cliente/ClienteRMI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Server/ServerRMIB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+        <state relative-caret-position="111">
+          <caret line="31" column="2" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="2" />
         </state>
       </provider>
     </entry>

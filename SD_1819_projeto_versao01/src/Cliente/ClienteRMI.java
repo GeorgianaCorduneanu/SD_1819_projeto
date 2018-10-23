@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -27,6 +28,10 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         String frase_crua=null;  //variavel para guardar input
         String frase_sem_espaco;
         String [] frase_chave_valor = null; //array para guardar cada par chave valor
+        //System.setProperty("java.rmi.server.hostname","192.168.56.1");
+
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\out\\production\\SD_1819_projeto_versao01\\policy.all");
+        System.setSecurityManager(new RMISecurityManager());
 
         //definir ip, porto do servidor e o nome
         location_s = "rmi://" + server_ip + ":" + server_port + "/"+ name;
