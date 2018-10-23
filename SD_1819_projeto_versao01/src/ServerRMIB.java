@@ -1,8 +1,3 @@
-package Server;
-
-import Cliente.ClienteRMI;
-import Cliente.ClienteRMI_I;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,8 +6,6 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.MulticastSocket;
 import java.rmi.*;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.*;
 
 public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {

@@ -1,7 +1,3 @@
-package Cliente;
-
-import Server.ServerRMI_I;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +26,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         String [] frase_chave_valor = null; //array para guardar cada par chave valor
         //System.setProperty("java.rmi.server.hostname","192.168.56.1");
 
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\out\\production\\SD_1819_projeto_versao01\\policy.all");
+        System.getProperties().put("java.security.policy", "file:C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setSecurityManager(new RMISecurityManager());
 
         //definir ip, porto do servidor e o nome

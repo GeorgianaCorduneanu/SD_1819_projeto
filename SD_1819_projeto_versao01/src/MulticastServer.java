@@ -1,5 +1,3 @@
-package MulticastServer;
-
 import java.net.MulticastSocket;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -8,10 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.Scanner;
-import java.rmi.*;
-
 
 public class MulticastServer extends Thread {
     private String MULTICAST_ADDRESS = "224.3.2.1";
