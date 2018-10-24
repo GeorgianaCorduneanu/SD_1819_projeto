@@ -9,9 +9,10 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class MulticastServer extends Thread {
-    private String MULTICAST_ADDRESS = "224.3.2.1";
+    private String MULTICAST_ADDRESS = "224.3.2.1"; //multicast adress permanente
     private int PORT = 5000;
-    private Connection connection;
+    private int ttl = 1; //time to live
+    //private Connection connection;
 
     public static void main(String[] args) {
         MulticastServer server = new MulticastServer();
@@ -29,27 +30,25 @@ public class MulticastServer extends Thread {
         MulticastSocket socket= null;
         System.out.println("O servidor Multicast nr "+this.getName() + " está a correr!!");
         String [] mensagem_cortada;
-        this.connection = getConnection(); //obter a conexão com a base de dados
+        //this.connection = getConnection(); //obter a conexão com a base de dados
 
         int id;
         try {
-            socket = new MulticastSocket(PORT);
+            socket = new MulticastSocket(PORT); //create socket and bindint to port
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             socket.joinGroup(group);
+            socket.setTimeToLive(ttl); //definir o numero de routers a saltar
 
             while (true) {
                 byte[] buffer = new byte[256];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
                 socket.setLoopbackMode(false);//false quando recebe
                 socket.receive(packet);
-
                 String message = new String(packet.getData(),0,packet.getLength());
                 mensagem_cortada = message.split(";");
 
-                id = Integer.parseInt(mensagem_cortada[0]);
-                switch (id){
+                switch (Integer.parseInt(mensagem_cortada[0])){
                     case 1: // registo
-                        System.out.println("Registo! A enviar utilizador para arraylist!\n"+"Utilizador: "+mensagem_cortada[1] + ", passoword: "+mensagem_cortada[2]);
                         //Aqui confirmam-se duplos e adicionam-se os registos na bd
                         //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
                         insere_dados(mensagem_cortada, 1);
@@ -67,8 +66,9 @@ public class MulticastServer extends Thread {
         }
     }
     public void insere_dados(String [] mensagem, int numero_tabela){
+        Utilizador u;
         //criar um statement para inserir dados na bd
-        Statement statement;
+        //Statement statement;
        /* try {
            // statement = connection.prepareStatement();
         } catch (SQLException e) {
@@ -78,7 +78,11 @@ public class MulticastServer extends Thread {
             case 1: //registo
                 //insere-se o codigo em sql
                 // statement.executeUpdate(Select nome from);
-                System.out.println(mensagem[1] + " : " + mensagem[2]);
+                /*            escrever nos ficheiros de objeto       */
+                //caso o ficheiro esteja vazio escreve-se Utilizador(mensagem[1], mensagem[2], true) para dar privilegios
+                //caso contrario
+                u = new Utilizador(mensagem[1], mensagem[2]);
+                //escrever no ficheiro
                 break;
             case 2: //artista
                 //insere-se o codigo em sql

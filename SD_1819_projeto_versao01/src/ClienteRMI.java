@@ -1,13 +1,14 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
+public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I{
     private Utilizador cliente_corrente;
 
     public ClienteRMI() throws RemoteException {
@@ -24,6 +25,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         String name = "msg";
         //definir plicy
         System.getProperties().put("java.security.policy", "file:C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.setProperty( "java.rmi.server.hostname", "192.168.56.1" );
         System.setSecurityManager(new RMISecurityManager());
 
         //definir ip, porto do servidor e o nome
@@ -81,6 +83,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
                         }catch (IOException e) {
                             try {
                                 server_i = (ServerRMI_I) Naming.lookup(location_s);
+                                System.out.println(server_i.toString());
                                 server_i.subscribe(location_s, cliente);
 
                             } catch (NotBoundException e1) {

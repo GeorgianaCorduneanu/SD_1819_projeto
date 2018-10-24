@@ -120,7 +120,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //c_i.check_registar(check);
+        c_i.check_registar(check);
     }
 
     @Override
