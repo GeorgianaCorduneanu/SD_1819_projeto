@@ -1,13 +1,14 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
+public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Serializable {
     private Utilizador cliente_corrente;
 
     public ClienteRMI() throws RemoteException {
@@ -22,8 +23,10 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         String server_ip = "localhost";
         int server_port = 7000;
         String name = "msg";
+        String txt = null;
         //definir plicy
-        System.getProperties().put("java.security.policy", "file:C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.setProperty("java.rmi.server.hostname","192.168.56.1");
         System.setSecurityManager(new RMISecurityManager());
 
         //definir ip, porto do servidor e o nome
@@ -57,7 +60,8 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
                 case "login":
                     cliente = login_cliente(frase_chave_valor[1], frase_chave_valor[2]);
                     try {
-                        server_i.login(location_s, cliente);
+                        txt = server_i.login(location_s, cliente);
+                        System.out.println(txt);
                     }catch (IOException e) {
                         try {
                             server_i = (ServerRMI_I) Naming.lookup(location_s);
@@ -74,7 +78,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
                     try {
                         cliente = registar_cliente(frase_chave_valor[1], frase_chave_valor[2]);
                         //cliente.cliente_corrente = new Utilizador(frase_chave_valor[1], frase_chave_valor[2]);
-                        System.out.println("a enviar para servidor");
+                        System.out.println("A enviar para servidor");
                         try {
                             assert server_i != null;
                             server_i.subscribe(location_s, cliente);
@@ -144,9 +148,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
 
     @Override
     public void check_login(boolean b) throws RemoteException {
-        if(b)
-            System.out.println("Login com sucesso");
-        else
+        if(!b)
             System.out.println("Ocorreu um erro, tente novamente");
     }
 
