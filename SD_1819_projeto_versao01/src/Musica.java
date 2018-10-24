@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Musica {
+public class Musica implements Serializable {
     private String nome_musica, compositor, duracao;
     private Upload upload;
 

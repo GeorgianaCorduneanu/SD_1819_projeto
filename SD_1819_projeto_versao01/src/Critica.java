@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Critica {
+public class Critica implements Serializable {
     private Utilizador pessoa_critica;
     private String justificacao;
     private int pontuacao;

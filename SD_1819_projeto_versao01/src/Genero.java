@@ -1,4 +1,6 @@
-public class Genero {
+import java.io.Serializable;
+
+public class Genero implements Serializable {
     private String genero;
 
     Genero(){}

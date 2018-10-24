@@ -1,4 +1,6 @@
-public class Upload {
+import java.io.Serializable;
+
+public class Upload implements Serializable {
     private Boolean privacidade;
     private Byte ficheiro_mp3;
 
