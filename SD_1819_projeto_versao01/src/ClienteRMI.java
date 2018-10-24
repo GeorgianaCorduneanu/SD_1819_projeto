@@ -8,11 +8,7 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-<<<<<<< HEAD
 public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Serializable {
-=======
-public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I{
->>>>>>> master
     private Utilizador cliente_corrente;
 
     public ClienteRMI() throws RemoteException {
@@ -29,13 +25,8 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I{
         String name = "msg";
         String txt = null;
         //definir plicy
-<<<<<<< HEAD
         System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setProperty("java.rmi.server.hostname","192.168.56.1");
-=======
-        System.getProperties().put("java.security.policy", "file:C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
-        System.setProperty( "java.rmi.server.hostname", "192.168.56.1" );
->>>>>>> master
         System.setSecurityManager(new RMISecurityManager());
 
         //definir ip, porto do servidor e o nome
@@ -94,7 +85,6 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I{
                         }catch (IOException e) {
                             try {
                                 server_i = (ServerRMI_I) Naming.lookup(location_s);
-                                System.out.println(server_i.toString());
                                 server_i.subscribe(location_s, cliente);
 
                             } catch (NotBoundException e1) {

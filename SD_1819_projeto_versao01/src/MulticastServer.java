@@ -34,10 +34,9 @@ public class MulticastServer extends Thread implements Serializable {
         }
         int id;
         try {
-            socket = new MulticastSocket(PORT); //create socket and bindint to port
+            socket = new MulticastSocket(PORT);
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             socket.joinGroup(group);
-            socket.setTimeToLive(ttl); //definir o numero de routers a saltar
 
             while (true) {
                 byte[] buffer = new byte[256];
@@ -133,7 +132,6 @@ public class MulticastServer extends Thread implements Serializable {
 }
     /*
     public void insere_dados(String [] mensagem, int numero_tabela){
-        Utilizador u;
         //criar um statement para inserir dados na bd
         Statement statement;
        //try {
@@ -145,11 +143,7 @@ public class MulticastServer extends Thread implements Serializable {
             case 1: //registo
                 //insere-se o codigo em sql
                 // statement.executeUpdate(Select nome from);
-                /*            escrever nos ficheiros de objeto       */
-                //caso o ficheiro esteja vazio escreve-se Utilizador(mensagem[1], mensagem[2], true) para dar privilegios
-                //caso contrario
-                u = new Utilizador(mensagem[1], mensagem[2]);
-                //escrever no ficheiro
+                System.out.println(mensagem[1] + " : " + mensagem[2]);
                 break;
             case 2: //artista
                 //insere-se o codigo em sql
