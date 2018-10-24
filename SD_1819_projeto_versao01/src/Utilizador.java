@@ -6,6 +6,7 @@ public class Utilizador implements Serializable {
     private Boolean editor;
     private ArrayList<Playlist> lista_playlists;
     private ArrayList<Musica> lista_musica_upload;
+    private ArrayList<Notificacao> lista_notificacoes;
 
     Utilizador(){}
     Utilizador(String username, String password){

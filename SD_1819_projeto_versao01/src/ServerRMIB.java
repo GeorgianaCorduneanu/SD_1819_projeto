@@ -14,7 +14,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     private static int server_port = 7000;
     private static String MULTICAST_ADDRESS;
     static ClienteRMI_I cliente;
-    public ServerRMIB() throws RemoteException{super();}
+    private ServerRMIB() throws RemoteException{super();}
 
     public static void main(String args[]) throws RemoteException {
         String MULTICAST_ADDRESS = "224.3.2.1";
@@ -29,7 +29,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
         write_on_server();
 
     }
-    public static void imprime(String a, String ip, int port){
+    private static void imprime(String a, String ip, int port){
         System.out.print(">>> ");
         try {
             System.out.print(cliente.getUtilizador().getUsername() + ":"+cliente.getUtilizador().getPassword());
@@ -38,7 +38,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
             e.printStackTrace();
         }
     }
-    public static void check_servidor(){
+    private static void check_servidor(){
         boolean check_principal = true;
         ServerRMI_I s_inter_principal=null;
         try {
@@ -64,7 +64,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
         }
 
     }
-    public static void write_on_server(){
+    private static void write_on_server(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase = null;
@@ -107,9 +107,14 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
         System.out.println("Em Registar " + nome + " (" + c_i.getUtilizador().getUsername() + ") " + " verify: " + check);
         cliente = c_i;
 
+        envia_para_multicast(1,c_i, multicast_port);
+
+        c_i.check_registar(check);
+    }
+    private void envia_para_multicast(int i, ClienteRMI_I c_i, int multicast_port){
         try (MulticastSocket socket = new MulticastSocket()) {
             // create socket without binding it (only for sending)
-            String message = "1;" + c_i.getUtilizador().getUsername() + ";" + c_i.getUtilizador().getPassword();
+            String message =  i + ";" + c_i.getUtilizador().getUsername() + ";" + c_i.getUtilizador().getPassword();
             byte[] buffer = message.getBytes();
 
             socket.setLoopbackMode(true);//true quando envia
@@ -120,15 +125,17 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        c_i.check_registar(check);
     }
 
     @Override
     public void login(String nome, ClienteRMI_I c_i) throws RemoteException {
         boolean check = true;
+        int multicast_port = 5000;
         //mandar info a multicast buscar na base de dados e verificar login
         System.out.println("Em Login: " + nome + " (" + c_i.getUtilizador().getUsername() + ") " + " verify: " + check);
         cliente = c_i;
+
+        envia_para_multicast(2,c_i, multicast_port);
         c_i.check_login(check);
     }
 
