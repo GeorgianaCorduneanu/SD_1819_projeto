@@ -32,7 +32,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     public static void imprime(String a, String ip, int port){
         System.out.print(">>> ");
         try {
-            System.out.print(cliente.getNome() + ":"+cliente.getPasse());
+            System.out.print(cliente.getUtilizador().getUsername() + ":"+cliente.getUtilizador().getPassword());
             cliente.say_hello_to_server(a, ip, port);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -67,30 +67,36 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
     public static void write_on_server(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
-        String frase;
+        String frase = null;
         try {
             ServerRMIB server = new ServerRMIB();
             Naming.rebind(location_s, server);
             System.out.println("Hello Server ready!!");
-            frase = reader.readLine();
+            try {
+                frase = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             do{
                 imprime(frase, server_ip, server_port);
-                frase = reader.readLine();
+                try {
+                    frase = reader.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }while(frase.compareTo(":/stop") != 0);
 
         } catch (RemoteException e) {
             System.out.println("Exception on main ServerRMI ->>> " + e.getMessage());
         } catch (MalformedURLException e) {
-            System.out.println("Exception on main ServerRMI ->>> " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("Exception on main ServerRMI ->>> " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    @Override
+   /* @Override
     public void say_hello_to_cliente(String s) throws RemoteException {
         System.out.println(">>> " + s);
-    }
+    }*/
 
     @Override
     public void subscribe(String nome, ClienteRMI_I c_i) throws RemoteException {
@@ -98,32 +104,30 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I {
         int multicast_port = 5000;
         String MULTICAST_ADDRESS = "224.3.2.1";
         //mandar info a multicast buscar base de dados e adicionar registo
-        System.out.println("Em Registar " + nome + " (" + c_i.tooString() + ") " + " verify: " + check);
+        System.out.println("Em Registar " + nome + " (" + c_i.getUtilizador().getUsername() + ") " + " verify: " + check);
         cliente = c_i;
-        MulticastSocket socket = null;
-        try {
-            socket = new MulticastSocket();  // create socket without binding it (only for sending)
-            String message = "1;"+ c_i.getNome()+";" +c_i.getPasse();
+
+        try (MulticastSocket socket = new MulticastSocket()) {
+            // create socket without binding it (only for sending)
+            String message = "1;" + c_i.getUtilizador().getUsername() + ";" + c_i.getUtilizador().getPassword();
             byte[] buffer = message.getBytes();
+
             socket.setLoopbackMode(true);//true quando envia
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
             socket.send(packet);
+
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            socket.close();
         }
-
-
-        c_i.check_registar(check);
+        //c_i.check_registar(check);
     }
 
     @Override
     public void login(String nome, ClienteRMI_I c_i) throws RemoteException {
         boolean check = true;
         //mandar info a multicast buscar na base de dados e verificar login
-        System.out.println("Em Login: " + nome + " (" + c_i.tooString() + ") " + " verify: " + check);
+        System.out.println("Em Login: " + nome + " (" + c_i.getUtilizador().getUsername() + ") " + " verify: " + check);
         cliente = c_i;
         c_i.check_login(check);
     }

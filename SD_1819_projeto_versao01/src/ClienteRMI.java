@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
@@ -9,12 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
-    private static String location_s;
-    private static String nome_cliente;
-    private static String passe_cliente;
-    private static String server_ip = "localhost";
-    private static int server_port = 7000;
-    private static String name = "msg";
+    private Utilizador cliente_corrente;
 
     public ClienteRMI() throws RemoteException {
         super();
@@ -24,8 +18,11 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         String frase_crua=null;  //variavel para guardar input
         String frase_sem_espaco;
         String [] frase_chave_valor = null; //array para guardar cada par chave valor
-        //System.setProperty("java.rmi.server.hostname","192.168.56.1");
-
+        String location_s;
+        String server_ip = "localhost";
+        int server_port = 7000;
+        String name = "msg";
+        //definir plicy
         System.getProperties().put("java.security.policy", "file:C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setSecurityManager(new RMISecurityManager());
 
@@ -36,23 +33,18 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         //definir clienteRMI e interfaceservidor RMI
-        ClienteRMI cliente = null;
+        ClienteRMI cliente;
         ServerRMI_I server_i = null;
 
         try {
             server_i = (ServerRMI_I) Naming.lookup(location_s);
         } catch (NotBoundException e) {
             e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
 
 
         do {
             //procurar o servidor a falar
-
             System.out.println("*** Inserir Comando ***");
             try {
                 frase_crua = reader.readLine();
@@ -65,11 +57,11 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
                 case "login":
                     cliente = login_cliente(frase_chave_valor[1], frase_chave_valor[2]);
                     try {
-                        server_i.login(location_s, (ClienteRMI_I) cliente);
+                        server_i.login(location_s, cliente);
                     }catch (IOException e) {
                         try {
                             server_i = (ServerRMI_I) Naming.lookup(location_s);
-                            server_i.login(location_s, (ClienteRMI_I) cliente);
+                            server_i.login(location_s, cliente);
 
 
                         } catch (NotBoundException e1) {
@@ -81,19 +73,22 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
                 case "registar":
                     try {
                         cliente = registar_cliente(frase_chave_valor[1], frase_chave_valor[2]);
+                        //cliente.cliente_corrente = new Utilizador(frase_chave_valor[1], frase_chave_valor[2]);
                         System.out.println("a enviar para servidor");
                         try {
-                            server_i.subscribe(location_s, (ClienteRMI_I) cliente);
+                            assert server_i != null;
+                            server_i.subscribe(location_s, cliente);
                         }catch (IOException e) {
                             try {
                                 server_i = (ServerRMI_I) Naming.lookup(location_s);
-                                server_i.subscribe(location_s, (ClienteRMI_I) cliente);
+                                server_i.subscribe(location_s, cliente);
 
                             } catch (NotBoundException e1) {
                                 e1.printStackTrace();
                             }
                             break;
-                        }                    } catch (RemoteException e) {
+                        }
+                    } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                     break;
@@ -104,7 +99,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         }while(frase_crua != ":/stop");
     }
 
-    public static ClienteRMI registar_cliente(String username, String passe) throws RemoteException {
+    public static ClienteRMI registar_cliente(String username, String passe){
         ClienteRMI cliente = null;
         System.out.println("*** Registar ***");
         try {
@@ -112,18 +107,11 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        try {
-            cliente.setNome(username);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            cliente.setPasse(passe);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cliente.cliente_corrente = new Utilizador(username, passe);
+        //System.out.println("username: " + cliente.getUtilizador().getUsername() + " : " + cliente.getUtilizador().getPassword());
         return cliente;
     }
+
     public static ClienteRMI login_cliente(String username, String passe) throws RemoteException {
         ClienteRMI cliente = null;
         System.out.println("*** Login ***");
@@ -132,41 +120,18 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        try {
-            cliente.setNome(username);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            cliente.setPasse(passe);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cliente.cliente_corrente = new Utilizador(username, passe);
         return cliente;
     }
+
     @Override
-    public String getNome() throws RemoteException {
-        return this.nome_cliente;
+    public Utilizador getUtilizador() throws RemoteException {
+        return cliente_corrente;
     }
 
     @Override
     public void say_hello_to_server(String a, String server_ip, int server_port) throws RemoteException {
         System.out.println(server_ip + ":" + server_port + ">>> " + a);
-    }
-
-    @Override
-    public String getPasse() throws RemoteException {
-        return this.passe_cliente;
-    }
-
-    @Override
-    public void setNome(String a) throws RemoteException {
-        this.nome_cliente = a;
-    }
-
-    @Override
-    public void setPasse(String a) throws RemoteException {
-        this.passe_cliente = a;
     }
 
     @Override
@@ -183,16 +148,6 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I {
             System.out.println("Login com sucesso");
         else
             System.out.println("Ocorreu um erro, tente novamente");
-    }
-
-    @Override
-    public String tooString() throws RemoteException {
-        try {
-            return getNome() + " : " + getPasse();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }

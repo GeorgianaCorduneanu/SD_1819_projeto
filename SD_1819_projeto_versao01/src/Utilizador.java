@@ -1,13 +1,18 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Utilizador {
+public class Utilizador implements Serializable {
     private String username, password;
     private Boolean editor;
     private ArrayList<Playlist> lista_playlists;
     private ArrayList<Musica> lista_musica_upload;
 
     Utilizador(){}
-
+    Utilizador(String username, String password){
+        this.username = username;
+        this.password = password;
+        this.editor = false;
+    }
     Utilizador(String username, String password, Boolean editor){
         this.username = username;
         this.password = password;
