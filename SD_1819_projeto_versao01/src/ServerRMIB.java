@@ -19,7 +19,6 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     public ServerRMIB() throws RemoteException{super();}
 
     public static void main(String args[]) throws RemoteException {
-        String MULTICAST_ADDRESS = "224.3.2.1";
         String nome = "msg";
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
         System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
@@ -132,7 +131,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
         System.out.println("Em Login: " + nome + " (" + c_i.getUtilizador().getUsername() + ") " + " verify: " + check);
         cliente = c_i;
         try {
-           socket = new MulticastSocket(multicast_port);
+           socket = new MulticastSocket();
             // create socket without binding it (only for sending)
             String message = "2;" + c_i.getUtilizador().getUsername() + ";" + c_i.getUtilizador().getPassword();
             byte[] buffer = message.getBytes();
@@ -143,35 +142,45 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
             socket.send(packet);
         } catch (IOException e) {
             e.printStackTrace();
-        }/*finally {
+        }finally {
+            System.out.println("socket fechou");
             socket.close();
-        }*/
+        }
+
         c_i.check_login(check);
 
-        String msg = RecebeMulticastSocket(socket);
+        String msg = RecebeMulticastSocket();
+
         if(msg!=null){
             return msg;
         }
         return "oops algo errado";
     }
 
-    public String RecebeMulticastSocket(MulticastSocket socket){
-        try {
-            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-            socket.joinGroup(group);
-            byte[] buffer = new byte[256];
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
-            socket.setLoopbackMode(false);//false quando recebe
-            socket.receive(packet);
-            String message = new String(packet.getData(), 0, packet.getLength());
-            System.out.println(message);
-            return message;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            socket.close();
-        }
-        return null;
+    public String RecebeMulticastSocket(){
+        MulticastSocket socket = null;
+       // while(true) {
+            try {
+                socket = new MulticastSocket(multicast_port);
+                InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+                socket.joinGroup(group);
+                byte[] buffer = new byte[256];
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                //socket.setLoopbackMode(false);//false quando recebe
+
+                socket.receive(packet);
+
+                String message = new String(packet.getData(), 0, packet.getLength());
+                System.out.println(message);
+
+                return message;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                socket.close();
+            }
+            return null;
+        //}
     }
 
     @Override

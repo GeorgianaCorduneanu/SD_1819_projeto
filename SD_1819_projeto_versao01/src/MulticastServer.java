@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class MulticastServer extends Thread implements Serializable {
     private String MULTICAST_ADDRESS = "224.3.2.1";
@@ -32,7 +33,6 @@ public class MulticastServer extends Thread implements Serializable {
         for(int i=0;i<user.size();i++) {
             System.out.println("Utilizador: "+user.get(i).getUsername()+" | password: "+user.get(i).getPassword());
         }
-        int id;
         try {
             socket = new MulticastSocket(PORT);
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
@@ -40,43 +40,48 @@ public class MulticastServer extends Thread implements Serializable {
 
             while (true) {
                 byte[] buffer = new byte[256];
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.setLoopbackMode(false);//false quando recebe
+                System.out.println("Waiting to receive...");
                 socket.receive(packet);
 
                 String message = new String(packet.getData(), 0, packet.getLength());
-                mensagem_cortada = message.split(";");
 
-                id = Integer.parseInt(mensagem_cortada[0]);
-                switch (id) {
-                    case 1: // registo
-                        System.out.println("Registo! A enviar utilizador para arraylist!\n" + "Utilizador: " + mensagem_cortada[1] + ", passoword: " + mensagem_cortada[2]);
-                        //Aqui confirmam-se duplos e adicionam-se os registos na bd
-                        //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
-                        //insere_dados(mensagem_cortada, 1);
-                        user.add(new Utilizador(mensagem_cortada[1],mensagem_cortada[2]));
-                        write_obj_user();
-                        break;
-                    case 2: //login
-                        //aqui confirmam-se os dados do utilizador
-                        v_ut=verifica_utilizador(mensagem_cortada[1],mensagem_cortada[2]);
-                        String msg;
-                        if(v_ut==true) { //verifica se o utilizador está na array list
-                            System.out.printf("Utilizador Encontrado!");
-                            msg = "Login bem sucedido";
-                            enviaServerRMI(socket,msg);
-                        }else{
-                            System.out.printf("Utilizador não encontrado");
-                            msg = "Login falhado";
-                            enviaServerRMI(socket,msg);
-                        }
-                        break;
+                if (!message.split(";")[0].equals("400")) {
+                    System.out.println("Message received: " + message);
+                    mensagem_cortada = message.split(";");
+
+                    switch (mensagem_cortada[0]) {
+                        case "1": // registo
+                            System.out.println("Registo! A enviar utilizador para arraylist!\n" + "Utilizador: " + mensagem_cortada[1] + ", passoword: " + mensagem_cortada[2]);
+                            //Aqui confirmam-se duplos e adicionam-se os registos na bd
+                            //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
+                            //insere_dados(mensagem_cortada, 1);
+                            user.add(new Utilizador(mensagem_cortada[1],mensagem_cortada[2]));
+                            write_obj_user();
+                            break;
+                        case "2": //login
+                            //aqui confirmam-se os dados do utilizador
+                            v_ut=verifica_utilizador(mensagem_cortada[1],mensagem_cortada[2]);
+                            String msg;
+                            if(v_ut==true) { //verifica se o utilizador está na array list
+                                System.out.printf("Utilizador Encontrado!\n");
+                                msg = "400;Login bem sucedido!";
+                                enviaServerRMI(msg);
+                            }else{
+                                System.out.printf("Utilizador não encontrado!\n");
+                                msg = "400;Login falhado!";
+                                enviaServerRMI(msg);
+                            }
+                            break;
+                    }
+
                 }
-                //System.out.println(message);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }finally {
+            System.out.println("nao podes fechar este socket");
             socket.close();
         }
     }
@@ -117,20 +122,26 @@ public class MulticastServer extends Thread implements Serializable {
         return false;
     }
 
-    public void enviaServerRMI(MulticastSocket socket, String message) {
+    public void enviaServerRMI(String message) {
+        MulticastSocket socket=null;
         try {
+            socket = new MulticastSocket();
             byte[] buffer = message.getBytes();
-            socket.setLoopbackMode(true);//true quando envia
+            //socket.setLoopbackMode(true);//true quando envia
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
+            //System.out.println("sending to rmi server: " + message);
+            TimeUnit.MILLISECONDS.sleep(50);
             socket.send(packet);
+            //System.out.println("msg: " + message);
 
         } catch (IOException e) {
             e.printStackTrace();
-        } /*finally {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
             socket.close();
-        }*/
-
+        }
     }
 }
     /*

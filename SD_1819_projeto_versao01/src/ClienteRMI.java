@@ -59,7 +59,9 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             switch (frase_chave_valor[0]) {
                 case "login":
                     cliente = login_cliente(frase_chave_valor[1], frase_chave_valor[2]);
+                   // System.out.println("Passou");
                     try {
+                     //   System.out.println("Passou 2");
                         txt = server_i.login(location_s, cliente);
                         System.out.println(txt);
                     }catch (IOException e) {
