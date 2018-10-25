@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -21,7 +18,8 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     public static void main(String args[]) throws RemoteException {
         String nome = "msg";
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+       // System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setSecurityManager(new RMISecurityManager());
         //encontrar servio
         check_servidor();
@@ -102,24 +100,35 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     @Override
     public void subscribe(String nome, ClienteRMI_I c_i) throws RemoteException {
         boolean check=true;
+        Pacote_datagram pacote;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte [] buffer;
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            //mandar info a multicast buscar base de dados e adicionar registo
+            System.out.println("Em Registar " + nome + " (" + c_i.getUtilizador().getUsername() + ") " + " verify: " + check);
+            cliente = c_i;
 
-        //mandar info a multicast buscar base de dados e adicionar registo
-        System.out.println("Em Registar " + nome + " (" + c_i.getUtilizador().getUsername() + ") " + " verify: " + check);
-        cliente = c_i;
+            try (MulticastSocket socket = new MulticastSocket()) {
+                // create socket without binding it (only for sending)
+                pacote = new Pacote_datagram(1, c_i);
 
-        try (MulticastSocket socket = new MulticastSocket()) {
-            // create socket without binding it (only for sending)
-            String message = "1;" + c_i.getUtilizador().getUsername() + ";" + c_i.getUtilizador().getPassword();
-            byte[] buffer = message.getBytes();
+                oos.writeObject(pacote);
+                oos.flush();
+                buffer = bos.toByteArray(); //passar o objeto Pacote_Datagram para byte
 
-            socket.setLoopbackMode(true);//true quando envia
-            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
-            socket.send(packet);
+                socket.setLoopbackMode(true);//true quando envia
+                InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
+                socket.send(packet);
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         //c_i.check_registar(check);
     }
 
@@ -149,7 +158,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
 
         c_i.check_login(check);
 
-        String msg = RecebeMulticastSocket();
+        String msg = recebe_multicast_socket();
 
         if(msg!=null){
             return msg;
@@ -157,35 +166,36 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
         return "oops algo errado";
     }
 
-    public String RecebeMulticastSocket(){
-        MulticastSocket socket = null;
-       // while(true) {
-            try {
-                socket = new MulticastSocket(multicast_port);
-                InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-                socket.joinGroup(group);
-                byte[] buffer = new byte[256];
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-                //socket.setLoopbackMode(false);//false quando recebe
-
-                socket.receive(packet);
-
-                String message = new String(packet.getData(), 0, packet.getLength());
-                System.out.println(message);
-
-                return message;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                socket.close();
-            }
-            return null;
-        //}
-    }
-
     @Override
     public boolean check_server_p() throws RemoteException {
         return true;
+    }
+
+    @Override
+    public String recebe_multicast_socket() throws RemoteException {
+        MulticastSocket socket = null;
+        // while(true) {
+        try {
+            socket = new MulticastSocket(multicast_port);
+            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+            socket.joinGroup(group);
+            byte[] buffer = new byte[256];
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+            //socket.setLoopbackMode(false);//false quando recebe
+
+            socket.receive(packet);
+
+            String message = new String(packet.getData(), 0, packet.getLength());
+            System.out.println(message);
+
+            return message;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            socket.close();
+        }
+        return null;
+        //}
     }
 
 

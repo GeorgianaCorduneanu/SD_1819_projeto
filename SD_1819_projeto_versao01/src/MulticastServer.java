@@ -1,3 +1,4 @@
+import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.net.MulticastSocket;
 import java.net.DatagramPacket;
@@ -26,7 +27,8 @@ public class MulticastServer extends Thread implements Serializable {
     public void run() {
         MulticastSocket socket = null;
         System.out.println("O servidor Multicast nr " + this.getName() + " está a correr!!");
-        String[] mensagem_cortada;
+        Pacote_datagram pacote = null;
+
         boolean v_ut;
         //this.connection = getConnection(); //obter a conexão com a base de dados
         read_obj();
@@ -39,45 +41,65 @@ public class MulticastServer extends Thread implements Serializable {
             socket.joinGroup(group);
 
             while (true) {
-                byte[] buffer = new byte[256];
+                byte[] buffer = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.setLoopbackMode(false);//false quando recebe
                 System.out.println("Waiting to receive...");
                 socket.receive(packet);
 
-                String message = new String(packet.getData(), 0, packet.getLength());
+                ByteArrayInputStream in = new ByteArrayInputStream(packet.getData(), 0, packet.getLength());
+                System.out.println(packet.getLength());
+                ObjectInputStream is = new ObjectInputStream(in);
+                try {
+                    pacote = (Pacote_datagram) is.readObject();
+                    System.out.println(pacote.getCliente().getUtilizador().getUsername() + " : " + pacote.getCliente().getUtilizador().getPassword());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }catch (EOFException e){
+                    System.out.println("Chegou ao fim");
+                    is.close();
+                }
 
-                if (!message.split(";")[0].equals("400")) {
-                    System.out.println("Message received: " + message);
-                    mensagem_cortada = message.split(";");
+                assert pacote != null;
+                if (400 != pacote.getFuncao()) {
+                    System.out.println("Message received");
 
-                    switch (mensagem_cortada[0]) {
-                        case "1": // registo
-                            System.out.println("Registo! A enviar utilizador para arraylist!\n" + "Utilizador: " + mensagem_cortada[1] + ", passoword: " + mensagem_cortada[2]);
+                    switch (pacote.getFuncao()) {
+                        case 1: // registo
                             //Aqui confirmam-se duplos e adicionam-se os registos na bd
                             //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
                             //insere_dados(mensagem_cortada, 1);
-                            user.add(new Utilizador(mensagem_cortada[1],mensagem_cortada[2]));
-                            write_obj_user();
+                            if(!verifica_utilizador(pacote.getCliente().getUtilizador())) { //caso o utilziador já exista nao adiciona a lista
+                                if (user.isEmpty())
+                                    pacote.getCliente().getUtilizador().setEditor(true);
+                                user.add(pacote.getCliente().getUtilizador());
+                                write_obj_user();
+                                pacote.setMessage(201);
+                                enviaServerRMI(pacote);
+                                break;
+                            }
+                            pacote.setMessage(409);
+                            enviaServerRMI(pacote);
                             break;
-                        case "2": //login
+                        case 2: //login
                             //aqui confirmam-se os dados do utilizador
-                            v_ut=verifica_utilizador(mensagem_cortada[1],mensagem_cortada[2]);
+                            v_ut = verifica_utilizador(pacote.getCliente().getUtilizador());
                             String msg;
-                            if(v_ut==true) { //verifica se o utilizador está na array list
-                                System.out.printf("Utilizador Encontrado!\n");
-                                msg = "400;Login bem sucedido!";
-                                enviaServerRMI(msg);
-                            }else{
-                                System.out.printf("Utilizador não encontrado!\n");
-                                msg = "400;Login falhado!";
-                                enviaServerRMI(msg);
+                            if (v_ut) { //verifica se o utilizador está na array list
+                                System.out.println("Utilizador Encontrado!");
+                                pacote.setMessage(202);
+                                enviaServerRMI(pacote);
+                            } else {
+                                System.out.println("Utilizador não encontrado!");
+                                pacote.setMessage(302);
+                                enviaServerRMI(pacote);
                             }
                             break;
                     }
+                }
+
 
                 }
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -87,7 +109,7 @@ public class MulticastServer extends Thread implements Serializable {
     }
     public void write_obj_user() {
         try {
-            FileOutputStream fos = new FileOutputStream("C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
+            FileOutputStream fos = new FileOutputStream("C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\data.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(user);
             oos.close();
@@ -99,7 +121,8 @@ public class MulticastServer extends Thread implements Serializable {
     }
     public void read_obj(){
         try{
-            FileInputStream fis = new FileInputStream("C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
+            //FileInputStream fis = new FileInputStream("C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
+            FileInputStream fis = new FileInputStream("C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
             user = (ArrayList<Utilizador>) ois.readObject();
             ois.close();
@@ -111,36 +134,42 @@ public class MulticastServer extends Thread implements Serializable {
             e.printStackTrace();
         }
     }
-    public boolean verifica_utilizador(String username, String password){ //verifica se o utilizador está na array list
+
+    public boolean verifica_utilizador(Utilizador u){ //verifica se o utilizador está na array list
         for(Utilizador utilizador : user){
-            if(utilizador.getUsername().equals(username)){
-                if(utilizador.getPassword().equals((password))){
-                    return true;
-                }
-            }
+            if(utilizador.getUsername().equals(u.getUsername()) && utilizador.getUsername().equals(u.getUsername()))
+                return true;
         }
         return false;
     }
 
-    public void enviaServerRMI(String message) {
-        MulticastSocket socket=null;
+    public void enviaServerRMI(Pacote_datagram pacote) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
-            socket = new MulticastSocket();
-            byte[] buffer = message.getBytes();
-            //socket.setLoopbackMode(true);//true quando envia
-            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
-            //System.out.println("sending to rmi server: " + message);
-            TimeUnit.MILLISECONDS.sleep(50);
-            socket.send(packet);
-            //System.out.println("msg: " + message);
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            MulticastSocket socket=null;
+            try {
+                oos.writeObject(pacote);
+                oos.flush();
+                socket = new MulticastSocket();
+                byte[] buffer = bos.toByteArray();
+                //socket.setLoopbackMode(true);//true quando envia
+                InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
+                //System.out.println("sending to rmi server: " + message);
+                TimeUnit.MILLISECONDS.sleep(50);
+                socket.send(packet);
+                //System.out.println("msg: " + message);
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                socket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            socket.close();
         }
     }
 }

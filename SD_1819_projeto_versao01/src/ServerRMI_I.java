@@ -5,4 +5,5 @@ public interface ServerRMI_I extends Remote {
     void subscribe(String nome, ClienteRMI_I c_i) throws RemoteException;
     String login(String nome, ClienteRMI_I c_i) throws RemoteException;
     boolean check_server_p() throws RemoteException;
+    String recebe_multicast_socket() throws RemoteException;
 }

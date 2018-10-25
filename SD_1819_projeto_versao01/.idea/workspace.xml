@@ -43,30 +43,31 @@
     <session id="833798454">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="17" />
           <entry key="project.open.time.105" value="1" />
           <entry key="project.open.time.122" value="1" />
           <entry key="project.open.time.141" value="1" />
           <entry key="project.open.time.146" value="1" />
           <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.302" value="1" />
           <entry key="project.open.time.47" value="1" />
           <entry key="project.open.time.52" value="1" />
-          <entry key="project.open.time.53" value="1" />
+          <entry key="project.open.time.53" value="2" />
           <entry key="project.open.time.54" value="1" />
           <entry key="project.open.time.68" value="1" />
           <entry key="project.open.time.70" value="1" />
           <entry key="project.open.time.82" value="1" />
           <entry key="project.open.time.97" value="1" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.opened" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="bin" value="1" />
           <entry key="class" value="2" />
-          <entry key="java" value="43" />
+          <entry key="java" value="52" />
           <entry key="sql" value="3" />
           <entry key="txt" value="1" />
         </counts>
@@ -74,21 +75,21 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="2" />
-          <entry key="JAVA" value="43" />
+          <entry key="JAVA" value="52" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="Scratch" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="11266" />
+          <entry key="java" value="14169" />
           <entry key="sql" value="46" />
           <entry key="txt" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="11266" />
+          <entry key="JAVA" value="14169" />
           <entry key="PLAIN_TEXT" value="18" />
           <entry key="Scratch" value="46" />
         </counts>
@@ -102,56 +103,57 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="137" column="31" selection-start-line="137" selection-start-column="31" selection-end-line="137" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Utilizador.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Notificacao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-              <folding>
-                <element signature="e#456#457#0" expanded="true" />
-                <element signature="e#480#481#0" expanded="true" />
-                <element signature="e#518#519#0" expanded="true" />
-                <element signature="e#544#545#0" expanded="true" />
-                <element signature="e#579#580#0" expanded="true" />
-                <element signature="e#610#611#0" expanded="true" />
-                <element signature="e#658#659#0" expanded="true" />
-                <element signature="e#698#699#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-969">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="940">
+              <caret line="154" column="49" selection-start-line="154" selection-start-column="49" selection-end-line="154" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Pacote_datagram.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#512#513#0" expanded="true" />
+                <element signature="e#542#543#0" expanded="true" />
+                <element signature="e#584#585#0" expanded="true" />
+                <element signature="e#633#634#0" expanded="true" />
+                <element signature="e#420#421#0" expanded="true" />
+                <element signature="e#450#451#0" expanded="true" />
+                <element signature="e#502#503#0" expanded="true" />
+                <element signature="e#540#541#0" expanded="true" />
+                <element signature="e#570#571#0" expanded="true" />
+                <element signature="e#599#600#0" expanded="true" />
+                <element signature="e#640#641#0" expanded="true" />
+                <element signature="e#676#677#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Http_message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+              <folding>
+                <element signature="e#308#309#0" expanded="true" />
+                <element signature="e#337#338#0" expanded="true" />
+                <element signature="e#378#379#0" expanded="true" />
+                <element signature="e#414#415#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="118">
+              <caret line="160" column="46" selection-start-line="160" selection-start-column="46" selection-end-line="160" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -159,11 +161,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="62" column="34" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="71" column="82" selection-start-line="71" selection-start-column="82" selection-end-line="71" selection-end-column="82" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ServerRMI_I.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ClienteRMI_I.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -202,7 +219,6 @@
         <option value="$PROJECT_DIR$/src/Cliente/ClienteRMI.java" />
         <option value="$PROJECT_DIR$/src/Server/ServerRMIB.java" />
         <option value="$PROJECT_DIR$/src/ClienteRMI_I.java" />
-        <option value="$PROJECT_DIR$/src/ServerRMI_I.java" />
         <option value="$PROJECT_DIR$/src/Album.java" />
         <option value="$PROJECT_DIR$/src/Artista.java" />
         <option value="$PROJECT_DIR$/src/Critica.java" />
@@ -212,9 +228,12 @@
         <option value="$PROJECT_DIR$/src/Upload.java" />
         <option value="$PROJECT_DIR$/src/Notificacao.java" />
         <option value="$PROJECT_DIR$/src/Utilizador.java" />
-        <option value="$PROJECT_DIR$/src/ClienteRMI.java" />
+        <option value="$PROJECT_DIR$/src/Pacote_datagram.java" />
+        <option value="$PROJECT_DIR$/src/Http_message.java" />
         <option value="$PROJECT_DIR$/src/MulticastServer.java" />
+        <option value="$PROJECT_DIR$/src/ServerRMI_I.java" />
         <option value="$PROJECT_DIR$/src/ServerRMIB.java" />
+        <option value="$PROJECT_DIR$/src/ClienteRMI.java" />
       </list>
     </option>
   </component>
@@ -224,7 +243,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="878" />
     <option name="height" value="775" />
@@ -235,6 +254,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -256,6 +276,13 @@
             <path>
               <item name="SD_1819_projeto_versao01" type="b2602c69:ProjectViewProjectNode" />
               <item name="SD_1819_projeto_versao01" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="SD_1819_projeto_versao01" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SD_1819_projeto_versao01" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SD_1819_projeto_versao01" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -271,7 +298,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -282,7 +308,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540418912374" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540500345217" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -299,7 +325,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MulticastServer">
+  <component name="RunManager" selected="Application.ClienteRMI">
     <configuration name="ClienteRMI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ClienteRMI" />
       <module name="SD_1819_projeto_versao01" />
@@ -328,9 +354,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MulticastServer" />
-        <item itemvalue="Application.ClienteRMI" />
         <item itemvalue="Application.ServerRMIB" />
+        <item itemvalue="Application.ClienteRMI" />
+        <item itemvalue="Application.MulticastServer" />
       </list>
     </recent_temporary>
   </component>
@@ -355,17 +381,18 @@
       <workItem from="1540329414932" duration="3114000" />
       <workItem from="1540383728654" duration="8636000" />
       <workItem from="1540402102919" duration="7841000" />
-      <workItem from="1540415535779" duration="3330000" />
+      <workItem from="1540415535779" duration="3708000" />
+      <workItem from="1540419531066" duration="464000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61544000" />
+    <option name="totallyTimeSpent" value="62386000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17019667" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17473525" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -375,7 +402,7 @@
       <window_info anchor="bottom" id="Inspection Results" order="0" weight="0.32923076" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.29692307" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.32615384" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.32615384" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -383,7 +410,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3276923" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3276923" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.21230769" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -428,143 +455,88 @@
     <entry file="file://$PROJECT_DIR$/src/Cliente/ClienteRMI.java" />
     <entry file="file://$PROJECT_DIR$/src/Server/ServerRMIB.java" />
     <entry file="file://$PROJECT_DIR$/src/MulticastServer/MulticastServer.java" />
+    <entry file="file://$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/Album.class">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Album.java" />
+    <entry file="file://$PROJECT_DIR$/src/Artista.java" />
+    <entry file="file://$PROJECT_DIR$/src/Critica.java" />
+    <entry file="file://$PROJECT_DIR$/src/Genero.java" />
+    <entry file="file://$PROJECT_DIR$/src/Musica.java" />
+    <entry file="file://$PROJECT_DIR$/src/Playlist.java" />
+    <entry file="file://$PROJECT_DIR$/src/Upload.java" />
+    <entry file="file://$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/ClienteRMI.class">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data.bin" />
+    <entry file="file://$PROJECT_DIR$/src/Utilizador.java" />
+    <entry file="file://$PROJECT_DIR$/src/Notificacao.java" />
     <entry file="file://$PROJECT_DIR$/src/ClienteRMI_I.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="51">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Pacote_datagram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#512#513#0" expanded="true" />
+            <element signature="e#542#543#0" expanded="true" />
+            <element signature="e#584#585#0" expanded="true" />
+            <element signature="e#633#634#0" expanded="true" />
+            <element signature="e#420#421#0" expanded="true" />
+            <element signature="e#450#451#0" expanded="true" />
+            <element signature="e#502#503#0" expanded="true" />
+            <element signature="e#540#541#0" expanded="true" />
+            <element signature="e#570#571#0" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+            <element signature="e#640#641#0" expanded="true" />
+            <element signature="e#676#677#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Http_message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+          <folding>
+            <element signature="e#308#309#0" expanded="true" />
+            <element signature="e#337#338#0" expanded="true" />
+            <element signature="e#378#379#0" expanded="true" />
+            <element signature="e#414#415#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerRMI_I.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/Album.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Album.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" column="42" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Artista.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" column="44" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Critica.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" column="44" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Genero.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="43" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Musica.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Playlist.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" column="45" selection-start-line="3" selection-start-column="45" selection-end-line="3" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Upload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="2" column="43" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/ClienteRMI.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data.bin">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Notificacao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding>
-            <element signature="e#456#457#0" expanded="true" />
-            <element signature="e#480#481#0" expanded="true" />
-            <element signature="e#518#519#0" expanded="true" />
-            <element signature="e#544#545#0" expanded="true" />
-            <element signature="e#579#580#0" expanded="true" />
-            <element signature="e#610#611#0" expanded="true" />
-            <element signature="e#658#659#0" expanded="true" />
-            <element signature="e#698#699#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Utilizador.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="62" column="34" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-969">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="137" column="31" selection-start-line="137" selection-start-column="31" selection-end-line="137" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="118">
+          <caret line="160" column="46" selection-start-line="160" selection-start-column="46" selection-end-line="160" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="71" column="82" selection-start-line="71" selection-start-column="82" selection-end-line="71" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="940">
+          <caret line="154" column="49" selection-start-line="154" selection-start-column="49" selection-end-line="154" selection-end-column="49" />
         </state>
       </provider>
     </entry>

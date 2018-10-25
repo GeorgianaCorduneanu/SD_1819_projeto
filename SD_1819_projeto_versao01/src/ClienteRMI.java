@@ -25,7 +25,8 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         String name = "msg";
         String txt = null;
         //definir plicy
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setProperty("java.rmi.server.hostname","192.168.56.1");
         System.setSecurityManager(new RMISecurityManager());
 
@@ -68,8 +69,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                         try {
                             server_i = (ServerRMI_I) Naming.lookup(location_s);
                             server_i.login(location_s, cliente);
-
-
+                            System.out.println(server_i.recebe_multicast_socket());
                         } catch (NotBoundException e1) {
                             e1.printStackTrace();
                         }
