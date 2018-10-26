@@ -23,7 +23,6 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         String server_ip = "localhost";
         int server_port = 7000;
         String name = "msg";
-        String txt = null;
         //definir plicy
         //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
@@ -60,16 +59,18 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             switch (frase_chave_valor[0]) {
                 case "login":
                     cliente = login_cliente(frase_chave_valor[1], frase_chave_valor[2]);
-                   // System.out.println("Passou");
+                    System.out.println("A enviar para servidor");
                     try {
-                     //   System.out.println("Passou 2");
-                        txt = server_i.login(location_s, cliente);
-                        System.out.println(txt);
+                        //txt = server_i.login(location_s, cliente);
+                        server_i.login(location_s, cliente);
+                        System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
+                        System.out.println("Devia ter enviado mensagem");
                     }catch (IOException e) {
                         try {
                             server_i = (ServerRMI_I) Naming.lookup(location_s);
                             server_i.login(location_s, cliente);
-                            System.out.println(server_i.recebe_multicast_socket());
+                            System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
+                            System.out.println("Devia ter enviado mensagem");
                         } catch (NotBoundException e1) {
                             e1.printStackTrace();
                         }
@@ -79,15 +80,18 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 case "registar":
                     try {
                         cliente = registar_cliente(frase_chave_valor[1], frase_chave_valor[2]);
-                        //cliente.cliente_corrente = new Utilizador(frase_chave_valor[1], frase_chave_valor[2]);
                         System.out.println("A enviar para servidor");
                         try {
                             assert server_i != null;
                             server_i.subscribe(location_s, cliente);
+                            System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
+                            System.out.println("Devia ter enviado mensagem");
                         }catch (IOException e) {
                             try {
                                 server_i = (ServerRMI_I) Naming.lookup(location_s);
                                 server_i.subscribe(location_s, cliente);
+                                System.out.println("Enviou!");
+                                System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de confirmacao ou nao do multicast
 
                             } catch (NotBoundException e1) {
                                 e1.printStackTrace();

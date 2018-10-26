@@ -36,11 +36,12 @@ public class MulticastServer extends Thread implements Serializable {
             System.out.println("Utilizador: "+user.get(i).getUsername()+" | password: "+user.get(i).getPassword());
         }
         try {
-            socket = new MulticastSocket(PORT);
-            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-            socket.joinGroup(group);
+
 
             while (true) {
+                socket = new MulticastSocket(PORT);
+                InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+                socket.joinGroup(group);
                 byte[] buffer = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.setLoopbackMode(false);//false quando recebe
@@ -70,6 +71,7 @@ public class MulticastServer extends Thread implements Serializable {
                             //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
                             //insere_dados(mensagem_cortada, 1);
                             if(!verifica_utilizador(pacote.getCliente().getUtilizador())) { //caso o utilziador já exista nao adiciona a lista
+                                System.out.println("Utilzador nao existente");
                                 if (user.isEmpty())
                                     pacote.getCliente().getUtilizador().setEditor(true);
                                 user.add(pacote.getCliente().getUtilizador());
@@ -78,6 +80,7 @@ public class MulticastServer extends Thread implements Serializable {
                                 enviaServerRMI(pacote);
                                 break;
                             }
+                            System.out.println("Utilizador ja existente");
                             pacote.setMessage(409);
                             enviaServerRMI(pacote);
                             break;
@@ -97,9 +100,7 @@ public class MulticastServer extends Thread implements Serializable {
                             break;
                     }
                 }
-
-
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -159,7 +160,7 @@ public class MulticastServer extends Thread implements Serializable {
                 //System.out.println("sending to rmi server: " + message);
                 TimeUnit.MILLISECONDS.sleep(50);
                 socket.send(packet);
-                //System.out.println("msg: " + message);
+                System.out.println("Mensagem enviada msg: " + pacote.getMessage());
 
             } catch (IOException e) {
                 e.printStackTrace();

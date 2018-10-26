@@ -19,7 +19,7 @@ public class Http_message implements Serializable {
         this.number = number;
     }
 
-    private String get_Message(int number){
+    public String get_Message(int number){
         switch (number){
             case 200:
                 return "OK";

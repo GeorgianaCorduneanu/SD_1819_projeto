@@ -43,7 +43,7 @@
     <session id="833798454">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="17" />
+          <entry key="project.closed" value="19" />
           <entry key="project.open.time.105" value="1" />
           <entry key="project.open.time.122" value="1" />
           <entry key="project.open.time.141" value="1" />
@@ -53,14 +53,16 @@
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.302" value="1" />
           <entry key="project.open.time.47" value="1" />
+          <entry key="project.open.time.50" value="1" />
           <entry key="project.open.time.52" value="1" />
           <entry key="project.open.time.53" value="2" />
           <entry key="project.open.time.54" value="1" />
+          <entry key="project.open.time.57" value="1" />
           <entry key="project.open.time.68" value="1" />
           <entry key="project.open.time.70" value="1" />
           <entry key="project.open.time.82" value="1" />
           <entry key="project.open.time.97" value="1" />
-          <entry key="project.opened" value="17" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -82,14 +84,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="14169" />
+          <entry key="java" value="14876" />
           <entry key="sql" value="46" />
           <entry key="txt" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="14169" />
+          <entry key="JAVA" value="14876" />
           <entry key="PLAIN_TEXT" value="18" />
           <entry key="Scratch" value="46" />
         </counts>
@@ -102,11 +104,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="940">
-              <caret line="154" column="49" selection-start-line="154" selection-start-column="49" selection-end-line="154" selection-end-column="49" />
+            <state relative-caret-position="289">
+              <caret line="55" column="77" lean-forward="true" selection-start-line="49" selection-end-line="55" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -114,21 +116,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Pacote_datagram.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="425">
               <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
               <folding>
                 <element signature="e#512#513#0" expanded="true" />
                 <element signature="e#542#543#0" expanded="true" />
                 <element signature="e#584#585#0" expanded="true" />
-                <element signature="e#633#634#0" expanded="true" />
-                <element signature="e#420#421#0" expanded="true" />
-                <element signature="e#450#451#0" expanded="true" />
-                <element signature="e#502#503#0" expanded="true" />
-                <element signature="e#540#541#0" expanded="true" />
-                <element signature="e#570#571#0" expanded="true" />
-                <element signature="e#599#600#0" expanded="true" />
-                <element signature="e#640#641#0" expanded="true" />
-                <element signature="e#676#677#0" expanded="true" />
+                <element signature="e#630#631#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,23 +131,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Http_message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-              <folding>
-                <element signature="e#308#309#0" expanded="true" />
-                <element signature="e#337#338#0" expanded="true" />
-                <element signature="e#378#379#0" expanded="true" />
-                <element signature="e#414#415#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="237">
+              <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="160" column="46" selection-start-line="160" selection-start-column="46" selection-end-line="160" selection-end-column="46" />
+            <state relative-caret-position="45">
+              <caret line="210" column="41" selection-start-line="210" selection-start-column="41" selection-end-line="210" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -161,8 +149,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="71" column="82" selection-start-line="71" selection-start-column="82" selection-end-line="71" selection-end-column="82" />
+            <state relative-caret-position="-882">
+              <caret line="86" column="81" selection-start-line="86" selection-start-column="81" selection-end-line="86" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -170,8 +158,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ServerRMI_I.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+            <state relative-caret-position="136">
+              <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -199,6 +187,7 @@
       <find>soc</find>
       <find>system</find>
       <find>subs</find>
+      <find>waitin</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\ginjo\Documents\SD_1819_projeto\SD_1819_projeto_versao01\src\Cliente</dir>
@@ -229,11 +218,11 @@
         <option value="$PROJECT_DIR$/src/Notificacao.java" />
         <option value="$PROJECT_DIR$/src/Utilizador.java" />
         <option value="$PROJECT_DIR$/src/Pacote_datagram.java" />
-        <option value="$PROJECT_DIR$/src/Http_message.java" />
-        <option value="$PROJECT_DIR$/src/MulticastServer.java" />
         <option value="$PROJECT_DIR$/src/ServerRMI_I.java" />
-        <option value="$PROJECT_DIR$/src/ServerRMIB.java" />
+        <option value="$PROJECT_DIR$/src/MulticastServer.java" />
         <option value="$PROJECT_DIR$/src/ClienteRMI.java" />
+        <option value="$PROJECT_DIR$/src/Http_message.java" />
+        <option value="$PROJECT_DIR$/src/ServerRMIB.java" />
       </list>
     </option>
   </component>
@@ -254,7 +243,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -298,6 +286,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -308,7 +297,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540500345217" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540573243999" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -325,7 +314,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ClienteRMI">
+  <component name="RunManager" selected="Application.MulticastServer">
     <configuration name="ClienteRMI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ClienteRMI" />
       <module name="SD_1819_projeto_versao01" />
@@ -354,9 +343,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ServerRMIB" />
-        <item itemvalue="Application.ClienteRMI" />
         <item itemvalue="Application.MulticastServer" />
+        <item itemvalue="Application.ClienteRMI" />
+        <item itemvalue="Application.ServerRMIB" />
       </list>
     </recent_temporary>
   </component>
@@ -383,16 +372,18 @@
       <workItem from="1540402102919" duration="7841000" />
       <workItem from="1540415535779" duration="3708000" />
       <workItem from="1540419531066" duration="464000" />
+      <workItem from="1540552823323" duration="590000" />
+      <workItem from="1540571023717" duration="2225000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62386000" />
+    <option name="totallyTimeSpent" value="65201000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17473525" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17927383" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -471,6 +462,13 @@
     <entry file="file://$PROJECT_DIR$/data.bin" />
     <entry file="file://$PROJECT_DIR$/src/Utilizador.java" />
     <entry file="file://$PROJECT_DIR$/src/Notificacao.java" />
+    <entry file="file://$PROJECT_DIR$/src/ServerRMI_I.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ClienteRMI_I.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -478,65 +476,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-882">
+          <caret line="86" column="81" selection-start-line="86" selection-start-column="81" selection-end-line="86" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Pacote_datagram.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
+        <state relative-caret-position="425">
           <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
           <folding>
             <element signature="e#512#513#0" expanded="true" />
             <element signature="e#542#543#0" expanded="true" />
             <element signature="e#584#585#0" expanded="true" />
-            <element signature="e#633#634#0" expanded="true" />
-            <element signature="e#420#421#0" expanded="true" />
-            <element signature="e#450#451#0" expanded="true" />
-            <element signature="e#502#503#0" expanded="true" />
-            <element signature="e#540#541#0" expanded="true" />
-            <element signature="e#570#571#0" expanded="true" />
-            <element signature="e#599#600#0" expanded="true" />
-            <element signature="e#640#641#0" expanded="true" />
-            <element signature="e#676#677#0" expanded="true" />
+            <element signature="e#630#631#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Http_message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-          <folding>
-            <element signature="e#308#309#0" expanded="true" />
-            <element signature="e#337#338#0" expanded="true" />
-            <element signature="e#378#379#0" expanded="true" />
-            <element signature="e#414#415#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ServerRMI_I.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="160" column="46" selection-start-line="160" selection-start-column="46" selection-end-line="160" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="71" column="82" selection-start-line="71" selection-start-column="82" selection-end-line="71" selection-end-column="82" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="940">
-          <caret line="154" column="49" selection-start-line="154" selection-start-column="49" selection-end-line="154" selection-end-column="49" />
+        <state relative-caret-position="289">
+          <caret line="55" column="77" lean-forward="true" selection-start-line="49" selection-end-line="55" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Http_message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="210" column="41" selection-start-line="210" selection-start-column="41" selection-end-line="210" selection-end-column="41" />
         </state>
       </provider>
     </entry>
