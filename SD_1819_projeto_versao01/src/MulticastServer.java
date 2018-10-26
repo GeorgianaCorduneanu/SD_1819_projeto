@@ -72,8 +72,9 @@ public class MulticastServer extends Thread implements Serializable {
                             //insere_dados(mensagem_cortada, 1);
                             if(!verifica_utilizador(pacote.getCliente().getUtilizador())) { //caso o utilziador já exista nao adiciona a lista
                                 System.out.println("Utilzador nao existente");
-                                if (user.isEmpty())
-                                    pacote.getCliente().getUtilizador().setEditor(true);
+                                if (user.isEmpty()){
+                                    pacote.getCliente().getUtilizador().setEditor(true);}
+                                System.out.println("teste: "+pacote.getCliente().getUtilizador().getEditor());
                                 user.add(pacote.getCliente().getUtilizador());
                                 write_obj_user();
                                 pacote.setMessage(201);
@@ -110,7 +111,8 @@ public class MulticastServer extends Thread implements Serializable {
     }
     public void write_obj_user() {
         try {
-            FileOutputStream fos = new FileOutputStream("C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\data.bin");
+            //FileOutputStream fos = new FileOutputStream("C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\data.bin");
+            FileOutputStream fos = new FileOutputStream("C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(user);
             oos.close();
@@ -122,8 +124,8 @@ public class MulticastServer extends Thread implements Serializable {
     }
     public void read_obj(){
         try{
-            //FileInputStream fis = new FileInputStream("C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
-            FileInputStream fis = new FileInputStream("C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
+            FileInputStream fis = new FileInputStream("C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
+//            FileInputStream fis = new FileInputStream("C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin");
             ObjectInputStream ois = new ObjectInputStream(fis);
             user = (ArrayList<Utilizador>) ois.readObject();
             ois.close();
@@ -138,7 +140,7 @@ public class MulticastServer extends Thread implements Serializable {
 
     public boolean verifica_utilizador(Utilizador u){ //verifica se o utilizador está na array list
         for(Utilizador utilizador : user){
-            if(utilizador.getUsername().equals(u.getUsername()) && utilizador.getUsername().equals(u.getUsername()))
+            if(utilizador.getUsername().equals(u.getUsername()))
                 return true;
         }
         return false;

@@ -8,7 +8,7 @@ import java.rmi.server.*;
 
 public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Serializable {
     private static String location_s;
-    private static String server_ip = "127.0.0.1";
+    private static String server_ip = "localhost";
     private static int server_port = 7000;
     int multicast_port = 5000;
     private static String MULTICAST_ADDRESS = "224.3.2.1";
@@ -21,8 +21,8 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     public static void main(String args[]) throws RemoteException {
         String nome = "msg";
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
-        // System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setSecurityManager(new RMISecurityManager());
         //encontrar servio
         check_servidor();
@@ -146,9 +146,9 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     }
 
     @Override
-    public String login(String nome, ClienteRMI_I c_i) throws RemoteException {
+    public Pacote_datagram login(String nome, ClienteRMI_I c_i) throws RemoteException {
         boolean check = true;
-        Pacote_datagram pacote;
+        Pacote_datagram pacote,pacote2;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         byte[] buffer;
         MulticastSocket socket = null;
@@ -186,12 +186,12 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
 
         c_i.check_login(check);
 
-        String msg = recebe_multicast_socket();
+        pacote2 = recebe_multicast_socket();
 
-        if (msg != null) {
-            return msg;
+        if (pacote2 != null) {
+            return pacote2;
         }
-        return "oops algo errado";
+        return null;
     }
 
     @Override
@@ -200,7 +200,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     }
 
     @Override
-    public String recebe_multicast_socket() throws RemoteException{
+    public Pacote_datagram recebe_multicast_socket() throws RemoteException{
         MulticastSocket socket = null;
         Pacote_datagram pacote=null;
         // while(true) {
@@ -210,7 +210,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
             socket.joinGroup(group);
             byte[] buffer = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-            //socket.setLoopbackMode(false);//false quando recebe
+            socket.setLoopbackMode(false);//false quando recebe
 
             socket.receive(packet);
 
@@ -231,7 +231,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
                 }
 
                 assert pacote != null;
-                return pacote.getMessage().get_Message(pacote.getMessage().getNumber());
+                return pacote;
             } catch (IOException e) {
                 e.printStackTrace();
             }

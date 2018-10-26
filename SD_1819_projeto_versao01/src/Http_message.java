@@ -26,7 +26,7 @@ public class Http_message implements Serializable {
             case 201:
                 return "CREATED";
             case 202:
-                return "ACCEPTEP";
+                return "ACCEPTED";
             case 203:
                 return "NON-AUTHORITATIVE INFORMATION";
             case 204:
