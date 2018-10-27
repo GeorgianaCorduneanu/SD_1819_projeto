@@ -1,11 +1,9 @@
-import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.net.MulticastSocket;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class MulticastServer extends Thread implements Serializable {
@@ -53,7 +51,7 @@ public class MulticastServer extends Thread implements Serializable {
                 ObjectInputStream is = new ObjectInputStream(in);
                 try {
                     pacote = (Pacote_datagram) is.readObject();
-                    System.out.println(pacote.getCliente().getUtilizador().getUsername() + " : " + pacote.getCliente().getUtilizador().getPassword());
+//                    System.out.println(pacote.getCliente().getUtilizador().getUsername() + " : " + pacote.getCliente().getUtilizador().getPassword());
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }catch (EOFException e){
@@ -70,7 +68,7 @@ public class MulticastServer extends Thread implements Serializable {
                             //Aqui confirmam-se duplos e adicionam-se os registos na bd
                             //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
                             //insere_dados(mensagem_cortada, 1);
-                            if(!verifica_utilizador(pacote.getCliente().getUtilizador())) { //caso o utilziador já exista nao adiciona a lista
+                            if(!verifica_utilizador(pacote.getCliente().getUtilizador())) { //caso o utilizador já exista nao adiciona a lista
                                 System.out.println("Utilzador nao existente");
                                 if (user.isEmpty()){
                                     pacote.getCliente().getUtilizador().setEditor(true);}
@@ -98,6 +96,13 @@ public class MulticastServer extends Thread implements Serializable {
                                 pacote.setMessage(302);
                                 enviaServerRMI(pacote);
                             }
+                            break;
+                        case 3: //dar permissao de editor a outro utilizador
+                            System.out.println("A encontrar user na base de dados");
+                            System.out.println("Username a dar permissao: "+pacote.getCliente().getUtilizador());
+                            Utilizador ut = encontraUtilizador(pacote.getCliente().getUtilizador());
+                            ut.setEditor(true);
+                            System.out.println("testePermissao:"+ut.getEditor());
                             break;
                     }
                 }
@@ -146,6 +151,15 @@ public class MulticastServer extends Thread implements Serializable {
         return false;
     }
 
+    public Utilizador encontraUtilizador(Utilizador u){
+        for(int i=0;i<user.size();i++) {
+            if(user.get(i).getUsername().equals(u.getUsername())){
+                return user.get(i);
+            }
+        }
+        return null;
+    }
+
     public void enviaServerRMI(Pacote_datagram pacote) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
@@ -156,11 +170,11 @@ public class MulticastServer extends Thread implements Serializable {
                 oos.flush();
                 socket = new MulticastSocket();
                 byte[] buffer = bos.toByteArray();
-                //socket.setLoopbackMode(true);//true quando envia
+                socket.setLoopbackMode(true);//true quando envia
                 InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
                 //System.out.println("sending to rmi server: " + message);
-                TimeUnit.MILLISECONDS.sleep(50);
+                TimeUnit.MILLISECONDS.sleep(75);
                 socket.send(packet);
                 System.out.println("Mensagem enviada msg: " + pacote.getMessage());
 

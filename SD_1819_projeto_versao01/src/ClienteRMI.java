@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
@@ -71,11 +72,11 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                        // System.out.println("Devia ter enviado mensagem");
                        // System.out.println(codigo);
                         System.out.println("TESTE: "+pacote.getCliente().getUtilizador().getEditor());
-                        if(codigo.equals("ACCEPTED") && !pacote.getCliente().getUtilizador().getEditor()){
+                        if(codigo.equals("ACCEPTED") && !pacote.getCliente().getUtilizador().getEditor()){ //tipo de menu
                             menu_login_normal();
                         }
                         else if(pacote.getCliente().getUtilizador().getEditor()){
-                            menu_login_editor();
+                            menu_login_editor(pacote);
                        }else
                             System.out.printf("codigo: "+codigo);
                     }catch (IOException e) {
@@ -139,7 +140,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         return cliente;
     }
 
-    public static ClienteRMI login_cliente(String username, String passe) throws RemoteException {
+    public static ClienteRMI login_cliente(String username, String passe) {
         ClienteRMI cliente = null;
         System.out.println("*** Login ***");
         try {
@@ -169,6 +170,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         int opcao = reader.nextInt();
         switch (opcao) {
             case 1:
+                escolheUser();
                 break;
             case 2:
                 break;
@@ -187,7 +189,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         }
 
     }
-    public static void menu_login_editor() throws IOException {
+    public static void menu_login_editor(Pacote_datagram pacote) throws IOException {
         Scanner reader = new Scanner(System.in);
         if( System.getProperty( "os.name" ).startsWith( "Window" ) )
             Runtime.getRuntime().exec("cls");
@@ -218,7 +220,8 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 break;
             case 5:
                 break;
-            case 6:
+            case 6: // privilégios de editor
+                escolheUser();
                 break;
             case 7:
                 break;
@@ -233,6 +236,34 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             default:
                 System.out.println("Insira uma opção válida!");
         }
+    }
+    public static void escolheUser() throws RemoteException {
+        Utilizador user;
+        Scanner scanner = new Scanner(System.in);
+        String nome;
+        String mensagem;
+        int n =1;// numero chave que diz ao metodo envia que é para enviar o nome
+        String server_ip = "localhost";
+        int server_port = 7000;
+        String name = "msg";
+        String location_s = "rmi://" + server_ip + ":" + server_port + "/"+ name;
+        ServerRMI_I server_i = null;
+        try {
+            server_i = (ServerRMI_I) Naming.lookup(location_s);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("Qual o username do utilizador?");
+        nome = scanner.nextLine();
+        mensagem = "3;"+nome;
+        server_i.EnviaStringAoMulticast(mensagem,n);
+
     }
     @Override
     public Utilizador getUtilizador() throws RemoteException {

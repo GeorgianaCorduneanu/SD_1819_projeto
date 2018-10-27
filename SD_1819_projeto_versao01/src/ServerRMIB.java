@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.MulticastSocket;
 import java.rmi.*;
 import java.rmi.server.*;
+import java.util.concurrent.TimeUnit;
 
 public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Serializable {
     private static String location_s;
@@ -195,6 +196,28 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     }
 
     @Override
+    public void EnviaStringAoMulticast(String message, int n){
+        byte[] buffer;
+        MulticastSocket socket = null;
+        try {
+                socket =new MulticastSocket();
+                buffer = message.getBytes();
+                socket.setLoopbackMode(true);//true quando envia
+                InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
+                TimeUnit.MILLISECONDS.sleep(75);
+                socket.send(packet);
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                socket.close();
+            }
+
+    }
+        @Override
     public boolean check_server_p() throws RemoteException {
         return true;
     }
