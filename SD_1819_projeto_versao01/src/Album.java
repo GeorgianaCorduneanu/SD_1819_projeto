@@ -30,11 +30,13 @@ public class Album implements Serializable {
     }
 
     public void setDescricao(String descricao, Utilizador u) {
+/*
         if(u.getEditor()){
             if(lista_utilizadores_editar_album.contains(u) == false)
                 lista_utilizadores_editar_album.add(u);
-            this.descricao = descricao;
-        }
+
+        }*/
+        this.descricao = descricao;
     }
 
     public String getData_lancamento() {
@@ -42,11 +44,12 @@ public class Album implements Serializable {
     }
 
     public void setData_lancamento(String data_lancamento, Utilizador u) {
-        if(u.getEditor()){
+        /*if(u.getEditor()){
             if(lista_utilizadores_editar_album.contains(u)==false)
                 lista_utilizadores_editar_album.add(u);
-            this.data_lancamento = data_lancamento;
-        }
+
+        }*/
+        this.data_lancamento = data_lancamento;
     }
 
     public String getNome_album() {
@@ -60,4 +63,5 @@ public class Album implements Serializable {
             this.nome_album = nome_album;
         }
     }
+
 }

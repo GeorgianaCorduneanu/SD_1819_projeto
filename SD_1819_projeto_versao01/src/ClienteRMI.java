@@ -31,6 +31,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         String txt;
         String codigo =null;
         Pacote_datagram pacote;
+
         //definir plicy
         System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
@@ -217,6 +218,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         else
             Runtime.getRuntime().exec("clear");*/
         Scanner sc = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         System.out.println("-----------Menu de Editor-----------\n"
                 +"[1]Pesquisar música\n"
                 +"[2]Gerir artistas\n"
@@ -231,7 +233,8 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 +"[11]Logout");
 
         int opcao = reader.nextInt();
-        int o;
+        int o,op;
+
         switch (opcao){
             case 1: //pesquisar musicas
                 System.out.println("A procurar musicas");
@@ -263,6 +266,19 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                         inserir_album(server_i);
                         break;
                     case 2:
+                        System.out.println("Pretende alterar a [1]descrição de um album ou [2]data de criação?\n");
+                        op = scan.nextInt();
+                        switch (op){
+                            case 1:
+                                editar_descricao_album(server_i,cliente_corrente.getUsername());
+                                break;
+                            case 2:
+                                editar_data_album(server_i,cliente_corrente.getUsername());
+                                break;
+                            default:
+                                System.out.printf("Insira uma opção válida!");
+                        }
+
                         break;
                     case 3:
                         elimina_album(server_i);
@@ -375,6 +391,50 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             e.printStackTrace();
         }
     }
+    private static void editar_descricao_album(ServerRMI_I s_i, String username){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase,frase2;
+        String mensagem;
+
+        System.out.println("Qual o nome do album que pretende editar? ");
+        try{
+            frase = reader.readLine();
+            mensagem = "11;"+frase;
+            System.out.println("Qual a nova descrição do album?");
+            frase2= reader.readLine();
+            mensagem = mensagem+";" + frase2;
+            mensagem = mensagem+";" + username;
+            s_i.enviaStringAoMulticast(mensagem);
+            System.out.println(s_i.recebe_multicast_socket());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void editar_data_album(ServerRMI_I s_i, String username){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase,frase2;
+        String mensagem;
+
+        System.out.println("Qual o nome do album que pretende editar? ");
+        try{
+            frase = reader.readLine();
+            mensagem = "12;"+frase;
+            System.out.println("Qual a nova data do album?");
+            frase2= reader.readLine();
+            mensagem = mensagem+";" + frase2;
+            mensagem = mensagem + ";" + username;
+            s_i.enviaStringAoMulticast(mensagem);
+            System.out.println(s_i.recebe_multicast_socket());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void elimina_musica(ServerRMI_I s_i){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
@@ -392,6 +452,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             e.printStackTrace();
         }
     }
+
     private static void elimina_album(ServerRMI_I s_i){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
