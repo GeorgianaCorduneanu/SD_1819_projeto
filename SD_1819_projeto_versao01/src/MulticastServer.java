@@ -26,12 +26,13 @@ public class MulticastServer extends Thread implements Serializable {
         MulticastSocket socket = null;
         System.out.println("O servidor Multicast nr " + this.getName() + " está a correr!!");
         Pacote_datagram pacote = null;
+        String[] mensagem_cortada;
 
         boolean v_ut;
         //this.connection = getConnection(); //obter a conexão com a base de dados
         read_obj();
         for(int i=0;i<user.size();i++) {
-            System.out.println("Utilizador: "+user.get(i).getUsername()+" | password: "+user.get(i).getPassword());
+            System.out.println("Utilizador: "+user.get(i).getUsername()+" | password: "+user.get(i).getPassword()+ "| Editor: "+user.get(i).getEditor());
         }
         try {
 
@@ -48,65 +49,60 @@ public class MulticastServer extends Thread implements Serializable {
 
                 ByteArrayInputStream in = new ByteArrayInputStream(packet.getData(), 0, packet.getLength());
                 System.out.println(packet.getLength());
-                ObjectInputStream is = new ObjectInputStream(in);
-                try {
-                    pacote = (Pacote_datagram) is.readObject();
-//                    System.out.println(pacote.getCliente().getUtilizador().getUsername() + " : " + pacote.getCliente().getUtilizador().getPassword());
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }catch (EOFException e){
-                    System.out.println("Chegou ao fim");
-                    is.close();
-                }
+                String message = new String(packet.getData(),0,packet.getLength());
 
-                assert pacote != null;
-                if (400 != pacote.getFuncao()) {
-                    System.out.println("Message received");
+                mensagem_cortada =message.split(";");
 
-                    switch (pacote.getFuncao()) {
-                        case 1: // registo
-                            //Aqui confirmam-se duplos e adicionam-se os registos na bd
-                            //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
-                            //insere_dados(mensagem_cortada, 1);
-                            if(!verifica_utilizador(pacote.getCliente().getUtilizador())) { //caso o utilizador já exista nao adiciona a lista
-                                System.out.println("Utilzador nao existente");
-                                if (user.isEmpty()){
-                                    pacote.getCliente().getUtilizador().setEditor(true);}
-                                System.out.println("teste: "+pacote.getCliente().getUtilizador().getEditor());
-                                user.add(pacote.getCliente().getUtilizador());
+                switch (mensagem_cortada[0]) {
+                    case "1": // registo
+                        //Aqui confirmam-se duplos e adicionam-se os registos na bd
+                        //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
+                        //insere_dados(mensagem_cortada, 1);
+                        if(!verifica_utilizador(mensagem_cortada[1])) { //caso o utilizador já exista nao adiciona a lista
+                            System.out.println("Utilzador nao existente");
+                            if (user.isEmpty()){
+                                user.add(new Utilizador(mensagem_cortada[1],mensagem_cortada[2]));
+                                user.get(0).setEditor(true);
                                 write_obj_user();
-                                pacote.setMessage(201);
-                                enviaServerRMI(pacote);
+                               // pacote.setMessage(201);
+                                enviaServerRMI("Utilizador criado com sucesso");
                                 break;
                             }
-                            System.out.println("Utilizador ja existente");
-                            pacote.setMessage(409);
-                            enviaServerRMI(pacote);
+                            //System.out.println("teste: "+pacote.getCliente().getUtilizador().getEditor());
+                            user.add(new Utilizador(mensagem_cortada[1],mensagem_cortada[2]));
+                            write_obj_user();
+                            //pacote.setMessage(201);
+                            enviaServerRMI("Utilizador criado com sucesso");
                             break;
-                        case 2: //login
-                            //aqui confirmam-se os dados do utilizador
-                            v_ut = verifica_utilizador(pacote.getCliente().getUtilizador());
-                            String msg;
-                            if (v_ut) { //verifica se o utilizador está na array list
-                                System.out.println("Utilizador Encontrado!");
-                                pacote.setMessage(202);
-                                enviaServerRMI(pacote);
-                            } else {
-                                System.out.println("Utilizador não encontrado!");
-                                pacote.setMessage(302);
-                                enviaServerRMI(pacote);
-                            }
-                            break;
-                        case 3: //dar permissao de editor a outro utilizador
-                            System.out.println("A encontrar user na base de dados");
-                            System.out.println("Username a dar permissao: "+pacote.getCliente().getUtilizador());
-                            Utilizador ut = encontraUtilizador(pacote.getCliente().getUtilizador());
-                            ut.setEditor(true);
-                            System.out.println("testePermissao:"+ut.getEditor());
-                            break;
+                        }
+                        System.out.println("Utilizador ja existente");
+                      //  pacote.setMessage(409);
+                        enviaServerRMI("Utilizador ja existente");
+                        break;
+                    case "2": //login
+                        //aqui confirmam-se os dados do utilizador
+                        v_ut = verifica_utilizador_login(mensagem_cortada[1],mensagem_cortada[2]);
+
+                        if (v_ut) { //verifica se o utilizador está na array list
+                            System.out.println("Utilizador Encontrado!");
+                          // pacote.setMessage(202);
+                            enviaServerRMI("Login bem sucedido!");
+                        } else {
+                            System.out.println("Utilizador não encontrado!");
+                           // pacote.setMessage(302);
+                            enviaServerRMI("Erro ao fazer login");
+                        }
+                        break;
+                    case "3": //dar permissao de editor a outro utilizador
+                        System.out.println("A encontrar user na base de dados");
+                        Utilizador ut = new Utilizador(mensagem_cortada[1], null);
+                       // System.out.println("Username a dar permissao: "+pacote.getCliente().getUtilizador());
+                        encontraUtilizadorEditor(ut);
+                        write_obj_user();
+                        break;
                     }
                 }
-            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -143,40 +139,45 @@ public class MulticastServer extends Thread implements Serializable {
         }
     }
 
-    public boolean verifica_utilizador(Utilizador u){ //verifica se o utilizador está na array list
+    public boolean verifica_utilizador_login(String username, String password){ //verifica se o utilizador está na array list
         for(Utilizador utilizador : user){
-            if(utilizador.getUsername().equals(u.getUsername()))
-                return true;
+            if(utilizador.getUsername().equals(username)){
+                if(utilizador.getPassword().equals((password))){
+                    return true;
+                }
+            }
         }
         return false;
     }
-
-    public Utilizador encontraUtilizador(Utilizador u){
-        for(int i=0;i<user.size();i++) {
-            if(user.get(i).getUsername().equals(u.getUsername())){
-                return user.get(i);
+    public boolean verifica_utilizador(String username){ //verifica se o utilizador está na array list
+        for(Utilizador utilizador : user){
+            if(utilizador.getUsername().equals(username)){
+                    return true;
+                }
             }
-        }
-        return null;
+        return false;
     }
 
-    public void enviaServerRMI(Pacote_datagram pacote) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
-            MulticastSocket socket=null;
+    public void encontraUtilizadorEditor(Utilizador u){
+        for(int i=0;i<user.size();i++) {
+            if(user.get(i).getUsername().equals(u.getUsername())){
+                user.get(i).setEditor(true);
+            }
+        }
+    }
+
+    public void enviaServerRMI(String message) {
+        MulticastSocket socket=null;
             try {
-                oos.writeObject(pacote);
-                oos.flush();
                 socket = new MulticastSocket();
-                byte[] buffer = bos.toByteArray();
+                byte[] buffer = message.getBytes();
                 socket.setLoopbackMode(true);//true quando envia
                 InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
                 //System.out.println("sending to rmi server: " + message);
                 TimeUnit.MILLISECONDS.sleep(75);
                 socket.send(packet);
-                System.out.println("Mensagem enviada msg: " + pacote.getMessage());
+                System.out.println("Mensagem enviada msg: " + message);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -185,9 +186,6 @@ public class MulticastServer extends Thread implements Serializable {
             } finally {
                 socket.close();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
     /*

@@ -25,6 +25,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         String server_ip = "localhost";
         int server_port = 7000;
         String name = "msg";
+        String txt;
         String codigo =null;
         Pacote_datagram pacote;
         //definir plicy
@@ -65,20 +66,21 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                     cliente = login_cliente(frase_chave_valor[1], frase_chave_valor[2]);
                     System.out.println("A enviar para servidor");
                     try {
-                        //txt = server_i.login(location_s, cliente);
-                        pacote =server_i.login(location_s, cliente);
-                        codigo = pacote.getMessage().get_Message(pacote.getMessage().getNumber());
+                        txt = server_i.login(location_s, cliente);
+                        System.out.println(txt);
+                        //pacote =server_i.login(location_s, cliente);
+                       // codigo = pacote.getMessage().get_Message(pacote.getMessage().getNumber());
                         //System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
                        // System.out.println("Devia ter enviado mensagem");
                        // System.out.println(codigo);
-                        System.out.println("TESTE: "+pacote.getCliente().getUtilizador().getEditor());
-                        if(codigo.equals("ACCEPTED") && !pacote.getCliente().getUtilizador().getEditor()){ //tipo de menu
-                            menu_login_normal();
-                        }
-                        else if(pacote.getCliente().getUtilizador().getEditor()){
-                            menu_login_editor(pacote);
-                       }else
-                            System.out.printf("codigo: "+codigo);
+                        //System.out.println("TESTE: "+pacote.getCliente().getUtilizador().getEditor());
+                       // if(codigo.equals("ACCEPTED") && !pacote.getCliente().getUtilizador().getEditor()){ //tipo de menu
+                            //menu_login_normal();
+                       // }
+                        //else if(pacote.getCliente().getUtilizador().getEditor()){
+                        menu_login_editor();
+                       //}else
+                            //System.out.printf("codigo: "+codigo);
                     }catch (IOException e) {
                        /* try {
                             pacote =server_i.login(location_s, cliente);
@@ -92,6 +94,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                         } catch (NotBoundException e1) {
                             e1.printStackTrace();
                         }*/
+                       e.printStackTrace();
                         break;
                     }
                     break;
@@ -189,12 +192,12 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         }
 
     }
-    public static void menu_login_editor(Pacote_datagram pacote) throws IOException {
+    public static void menu_login_editor() throws IOException {
         Scanner reader = new Scanner(System.in);
-        if( System.getProperty( "os.name" ).startsWith( "Window" ) )
+        /*if( System.getProperty( "os.name" ).startsWith( "Window" ) )
             Runtime.getRuntime().exec("cls");
         else
-            Runtime.getRuntime().exec("clear");
+            Runtime.getRuntime().exec("clear");*/
         System.out.println("-----------Menu de Editor-----------\n"
                 +"[1]Pesquisar música\n"
                 +"[2]Gerir artistas\n"
@@ -218,10 +221,10 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 break;
             case 4:
                 break;
-            case 5:
-                break;
-            case 6: // privilégios de editor
+            case 5: // privilégios de editor
                 escolheUser();
+                break;
+            case 6:
                 break;
             case 7:
                 break;
