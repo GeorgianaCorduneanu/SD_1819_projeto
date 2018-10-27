@@ -216,6 +216,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             Runtime.getRuntime().exec("cls");
         else
             Runtime.getRuntime().exec("clear");*/
+        Scanner sc = new Scanner(System.in);
         System.out.println("-----------Menu de Editor-----------\n"
                 +"[1]Pesquisar música\n"
                 +"[2]Gerir artistas\n"
@@ -230,19 +231,63 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 +"[11]Logout");
 
         int opcao = reader.nextInt();
+        int o;
         switch (opcao){
             case 1: //pesquisar musicas
                 System.out.println("A procurar musicas");
                 pesquisar_musicas(server_i);
                 break;
             case 2: //gerir artistas
-                inserir_artista(server_i);
+                System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar um artista");
+                o = sc.nextInt();
+                switch (o){
+                    case 1:
+                        inserir_artista(server_i);
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        elimina_artista(server_i);
+                        break;
+                    default:
+                        System.out.println("Introduza uma opção válida!");
+                        break;
+                }
+
                 break;
             case 3: ///gerir album
-                inserir_album(server_i);
+                System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar uma album");
+                o = sc.nextInt();
+                switch (o){
+                    case 1:
+                        inserir_album(server_i);
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        elimina_album(server_i);
+                        break;
+                    default:
+                        System.out.println("Introduza uma opção válida!");
+                        break;
+                }
                 break;
             case 4: //gerir musica
-                inserir_musica(server_i);
+                System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar uma musica");
+                o = sc.nextInt();
+                switch (o){
+                    case 1:
+                        inserir_musica(server_i);
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        elimina_musica(server_i);
+                        break;
+                    default:
+                        System.out.println("Introduza uma opção válida!");
+                        break;
+                }
                 break;
             case 5: // privilégios de editor
                 escolheUser();
@@ -318,7 +363,6 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
     private static void inserir_musica(ServerRMI_I s_i){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
-        Musica m;
         String frase;
         String mensagem;
         try {
@@ -330,8 +374,56 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private static void elimina_musica(ServerRMI_I s_i){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase;
+        String mensagem;
 
+        System.out.println("Qual o nome da música que pretende eliminar?");
+        try{
+            frase = reader.readLine();
+            mensagem = "8;" +frase;
 
+            s_i.enviaStringAoMulticast(mensagem);
+            System.out.println(s_i.recebe_multicast_socket());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void elimina_album(ServerRMI_I s_i){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase;
+        String mensagem;
+
+        System.out.println("Qual o nome do album que pretende eliminar?");
+        try{
+            frase = reader.readLine();
+            mensagem = "9;" +frase;
+            s_i.enviaStringAoMulticast(mensagem);
+            System.out.println(s_i.recebe_multicast_socket());
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+    private static void elimina_artista(ServerRMI_I s_i){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase;
+        String mensagem;
+
+        System.out.println("Qual o nome do artista que pretende eliminar?");
+        try{
+            frase = reader.readLine();
+            mensagem = "10;" +frase;
+            s_i.enviaStringAoMulticast(mensagem);
+            System.out.println(s_i.recebe_multicast_socket());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private static void consultar_album(){}
     private static void consultar_artista(){}

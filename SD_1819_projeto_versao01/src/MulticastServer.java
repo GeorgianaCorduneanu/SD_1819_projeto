@@ -52,18 +52,37 @@ public class MulticastServer extends Thread implements Serializable {
         //this.connection = getConnection(); //obter a conexão com a base de dados
         read_obj();
         if(!user.isEmpty()) {
-            for (Utilizador anUser : user) {
+            System.out.println("----USERS----");
+            /*for (Utilizador anUser : user) {
                 //if (anUser.getUsername().equals("gi"))
                   //  user.get(user.indexOf(anUser)).setEditor(true);
                 System.out.println("Utilizador: " + anUser.getUsername() + " | password: " + anUser.getPassword() + "| Editor: " + anUser.getEditor());
-            }
-           write_obj_user();
-            read_obj();
+            }*/
+            //write_obj_user();
+            //read_obj();
             for (Utilizador anUser : user) {
                 System.out.println("Utilizador: " + anUser.getUsername() + " | password: " + anUser.getPassword() + "| Editor: " + anUser.getEditor());
             }
         }
-        System.out.println("Listas vazias");
+        if(!lista_artistas.isEmpty()){
+            System.out.println("----ARTISTAS----");
+            for(Artista art: lista_artistas){
+                System.out.println("Nome Artista: "+ art.getNome_artista()+ "| compositor: "+ art.getCompositor() + "| Informacao: " + art.getInformacao());
+            }
+        }
+        if(!lista_musica.isEmpty()){
+            System.out.println("----MUSICAS----");
+            for(Musica m: lista_musica){
+                System.out.println("Nome musica: "+ m.getNome_musica()+ "| compositor: "+ m.getCompositor() + "| Duracao(min): " + m.getDuracao());
+            }
+        }
+        if(!lista_album.isEmpty()){
+            System.out.println("----ALBUNS----");
+            for(Album alb: lista_album){
+                System.out.println("Nome ALBUNS: "+ alb.getNome_album() + "| descricao: " + alb.getDescricao() + "| Data de Lançamento: " + alb.getData_lancamento());
+            }
+        }
+       // System.out.println("Listas vazias");
         try {
 
 
@@ -174,11 +193,35 @@ public class MulticastServer extends Thread implements Serializable {
                             enviaServerRMI("Album adicionado");
                         }else
                             enviaServerRMI("Album já existente");
+                        write_obj_user();
+                        break;
+                    case "8"://elimina uma musica
+                        System.out.println("A eliminar uma música da base de dadso");
+                        if(elimina_musica_list(mensagem_cortada[1])){
+                            enviaServerRMI("Musica eliminada");
+                        }else
+                            enviaServerRMI("Musica não encontrada");
+                        write_obj_user();
+                        break;
+                    case "9"://elimina album
+                        System.out.println("A eliminar um album da base de dados");
+                        if(elimina_album_list(mensagem_cortada[1])){
+                            enviaServerRMI("Album eliminado");
+                        }else
+                            enviaServerRMI("Album não encontrado");
+                        write_obj_user();
+                        break;
+                    case "10"://elimina artista
+                        System.out.println("A eliminar um artista da base de dados");
+                        if(elimina_artista_list(mensagem_cortada[1])){
+                            enviaServerRMI("Artista eliminado");
+                        }else
+                            enviaServerRMI("Artista não encontrado");
+                        write_obj_user();
                         break;
                     default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
                     }
-
                 }
 
         } catch (IOException e) {
@@ -221,6 +264,42 @@ public class MulticastServer extends Thread implements Serializable {
         Artista aux = new Artista(nome,compositor,descricao);
         lista_artistas.add(aux);
         return true;
+    }
+
+    private boolean elimina_musica_list(String nome){
+        int i=0;
+        for(Musica m: lista_musica){
+            if(m.getNome_musica().equals(nome)){
+                lista_musica.remove(i);
+                return true;
+            }
+
+            i++;
+        }
+        return  false;
+    }
+    private boolean elimina_album_list(String nome){
+        int i=0;
+        for(Album a: lista_album){
+            if(a.getNome_album().equals(nome)){
+                lista_album.remove(i);
+                return true;
+            }
+
+            i++;
+        }
+        return  false;
+    }
+    private boolean elimina_artista_list(String nome){
+        int i=0;
+        for(Artista a: lista_artistas){
+            if(a.getNome_artista().equals(nome)){
+                lista_artistas.remove(i);
+                return true;
+            }
+            i++;
+        }
+        return  false;
     }
 
     private void write_obj_user() {
