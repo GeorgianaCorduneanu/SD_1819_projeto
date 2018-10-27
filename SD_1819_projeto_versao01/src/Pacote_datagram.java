@@ -10,7 +10,6 @@ public class Pacote_datagram  implements Serializable {
     202 - accepted
     203 - non-authorised information
      */
-    Pacote_datagram(){}
 
     Pacote_datagram(int funcao, ClienteRMI_I cliente){
         this.funcao = funcao;
