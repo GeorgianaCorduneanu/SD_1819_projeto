@@ -22,8 +22,8 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
 
     public static void main(String args[]) throws RemoteException {
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
-        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setSecurityManager(new RMISecurityManager());
         //encontrar servio
         check_servidor();
@@ -270,9 +270,12 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
             socket.receive(packet);
             ByteArrayInputStream b_i = new ByteArrayInputStream(buffer);
             ObjectInputStream is = new ObjectInputStream(b_i);
-            lista_musica = (ArrayList<Musica>) is.readObject();
-            System.out.println("Recebeu do Multicast");
 
+            lista_musica = (ArrayList<Musica>) is.readObject();
+            //Musica musica = (Musica)is.readObject();
+//            System.out.println("MAIS UM TESTE"+is.readObject().getClass());
+            System.out.println("Recebeu do Multicast");
+            //lista_musica.add(musica);
             return lista_musica;
             //lista_musica = new String(packet.getData(), 0, packet.getLength());
         } catch (IOException e) {

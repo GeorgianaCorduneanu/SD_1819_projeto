@@ -1,3 +1,5 @@
+import com.sun.security.ntlm.Server;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,8 +32,8 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         String codigo =null;
         Pacote_datagram pacote;
         //definir plicy
-        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setProperty("java.rmi.server.hostname","192.168.56.1");
         System.setSecurityManager(new RMISecurityManager());
 
@@ -189,7 +191,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         int opcao = reader.nextInt();
         switch (opcao) {
             case 1:
-                escolheUser();
+
                 break;
             case 2:
                 break;
@@ -234,13 +236,13 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 pesquisar_musicas(server_i);
                 break;
             case 2: //gerir artistas
-                gerir_artista();
+                inserir_artista(server_i);
                 break;
-            case 3: ///gerir algum
-                gerir_album();
+            case 3: ///gerir album
+                inserir_album(server_i);
                 break;
             case 4: //gerir musica
-                gerir_musica(server_i);
+                inserir_musica(server_i);
                 break;
             case 5: // privilégios de editor
                 escolheUser();
@@ -283,9 +285,37 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         }
 
     }
-    private static void gerir_artista(){}
-    private static void gerir_album(){}
-    private static void gerir_musica(ServerRMI_I s_i){
+    private static void inserir_artista(ServerRMI_I s_i){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase;
+        String mensagem;
+        try {
+            System.out.println("Nome_Artista;Compositor(true/false);Informacao");
+            frase = reader.readLine();
+            mensagem = "6;"+frase;
+            s_i.enviaStringAoMulticast(mensagem);
+            System.out.println(s_i.recebe_multicast_socket());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void inserir_album(ServerRMI_I s_i){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String frase;
+        String mensagem;
+        try {
+            System.out.println("Nome_Album;Descricao;Data_Lancamento(dd/mm/aaaa)");
+            frase = reader.readLine();
+            mensagem = "7;"+frase;
+            s_i.enviaStringAoMulticast(mensagem);
+            System.out.println(s_i.recebe_multicast_socket());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void inserir_musica(ServerRMI_I s_i){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         Musica m;

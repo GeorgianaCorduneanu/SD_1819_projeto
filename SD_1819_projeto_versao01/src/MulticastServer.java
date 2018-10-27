@@ -37,19 +37,24 @@ public class MulticastServer extends Thread implements Serializable {
         String mensagem;
         Utilizador u;
         Utilizador v_ut;
+        ficheiro_utilizador = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin";
+        ficheiro_artista= "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\artista.bin";
+        ficheiro_album = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\album.bin";
+        ficheiro_musicas = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";
+        /*
         ficheiro_utilizador = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin";
         ficheiro_album = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\album.bin";
         ficheiro_artista = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\artista.bin";
         ficheiro_musicas = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";
-
+        */
        // write_obj_user();
 
         //this.connection = getConnection(); //obter a conexão com a base de dados
         read_obj();
         if(!user.isEmpty()) {
             for (Utilizador anUser : user) {
-                if (anUser.getUsername().equals("gi"))
-                    user.get(user.indexOf(anUser)).setEditor(true);
+                //if (anUser.getUsername().equals("gi"))
+                  //  user.get(user.indexOf(anUser)).setEditor(true);
                 System.out.println("Utilizador: " + anUser.getUsername() + " | password: " + anUser.getPassword() + "| Editor: " + anUser.getEditor());
             }
            write_obj_user();
@@ -150,6 +155,26 @@ public class MulticastServer extends Thread implements Serializable {
                             enviaServerRMI("Musica existente");
                         write_obj_user();
                         break;
+                    case "6"://inserir um artista
+                        System.out.println("A gravar utilizador na base de dados");
+                        boolean bol;
+                        if(mensagem_cortada[2].equals("true")||mensagem_cortada[2].equals("True")||mensagem_cortada[2].equals("TRUE")){
+                             bol = true;
+                        }else{ bol = false;}
+
+                        if(inserir_artista_lista(mensagem_cortada[1],bol,mensagem_cortada[3])){
+                            enviaServerRMI("Artista Adicionado");
+                        }else
+                            enviaServerRMI("Artista já existente");
+                        write_obj_user();
+                        break;
+                    case "7"://inserir um album
+                        System.out.println("A gravar album na base de dados");
+                        if(inserir_album_lista(mensagem_cortada[1],mensagem_cortada[2],mensagem_cortada[3])){
+                            enviaServerRMI("Album adicionado");
+                        }else
+                            enviaServerRMI("Album já existente");
+                        break;
                     default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
                     }
@@ -170,12 +195,34 @@ public class MulticastServer extends Thread implements Serializable {
                 System.out.println("Musica ja existente");
                 return false;
             }
-
         }
         Musica aux = new Musica(nome, compositor, duracao);
         lista_musica.add(aux);
         return true;
     }
+    private boolean inserir_album_lista(String nome,String descricao,String data){
+        for (Album a:lista_album) {
+            if(a.getNome_album().equals(nome) && a.getDescricao().equals(descricao) && a.getData_lancamento().equals(data)){
+                System.out.println("Musica ja existente");
+                return false;
+            }
+        }
+        Album aux = new Album(nome, descricao, data);
+        lista_album.add(aux);
+        return true;
+    }
+    private boolean inserir_artista_lista(String nome,boolean compositor ,String descricao){
+        for(Artista a: lista_artistas){
+            if(a.getInformacao().equals(descricao)&& a.getNome_artista().equals(nome)&& a.getCompositor()==compositor){
+                System.out.println("Artista já existente");
+                return false;
+            }
+        }
+        Artista aux = new Artista(nome,compositor,descricao);
+        lista_artistas.add(aux);
+        return true;
+    }
+
     private void write_obj_user() {
         try {
             FileOutputStream fos = new FileOutputStream(ficheiro_utilizador);
@@ -270,14 +317,14 @@ public class MulticastServer extends Thread implements Serializable {
                     System.out.println(lista_musica.get(0).getNome_musica());
                 }else if(fim>lista_musica.size() && lista_musica.size()!=0){
                     fim = lista_musica.size();
-                    sublista = new ArrayList<>(lista_musica.subList(inicio, fim-1));
+                    sublista = new ArrayList<>(lista_musica.subList(inicio, fim));
                     for (Musica m: sublista) {
                         System.out.println(m.getNome_musica() + " : " + m.getCompositor());
                     }
                     out.writeObject(sublista);
                 }
                 else{
-                    sublista = new ArrayList<>(lista_musica.subList(inicio, fim-1));
+                    sublista = new ArrayList<>(lista_musica.subList(inicio, fim));
                     out.writeObject(sublista);
                 }
                 byte [] buffer = b_a.toByteArray();
