@@ -106,7 +106,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                     System.out.println("Indique valor correto");
                     break;
             }
-        }while(frase_crua != ":/stop");
+        }while(!":/stop".equals(frase_crua));
     }
 
     public static ClienteRMI registar_cliente(String username, String passe){
