@@ -18,133 +18,100 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
     private static  String server_ip = "localhost";
     private static int server_port = 7000;
     private static String name = "msg";
+    private static String location_s = "rmi://" + server_ip + ":" + server_port + "/"+ name;
+
 
     private ClienteRMI() throws RemoteException {
         super();
     }
 
     public static void main(String args[]) throws IOException {
-        String frase_crua=null;  //variavel para guardar input
-        String frase_sem_espaco;
-        String [] frase_chave_valor = null; //array para guardar cada par chave valor
-        String location_s;
-        String txt;
-        String codigo =null;
-        Pacote_datagram pacote;
-
         //definir plicy
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
-        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setProperty("java.rmi.server.hostname","192.168.56.1");
         System.setSecurityManager(new RMISecurityManager());
-
-        //definir ip, porto do servidor e o nome
-        location_s = "rmi://" + server_ip + ":" + server_port + "/"+ name;
-
-        //ler o tipo de comando e valores
+        menu_inicial();
+    }
+    private static void menu_inicial() throws MalformedURLException {
+        Scanner sc = new Scanner(System.in);
+        String frase;
+        String[] frase_chave_valor;
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         //definir clienteRMI e interfaceservidor RMI
         ClienteRMI cliente;
         ServerRMI_I server_i = null;
-
-        try {
-            server_i = (ServerRMI_I) Naming.lookup(location_s);
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        }
+        int opcao=0;
 
 
         do {
-            //procurar o servidor a falar
-            System.out.println("*** Inserir Comando ***");
             try {
-                frase_crua = reader.readLine();
-                frase_sem_espaco = frase_crua.replace(" ","");
-                frase_chave_valor = frase_sem_espaco.split(";");
-            } catch (IOException e) {
+                server_i = (ServerRMI_I) Naming.lookup(location_s);
+                System.out.println("-----------Menu Inicial-----------\n"
+                        + "[1]Login\n"
+                        + "[2]Registar\n"
+                        + "[3]Sair\n");
+
+                opcao = sc.nextInt();
+                System.out.println("Nome Passe");
+                try {
+                    frase = reader.readLine();
+                    frase_chave_valor = frase.split(" ");
+                    switch (opcao) {
+                        case 1: //login
+                            login_cliente(frase_chave_valor[0], frase_chave_valor[1], server_i);
+                            //}else
+                            //System.out.printf("codigo: "+codigo);
+                            break;
+                        case 2://registar
+                            try {
+                                cliente = registar_cliente(frase_chave_valor[1], frase_chave_valor[2]);
+                                System.out.println("A enviar para servidor");
+                                server_i.subscribe(location_s,cliente);
+                                //  System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
+                                // System.out.println("Devia ter enviado mensagem");
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (NotBoundException | RemoteException e) {
                 e.printStackTrace();
             }
-            assert frase_chave_valor != null;
-            switch (frase_chave_valor[0]) {
-                case "login":
-                    cliente = login_cliente(frase_chave_valor[1], frase_chave_valor[2]);
-                    System.out.println("A enviar para servidor");
-                    try {
-                        assert server_i != null;
-                        //txt = server_i.login(location_s, cliente);
-                        pacote = server_i.login(location_s, cliente);
-                        System.out.println(pacote.getMessage().get_Message(pacote.getMessage().getNumber()));
-                        //pacote =server_i.login(location_s, cliente);
-                       // codigo = pacote.getMessage().get_Message(pacote.getMessage().getNumber());
-                        //System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
-                       // System.out.println("Devia ter enviado mensagem");
-                       // System.out.println(codigo);
-                        //System.out.println("TESTE: "+pacote.getCliente().getUtilizador().getEditor());
-                       // if(codigo.equals("ACCEPTED") && !pacote.getCliente().getUtilizador().getEditor()){ //tipo de menu
-                            //menu_login_normal();
-                       // }
-                        //else if(pacote.getCliente().getUtilizador().getEditor()){
-                        if(pacote.getMessage().getNumber() == 409){
-                            break;
-                        }
-                        cliente_corrente = pacote.getCliente().getUtilizador();
-                        System.out.println(pacote.getMessage().getNumber());
-                        System.out.println(cliente_corrente.getUsername() + " : " + cliente_corrente.getPassword() + " : " + cliente_corrente.getEditor());
-                        //check_editor();
-                        if(cliente_corrente.getEditor())
-                            menu_login_editor(server_i);
-                        else
-                            menu_login_normal(server_i);
-                       //}else
-                            //System.out.printf("codigo: "+codigo);
-                    }catch (IOException e) {
-                       /* try {
-                            pacote =server_i.login(location_s, cliente);
-                            codigo = pacote.getMessage().get_Message(pacote.getMessage().getNumber());
-                           // System.out.println(codigo);
-                            if(codigo.equals("ACCEPTED")){
-                                menu_login_normal();
-                            }
-                           // System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
-                          //  System.out.println("Devia ter enviado mensagem");
-                        } catch (NotBoundException e1) {
-                            e1.printStackTrace();
-                        }*/
-                       e.printStackTrace();
-                        break;
-                    }
-                    break;
-                case "registar":
-                    try {
-                        cliente = registar_cliente(frase_chave_valor[1], frase_chave_valor[2]);
-                        System.out.println("A enviar para servidor");
-                        try {
-                            assert server_i != null;
-                            server_i.subscribe(location_s, cliente);
-                          //  System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
-                           // System.out.println("Devia ter enviado mensagem");
-                        }catch (IOException e) {
-                            try {
-                                server_i = (ServerRMI_I) Naming.lookup(location_s);
-                                server_i.subscribe(location_s, cliente);
-                                System.out.println("Enviou!");
-                               // System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de confirmacao ou nao do multicast
 
-                            } catch (NotBoundException e1) {
-                                e1.printStackTrace();
-                            }
-                            break;
-                        }
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                default:
-                    System.out.println("Indique valor correto");
-                    break;
-            }
-        }while(!":/stop".equals(frase_crua));
+        }while(opcao != 0);
+    }
+    private static void login_cliente(String username, String passe, ServerRMI_I server_i){
+        ClienteRMI cliente = null;
+        System.out.println("*** Registar ***");
+        String msg;
+        String [] msg_split;
+        try {
+            cliente = new ClienteRMI();
+            cliente.cliente_corrente = new Utilizador(username, passe);
+            msg = server_i.login(location_s, cliente);
+            System.out.println("A enviar para servidor: " + msg);
+            msg_split = msg.split(";");
+            if(msg_split[msg_split.length-1].equals("true"))
+                cliente_corrente.setEditor(true);
+            else
+                cliente_corrente.setEditor(false);
+
+            if (cliente_corrente.getEditor())
+                menu_login_editor(server_i);
+            else
+                menu_login_normal(server_i);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println("username: " + cliente.getUtilizador().getUsername() + " : " + cliente.getUtilizador().getPassword());
     }
 
     private static ClienteRMI registar_cliente(String username, String passe){
@@ -152,63 +119,55 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         System.out.println("*** Registar ***");
         try {
             cliente = new ClienteRMI();
+            cliente.cliente_corrente = new Utilizador(username, passe);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        assert cliente != null;
-        cliente.cliente_corrente = new Utilizador(username, passe);
         //System.out.println("username: " + cliente.getUtilizador().getUsername() + " : " + cliente.getUtilizador().getPassword());
         return cliente;
     }
-
-    private static ClienteRMI login_cliente(String username, String passe) {
-        ClienteRMI cliente = null;
-        System.out.println("*** Login ***");
-        try {
-            cliente = new ClienteRMI();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        assert cliente != null;
-        cliente.cliente_corrente = new Utilizador(username, passe);
-        return cliente;
-    }
-    public static void menu_login_normal(ServerRMI_I server_i) throws IOException {
+    private static void menu_login_normal(ServerRMI_I server_i) throws IOException {
         Scanner reader = new Scanner(System.in);
        /* if( System.getProperty( "os.name" ).startsWith( "Window" ) )
             Runtime.getRuntime().exec("cls");
         else
             Runtime.getRuntime().exec("clear");
 */
-        System.out.println("-----------Menu-----------\n"
-                +"[1]Pesquisar música\n"
-                +"[2]Consultar detalhes album\n"
-                +"[3]Consultar detalhes artista\n"
-                +"[4]Upload de música\n"
-                +"[5]Download de música\n"
-                +"[6]Partilhar uma música\n"
-                +"[7]Logout");
+       int opcao;
+       do {
+           System.out.println("-----------Menu-----------\n"
+                   + "[1]Listar músicas\n"
+                   + "[2]Consultar detalhes album\n"
+                   + "[3]Consultar detalhes artista\n"
+                   + "[4]Upload de música\n"
+                   + "[5]Download de música\n"
+                   + "[6]Partilhar uma música\n"
+                   + "[7]Pesquisar uma musica\n"
+                   + "[0]Logout");
 
-        int opcao = reader.nextInt();
-        switch (opcao) {
-            case 1:
-
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            default:
-                System.out.println("Insira uma opção válida!");
-        }
+           opcao = reader.nextInt();
+           switch (opcao) {
+               case 1:
+                   break;
+               case 2: //consultar um album
+                   consultar_album();
+                   break;
+               case 3:
+                   break;
+               case 4:
+                   break;
+               case 5:
+                   break;
+               case 6:
+                   break;
+               case 7:
+                   break;
+               case 0:
+                   System.out.println("Logout");
+               default:
+                   System.out.println("Insira uma opção válida!");
+           }
+       }while (opcao != 0);
 
     }
     private static void menu_login_editor(ServerRMI_I server_i) throws IOException {
@@ -217,114 +176,120 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             Runtime.getRuntime().exec("cls");
         else
             Runtime.getRuntime().exec("clear");*/
+        int opcao;
         Scanner sc = new Scanner(System.in);
-        Scanner scan = new Scanner(System.in);
-        System.out.println("-----------Menu de Editor-----------\n"
-                +"[1]Pesquisar música\n"
-                +"[2]Gerir artistas\n"
-                +"[3]Gerir álbuns\n"
-                +"[4]Gerir músicas\n"
-                +"[5]Dar privilégios de editor a um utilizador\n"
-                +"[6]Consultar detalhes album\n"
-                +"[7]Consultar detalhes artista\n"
-                +"[8]Upload de música\n"
-                +"[9]Download de música\n"
-                +"[10]Partilhar uma música\n"
-                +"[11]Logout");
+        do {//manter o login aberto a nao ser que peça para sair
+            System.out.println("-----------Menu de Editor-----------\n"
+                    + "[1]Listar música\n"
+                    + "[2]Gerir artistas\n"
+                    + "[3]Gerir álbuns\n"
+                    + "[4]Gerir músicas\n"
+                    + "[5]Dar privilégios de editor a um utilizador\n"
+                    + "[6]Consultar detalhes album\n"
+                    + "[7]Consultar detalhes artista\n"
+                    + "[8]Upload de música\n"
+                    + "[9]Download de música\n"
+                    + "[10]Partilhar uma música\n"
+                    + "[11]Pesquisar uma musica\n"
+                    + "[0]Logout");
 
-        int opcao = reader.nextInt();
-        int o,op;
+            opcao = reader.nextInt();
+            int o, op;
 
-        switch (opcao){
-            case 1: //pesquisar musicas
-                System.out.println("A procurar musicas");
-                pesquisar_musicas(server_i);
-                break;
-            case 2: //gerir artistas
-                System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar um artista");
-                o = sc.nextInt();
-                switch (o){
-                    case 1:
-                        inserir_artista(server_i);
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        elimina_artista(server_i);
-                        break;
-                    default:
-                        System.out.println("Introduza uma opção válida!");
-                        break;
-                }
+            switch (opcao) {
+                case 1: //pesquisar musicas
+                    System.out.println("A procurar musicas");
+                    pesquisar_musicas(server_i);
+                    break;
+                case 2: //gerir artistas
+                    System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar um artista");
+                    o = sc.nextInt();
+                    switch (o) {
+                        case 1:
+                            inserir_artista(server_i);
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            elimina_artista(server_i);
+                            break;
+                        default:
+                            System.out.println("Introduza uma opção válida!");
+                            break;
+                    }
 
-                break;
-            case 3: ///gerir album
-                System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar uma album");
-                o = sc.nextInt();
-                switch (o){
-                    case 1:
-                        inserir_album(server_i);
-                        break;
-                    case 2:
-                        System.out.println("Pretende alterar a [1]descrição de um album ou [2]data de criação?\n");
-                        op = scan.nextInt();
-                        switch (op){
-                            case 1:
-                                editar_descricao_album(server_i,cliente_corrente.getUsername());
-                                break;
-                            case 2:
-                                editar_data_album(server_i,cliente_corrente.getUsername());
-                                break;
-                            default:
-                                System.out.printf("Insira uma opção válida!");
-                        }
+                    break;
+                case 3: ///gerir album
+                    System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar uma album");
+                    o = sc.nextInt();
+                    switch (o) {
+                        case 1:
+                            inserir_album(server_i);
+                            break;
+                        case 2:
+                            System.out.println("Pretende alterar a [1]descrição de um album ou [2]data de criação?\n");
+                            op = sc.nextInt();
+                            switch (op) {
+                                case 1:
+                                    editar_descricao_album(server_i, cliente_corrente.getUsername());
+                                    break;
+                                case 2:
+                                    editar_data_album(server_i, cliente_corrente.getUsername());
+                                    break;
+                                default:
+                                    System.out.printf("Insira uma opção válida!");
+                            }
 
-                        break;
-                    case 3:
-                        elimina_album(server_i);
-                        break;
-                    default:
-                        System.out.println("Introduza uma opção válida!");
-                        break;
-                }
-                break;
-            case 4: //gerir musica
-                System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar uma musica");
-                o = sc.nextInt();
-                switch (o){
-                    case 1:
-                        inserir_musica(server_i);
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        elimina_musica(server_i);
-                        break;
-                    default:
-                        System.out.println("Introduza uma opção válida!");
-                        break;
-                }
-                break;
-            case 5: // privilégios de editor
-                escolheUser();
-                break;
-            case 6: //detalhes do album
-                consultar_album();
-                break;
-            case 7: //detalhe artista
-                consultar_artista();
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-            case 11:
-                break;
-            default:
-                System.out.println("Insira uma opção válida!");
-        }
+                            break;
+                        case 3:
+                            elimina_album(server_i);
+                            break;
+                        default:
+                            System.out.println("Introduza uma opção válida!");
+                            break;
+                    }
+                    break;
+                case 4: //gerir musica
+                    System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar uma musica");
+                    o = sc.nextInt();
+                    switch (o) {
+                        case 1:
+                            inserir_musica(server_i);
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            elimina_musica(server_i);
+                            break;
+                        default:
+                            System.out.println("Introduza uma opção válida!");
+                            break;
+                    }
+                    break;
+                case 5: // privilégios de editor
+                    escolheUser();
+                    break;
+                case 6: //detalhes do album
+                    consultar_album();
+                    break;
+                case 7: //detalhe artista
+                    consultar_artista();
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
+                case 11:
+                    break;
+                case 0:
+                    System.out.println("Logout");
+                    break;
+                default:
+                    System.out.println("Insira uma opção válida!");
+            }
+        }while (opcao != 0);
     }
     private static void pesquisar_musicas(ServerRMI_I server_i){
         System.out.println("Dentro pesquisar musicas");

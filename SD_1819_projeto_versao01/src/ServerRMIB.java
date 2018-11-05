@@ -10,7 +10,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     private static String location_s;
     private static String server_ip = "localhost";
     private static int server_port = 7000;
-    private int multicast_port = 5000;
+    private int PORT = 5000;
     private static String MULTICAST_ADDRESS = "224.3.2.1";
     private static ClienteRMI_I cliente;
     private static String nome = "msg";
@@ -22,8 +22,8 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
 
     public static void main(String args[]) throws RemoteException {
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
-        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
-        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
+        System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setSecurityManager(new RMISecurityManager());
         //encontrar servio
         check_servidor();
@@ -124,7 +124,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
 
             socket.setLoopbackMode(true);//true quando envia
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
             socket.send(packet);
 
         } catch (IOException e) {
@@ -139,7 +139,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     }
 
     @Override
-    public Pacote_datagram login(String nome, ClienteRMI_I c_i) throws RemoteException {
+    public String login(String nome, ClienteRMI_I c_i) throws RemoteException {
         boolean check = true;
         Pacote_datagram pacote = null;
         MulticastSocket socket = null;
@@ -156,7 +156,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
 
                 socket.setLoopbackMode(true);//true quando envia
                 InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
                 socket.send(packet);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -169,31 +169,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
             e.printStackTrace();
         }
 
-
-        //c_i.check_login(check);
-        System.out.println("Antes de receber a mensagem");
-        String msg = recebe_multicast_socket();
-        System.out.println("Depois de receber a mensagem");
-        System.out.println("Mensagem enviada para login: " + msg);
-        msg_cortada = msg.split(";");
-        for (String item : msg_cortada) {
-            System.out.print("\t" + item);
-        }
-        if (msg.equals("Erro ao fazer login")) {
-            pacote = new Pacote_datagram(2, cliente);
-            pacote.setMessage(409);
-            return pacote;
-        } else if (msg_cortada[1].equals("true")) {
-            cliente.change_edir(true);
-            System.out.println("Estou em set a true " + cliente.getUtilizador().getEditor());
-            pacote = new Pacote_datagram(2, cliente);
-            pacote.setMessage(200);
-        } else if (msg_cortada[1].equals("false")) {
-            cliente.change_edir(false);
-            pacote = new Pacote_datagram(2, cliente);
-            pacote.setMessage(200);
-        }
-        return pacote;
+        return recebe_multicast_socket();
     }
 
     @Override
@@ -205,7 +181,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
             buffer = message.getBytes();
             socket.setLoopbackMode(true);//true quando envia
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicast_port);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
             TimeUnit.MILLISECONDS.sleep(75);
             socket.send(packet);
 
@@ -231,7 +207,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
         Pacote_datagram pacote = null;
         // while(true) {
         try {
-            socket = new MulticastSocket(multicast_port);
+            socket = new MulticastSocket(PORT);
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             socket.joinGroup(group);
             byte[] buffer = new byte[1024];
@@ -261,7 +237,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
         //c_i.check_login(check);
         System.out.println("Antes de receber a mensagem");
         try {
-            socket = new MulticastSocket(multicast_port);
+            socket = new MulticastSocket(PORT);
             InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
             socket.joinGroup(group);
             byte[] buffer = new byte[1024];
@@ -286,28 +262,6 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
             assert socket != null;
             socket.close();
         }
-        /*System.out.println("A enviar para cliente");
-        try {
-            System.out.println("Entrou em try");
-            socket = new MulticastSocket(multicast_port);
-            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
-            socket.joinGroup(group);
-            byte[] buffer = new byte[1024];
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-            socket.setLoopbackMode(false);//false quando recebe
-            socket.receive(packet);
-
-            ByteArrayInputStream b_i = new ByteArrayInputStream(buffer);
-            ObjectInputStream is = new ObjectInputStream(b_i);
-            lista_musica = (ArrayList<Musica>)is.readObject();
-
-            return null;
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Antes de enviar a musica");
-        return lista_musica;
-    }*/
         return lista_musica;
     }
 }
