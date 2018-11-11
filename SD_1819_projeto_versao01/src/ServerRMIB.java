@@ -106,10 +106,8 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     }*/
 
     @Override
-    public void subscribe(String nome, ClienteRMI_I c_i) throws RemoteException {
+    public String subscribe(String nome, ClienteRMI_I c_i) throws RemoteException {
         boolean check = true;
-        Pacote_datagram pacote;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         MulticastSocket socket = null;
 
         //mandar info a multicast buscar base de dados e adicionar registo
@@ -136,6 +134,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
         }
 
         //c_i.check_registar(check);
+        return recebe_multicast_socket();
     }
 
     @Override
@@ -204,7 +203,6 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     @Override
     public String recebe_multicast_socket() {
         MulticastSocket socket = null;
-        Pacote_datagram pacote = null;
         // while(true) {
         try {
             socket = new MulticastSocket(PORT);
@@ -226,6 +224,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
         }
         return null;
     }
+
 
     @Override
     public ArrayList<Musica> recebe_musicas(int inicio, int fim) throws RemoteException {

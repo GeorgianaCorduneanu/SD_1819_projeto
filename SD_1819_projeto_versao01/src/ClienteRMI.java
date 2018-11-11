@@ -12,13 +12,30 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/*Protocolo multicast
+ 1 - login
+ 2 - registo
+ 3 - dar permissoes
+ 4 - listar musicas
+ 5 - inserir uma musica
+ 6 - inserir um artista
+ 7 - inserir um album
+ 8 - eliminar uma musica
+ 9 - eliminar um album
+ 10 - eliminar artista
+ 11 - editar descricao
+ 12 - edirar data album
+ 13 - pesquisar uma musica
+ 14 - pesquisar album
+ 15 - pesquisar artista
+ */
 public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Serializable {
     private static Utilizador cliente_corrente;
     private static  String server_ip = "localhost";
     private static int server_port = 7000;
     private static String name = "msg";
     private static String location_s = "rmi://" + server_ip + ":" + server_port + "/"+ name;
+    private static ServerRMI_I server_i;
 
 
     private ClienteRMI() throws RemoteException {
@@ -41,7 +58,8 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         BufferedReader reader = new BufferedReader(input);
         //definir clienteRMI e interfaceservidor RMI
         ClienteRMI cliente;
-        ServerRMI_I server_i = null;
+        String mensagem;
+
         int opcao=0;
 
 
@@ -60,20 +78,13 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                     frase_chave_valor = frase.split(" ");
                     switch (opcao) {
                         case 1: //login
-                            login_cliente(frase_chave_valor[0], frase_chave_valor[1], server_i);
+                            login_cliente(frase_chave_valor[0], frase_chave_valor[1]);
                             //}else
                             //System.out.printf("codigo: "+codigo);
                             break;
                         case 2://registar
-                            try {
-                                cliente = registar_cliente(frase_chave_valor[1], frase_chave_valor[2]);
-                                System.out.println("A enviar para servidor");
-                                server_i.subscribe(location_s,cliente);
-                                //  System.out.println(server_i.recebe_multicast_socket()); //receber mensagem de multicast ou nao
-                                // System.out.println("Devia ter enviado mensagem");
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
+                            cliente = registar_cliente(frase_chave_valor[0], frase_chave_valor[1]);
+                            System.out.println("A enviar para servidor");
                             break;
                     }
                 } catch (IOException e) {
@@ -86,7 +97,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
 
         }while(opcao != 0);
     }
-    private static void login_cliente(String username, String passe, ServerRMI_I server_i){
+    private static void login_cliente(String username, String passe){
         ClienteRMI cliente = null;
         System.out.println("*** Registar ***");
         String msg;
@@ -103,9 +114,9 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 cliente_corrente.setEditor(false);
 
             if (cliente_corrente.getEditor())
-                menu_login_editor(server_i);
+                menu_login_editor();
             else
-                menu_login_normal(server_i);
+                menu_login_normal();
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -116,6 +127,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
 
     private static ClienteRMI registar_cliente(String username, String passe){
         ClienteRMI cliente = null;
+        String mensagem;
         System.out.println("*** Registar ***");
         try {
             cliente = new ClienteRMI();
@@ -123,10 +135,25 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        try {
+            mensagem = server_i.subscribe(location_s,cliente);
+            if(mensagem.equals("Utilizador ja existente")) {
+                System.out.println(mensagem);
+            }
+            else{
+                if(cliente_corrente.getEditor())
+                    menu_login_editor();
+                else
+                    menu_login_normal();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //System.out.println("username: " + cliente.getUtilizador().getUsername() + " : " + cliente.getUtilizador().getPassword());
         return cliente;
     }
-    private static void menu_login_normal(ServerRMI_I server_i) throws IOException {
+    private static void menu_login_normal() throws IOException {
         Scanner reader = new Scanner(System.in);
        /* if( System.getProperty( "os.name" ).startsWith( "Window" ) )
             Runtime.getRuntime().exec("cls");
@@ -170,7 +197,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
        }while (opcao != 0);
 
     }
-    private static void menu_login_editor(ServerRMI_I server_i) throws IOException {
+    private static void menu_login_editor() throws IOException {
         Scanner reader = new Scanner(System.in);
         /*if( System.getProperty( "os.name" ).startsWith( "Window" ) )
             Runtime.getRuntime().exec("cls");
@@ -197,21 +224,23 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             int o, op;
 
             switch (opcao) {
-                case 1: //pesquisar musicas
-                    System.out.println("A procurar musicas");
-                    pesquisar_musicas(server_i);
+                case 1: //listar as musicas
+                    System.out.println("A listar musicas");
+                    listar_musicas();
                     break;
                 case 2: //gerir artistas
-                    System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar um artista");
+                    System.out.println("Pretende [1]adicionar, [2]editar ou [3]eliminar um artista [0]Sair");
                     o = sc.nextInt();
                     switch (o) {
                         case 1:
-                            inserir_artista(server_i);
+                            inserir_artista();
                             break;
                         case 2:
                             break;
                         case 3:
-                            elimina_artista(server_i);
+                            elimina_artista();
+                            break;
+                        case 0:
                             break;
                         default:
                             System.out.println("Introduza uma opção válida!");
@@ -220,29 +249,28 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
 
                     break;
                 case 3: ///gerir album
-                    System.out.printf("Pretende [1]adicionar, [2]editar ou [3]eliminar uma album");
+                    System.out.println("Pretende [1]adicionar, [2]editar ou [3]eliminar uma album");
                     o = sc.nextInt();
                     switch (o) {
                         case 1:
-                            inserir_album(server_i);
+                            inserir_album();
                             break;
                         case 2:
                             System.out.println("Pretende alterar a [1]descrição de um album ou [2]data de criação?\n");
                             op = sc.nextInt();
                             switch (op) {
                                 case 1:
-                                    editar_descricao_album(server_i, cliente_corrente.getUsername());
+                                    editar_descricao_album(cliente_corrente.getUsername());
                                     break;
                                 case 2:
-                                    editar_data_album(server_i, cliente_corrente.getUsername());
+                                    editar_data_album(cliente_corrente.getUsername());
                                     break;
                                 default:
-                                    System.out.printf("Insira uma opção válida!");
+                                    System.out.println("Insira uma opção válida!");
                             }
-
                             break;
                         case 3:
-                            elimina_album(server_i);
+                            elimina_album();
                             break;
                         default:
                             System.out.println("Introduza uma opção válida!");
@@ -254,12 +282,12 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                     o = sc.nextInt();
                     switch (o) {
                         case 1:
-                            inserir_musica(server_i);
+                            inserir_musica();
                             break;
                         case 2:
                             break;
                         case 3:
-                            elimina_musica(server_i);
+                            elimina_musica();
                             break;
                         default:
                             System.out.println("Introduza uma opção válida!");
@@ -269,19 +297,20 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 case 5: // privilégios de editor
                     escolheUser();
                     break;
-                case 6: //detalhes do album
-                    consultar_album();
+                case 6: //detalhes do album numero 14
+                    pesquisar(14);
                     break;
-                case 7: //detalhe artista
-                    consultar_artista();
+                case 7: //detalhe artista numero 15
+                    pesquisar(15); /// a fazer
                     break;
-                case 8:
+                case 8: //upload de musica
                     break;
-                case 9:
+                case 9: //download de musica
                     break;
-                case 10:
+                case 10: //partilhar musica
                     break;
-                case 11:
+                case 11://pesquisar musica numero 13
+                    pesquisar(13);
                     break;
                 case 0:
                     System.out.println("Logout");
@@ -291,7 +320,24 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             }
         }while (opcao != 0);
     }
-    private static void pesquisar_musicas(ServerRMI_I server_i){
+    private static void pesquisar(int numero_protocolo){
+        InputStreamReader input = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(input);
+        String musica_pesquisar;
+        String mensagem;
+        System.out.println("Indique o nome a pesquisar: ");
+        try {
+            musica_pesquisar = reader.readLine();
+            musica_pesquisar = musica_pesquisar.toLowerCase(); //passar todos os caracteres para minusculos
+            mensagem = numero_protocolo + ";" + musica_pesquisar;
+            server_i.enviaStringAoMulticast(mensagem);  //enviar pedido de detalhe de uma musica
+
+            System.out.println(server_i.recebe_multicast_socket()); //receber info musica ou info erro
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void listar_musicas(){
         System.out.println("Dentro pesquisar musicas");
         ArrayList<Musica> lista_musica = null;
         try {
@@ -311,7 +357,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         }
 
     }
-    private static void inserir_artista(ServerRMI_I s_i){
+    private static void inserir_artista(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase;
@@ -320,13 +366,13 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             System.out.println("Nome_Artista;Compositor(true/false);Informacao");
             frase = reader.readLine();
             mensagem = "6;"+frase;
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private static void inserir_album(ServerRMI_I s_i){
+    private static void inserir_album(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase;
@@ -335,13 +381,13 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             System.out.println("Nome_Album;Descricao;Data_Lancamento(dd/mm/aaaa)");
             frase = reader.readLine();
             mensagem = "7;"+frase;
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private static void inserir_musica(ServerRMI_I s_i){
+    private static void inserir_musica(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase;
@@ -350,13 +396,13 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             System.out.println("Nome_Musica;Compositor;Duracao");
             frase = reader.readLine();
             mensagem = "5;"+frase;
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private static void editar_descricao_album(ServerRMI_I s_i, String username){
+    private static void editar_descricao_album(String username){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase,frase2;
@@ -370,15 +416,15 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             frase2= reader.readLine();
             mensagem = mensagem+";" + frase2;
             mensagem = mensagem+";" + username;
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void editar_data_album(ServerRMI_I s_i, String username){
+    private static void editar_data_album(String username){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase,frase2;
@@ -392,15 +438,15 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             frase2= reader.readLine();
             mensagem = mensagem+";" + frase2;
             mensagem = mensagem + ";" + username;
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void elimina_musica(ServerRMI_I s_i){
+    private static void elimina_musica(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase;
@@ -411,14 +457,14 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             frase = reader.readLine();
             mensagem = "8;" +frase;
 
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void elimina_album(ServerRMI_I s_i){
+    private static void elimina_album(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase;
@@ -428,14 +474,14 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         try{
             frase = reader.readLine();
             mensagem = "9;" +frase;
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
         } catch (IOException e) {
 
             e.printStackTrace();
         }
     }
-    private static void elimina_artista(ServerRMI_I s_i){
+    private static void elimina_artista(){
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         String frase;
@@ -445,13 +491,15 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         try{
             frase = reader.readLine();
             mensagem = "10;" +frase;
-            s_i.enviaStringAoMulticast(mensagem);
-            System.out.println(s_i.recebe_multicast_socket());
+            server_i.enviaStringAoMulticast(mensagem);
+            System.out.println(server_i.recebe_multicast_socket());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private static void consultar_album(){}
+    private static void consultar_album(){
+
+    }
     private static void consultar_artista(){}
 
     private static void escolheUser() throws RemoteException {

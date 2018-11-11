@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.operations.Mult;
+
 import java.io.*;
 import java.net.MulticastSocket;
 import java.net.DatagramPacket;
@@ -97,7 +99,6 @@ public class MulticastServer extends Thread implements Serializable {
                 System.out.println("Waiting to receive...");
                 socket.receive(packet);
 
-                ByteArrayInputStream in = new ByteArrayInputStream(packet.getData(), 0, packet.getLength());
                 System.out.println(packet.getLength());
                 String message = new String(packet.getData(), 0, packet.getLength());
                 System.out.println("Recebeu a mensagem: " + message);
@@ -109,29 +110,19 @@ public class MulticastServer extends Thread implements Serializable {
                         //Aqui confirmam-se duplos e adicionam-se os registos na bd
                         //inserir dados -> insere_dados(String[] mensagem, int numeto_tabela) type void
                         //insere_dados(mensagem_cortada, 1);
-                        /*if(!verifica_utilizador(mensagem_cortada[1])) { //caso o utilizador já exista nao adiciona a lista
-                            System.out.println("Utilzador nao existente");
-                            if (user.isEmpty())
-                                u.setEditor(true);
-
-                            //System.out.println("teste: "+pacote.getCliente().getUtilizador().getEditor());
-                            user.add(u);
-                            write_obj_user();
-                            //pacote.setMessage(201);
-                            enviaServerRMI("Utilizador criado com sucesso");
-                            break;
-                        }*/
-                        if (user.isEmpty()) {
+                        if (user.isEmpty()) {  //caso a lista esteja vazia
                             u = new Utilizador(u.getUsername(), u.getPassword(), true);
                             user.add(u);
                             write_obj_user();
                             break;
-                        } else if (!user.isEmpty()) {
-                            if (!verifica_utilizador(mensagem_cortada[1]))
+                        } else if(!verifica_utilizador(mensagem_cortada[1])) //caso nao encontre o utilizado
+                            {
                                 user.add(u);
-                            write_obj_user();
-                            break;
-                        }
+                                write_obj_user();
+                                enviaServerRMI("Utilizador nao existente");
+                                break;
+                            }
+
                         System.out.println("Utilizador ja existente");
                         //  pacote.setMessage(409);
                         enviaServerRMI("Utilizador ja existente");
@@ -159,7 +150,7 @@ public class MulticastServer extends Thread implements Serializable {
                         encontraUtilizadorEditor(ut);
                         write_obj_user();
                         break;
-                    case "4":  //pesquisar musicas
+                    case "4":  //listar musicas
                         System.out.println("A encontrar musicas na base de dados");
                         if (lista_musica.isEmpty()) {
                             enviaServerRMI("Nao existem musicas");
@@ -178,11 +169,7 @@ public class MulticastServer extends Thread implements Serializable {
                     case "6"://inserir um artista
                         System.out.println("A gravar utilizador na base de dados");
                         boolean bol;
-                        if (mensagem_cortada[2].equals("true") || mensagem_cortada[2].equals("True") || mensagem_cortada[2].equals("TRUE")) {
-                            bol = true;
-                        } else {
-                            bol = false;
-                        }
+                        bol = mensagem_cortada[2].equals("true") || mensagem_cortada[2].equals("True") || mensagem_cortada[2].equals("TRUE");
 
                         if (inserir_artista_lista(mensagem_cortada[1], bol, mensagem_cortada[3])) {
                             enviaServerRMI("Artista Adicionado");
@@ -236,6 +223,13 @@ public class MulticastServer extends Thread implements Serializable {
                             enviaServerRMI("Upps algo errado!");
                         write_obj_user();
                         break;
+                    case "13"://pesquisar uma musica
+                        enviaServerRMI(pesquisar(13,mensagem_cortada[1]));
+                        break;
+                    case "14": //pesquisar album
+                        enviaServerRMI(pesquisar(14, mensagem_cortada[1]));
+                    case "15":
+                        enviaServerRMI(pesquisar(15, mensagem_cortada[1]));
                     default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
                 }
@@ -250,6 +244,34 @@ public class MulticastServer extends Thread implements Serializable {
         }
     }
 
+    private String pesquisar(int protocolo, String nome){
+        String mensagem_erro= null;
+        switch (protocolo) {
+            case 13: //para musica
+                for (Musica item : lista_musica) {
+                    if (item.getNome_musica().toLowerCase().equals(nome)) //pesquisar nome em minusculo
+                        return item.getNome_musica() + " -> " + item.getCompositor() + " : " + item.getDuracao();
+                }
+                mensagem_erro =  "Musica inexistente";
+                break;
+            case 14: //para album
+                for(Album item:lista_album){
+                    if(item.getNome_album().toLowerCase().equals(nome))
+                        return item.getNome_album() + " -> " + item.getData_lancamento() + " : " + item.getDescricao();
+                }
+                mensagem_erro =  "Album inexistente";
+                break;
+            case 15: //para artista
+                for(Artista item:lista_artistas){
+                    if(item.getNome_artista().toLowerCase().equals(nome))
+                        return item.getNome_artista() + " -> " + item.getCompositor() + " : " + item.getInformacao();
+                }
+                mensagem_erro = "Artista inexistente";
+                default:
+                    break;
+        }
+        return mensagem_erro;
+    }
     private boolean inserir_musica_lista(String nome, String compositor, String duracao) {
         for (Musica m : lista_musica) {
             if (m.getCompositor().equals(compositor) && m.getNome_musica().equals(nome)) {
@@ -417,8 +439,7 @@ public class MulticastServer extends Thread implements Serializable {
             }
         }
 
-        private Utilizador verifica_utilizador_login (String username, String password)
-        { //verifica se o utilizador está na array list
+        private Utilizador verifica_utilizador_login (String username, String password) { //verifica se o utilizador está na array list
             for (Utilizador utilizador : user) {
                 if (utilizador.getUsername().equals(username) && utilizador.getPassword().equals(password)) {
                     return utilizador;
