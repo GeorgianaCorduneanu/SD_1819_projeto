@@ -1,5 +1,3 @@
-import com.sun.security.ntlm.Server;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -113,10 +111,14 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             else
                 cliente_corrente.setEditor(false);
 
-            if (cliente_corrente.getEditor())
+            server_i.addClienteOnline(cliente);
+
+            if (cliente_corrente.getEditor()) {
                 menu_login_editor();
-            else
+            }
+            else {
                 menu_login_normal();
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -141,10 +143,12 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 System.out.println(mensagem);
             }
             else{
-                if(cliente_corrente.getEditor())
+                server_i.addClienteOnline(cliente);
+                if(cliente_corrente.getEditor()){
                     menu_login_editor();
-                else
-                    menu_login_normal();
+                }
+                else{
+                    menu_login_normal();}
             }
 
         } catch (IOException e) {
@@ -177,7 +181,6 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                case 1:
                    break;
                case 2: //consultar um album
-                   consultar_album();
                    break;
                case 3:
                    break;
@@ -497,17 +500,13 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             e.printStackTrace();
         }
     }
-    private static void consultar_album(){
-
-    }
-    private static void consultar_artista(){}
 
     private static void escolheUser() throws RemoteException {
         Utilizador user;
         Scanner scanner = new Scanner(System.in);
         String nome;
         String mensagem;
-        int n =1;// numero chave que diz ao metodo envia que é para enviar o nome
+        int opcao;
         String location_s = "rmi://" + server_ip + ":" + server_port + "/"+ name;
         ServerRMI_I server_i = null;
         try {
@@ -519,13 +518,31 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
-
-        System.out.println("Qual o username do utilizador?");
-        nome = scanner.nextLine();
-        mensagem = "3;"+nome;
+        System.out.println("[0] Retirar privilegios [1] Dar privilegios [2] Sair");
+        opcao = scanner.nextInt();
+        if(opcao == 2)
+            return;
+        if(opcao == 1 || opcao == 0) {
+            scanner.nextLine();
+            System.out.println("Qual o username do utilizador?");
+            nome = scanner.nextLine();
+            mensagem = "3;" + nome + ";" + opcao;
+        }
+        else{
+            System.out.println("Opcao errada");
+            return;
+        }
         assert server_i != null;
         server_i.enviaStringAoMulticast(mensagem);
+
+        mensagem = server_i.recebe_multicast_socket();
+        if(mensagem.equals("Feito")){
+            System.out.println("Opcao para mensagem " + opcao);
+            if(opcao == 1)
+                server_i.notifica_cliente(nome, "NOTIFICACAO: Recebeu privilegios de editor de " + cliente_corrente.getUsername());
+            else if(opcao == 0)
+                server_i.notifica_cliente(nome, "NOTIFICACAO: Foram retirados os privilegios de editor de " + cliente_corrente.getUsername());
+        }
 
     }
     @Override
@@ -555,6 +572,11 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
     @Override
     public void change_edir(boolean b) throws RemoteException {
         cliente_corrente.setEditor(b);
+    }
+
+    @Override
+    public void notificacao(String mensagem) throws RemoteException {
+        System.out.println(mensagem);
     }
 
 }

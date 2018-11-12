@@ -146,8 +146,10 @@ public class MulticastServer extends Thread implements Serializable {
                     case "3": //dar permissao de editor a outro utilizador
                         System.out.println("A encontrar user na base de dados");
                         Utilizador ut = new Utilizador(mensagem_cortada[1], null);
-                        // System.out.println("Username a dar permissao: "+pacote.getCliente().getUtilizador());
-                        encontraUtilizadorEditor(ut);
+                        if(encontraUtilizadorEditor(ut, mensagem_cortada[2]))
+                            enviaServerRMI("Feito");
+                        else
+                            enviaServerRMI("Nao feito");
                         write_obj_user();
                         break;
                     case "4":  //listar musicas
@@ -245,32 +247,32 @@ public class MulticastServer extends Thread implements Serializable {
     }
 
     private String pesquisar(int protocolo, String nome){
-        String mensagem_erro= null;
-        switch (protocolo) {
-            case 13: //para musica
-                for (Musica item : lista_musica) {
-                    if (item.getNome_musica().toLowerCase().equals(nome)) //pesquisar nome em minusculo
-                        return item.getNome_musica() + " -> " + item.getCompositor() + " : " + item.getDuracao();
-                }
-                mensagem_erro =  "Musica inexistente";
-                break;
-            case 14: //para album
-                for(Album item:lista_album){
-                    if(item.getNome_album().toLowerCase().equals(nome))
-                        return item.getNome_album() + " -> " + item.getData_lancamento() + " : " + item.getDescricao();
-                }
-                mensagem_erro =  "Album inexistente";
-                break;
-            case 15: //para artista
-                for(Artista item:lista_artistas){
-                    if(item.getNome_artista().toLowerCase().equals(nome))
-                        return item.getNome_artista() + " -> " + item.getCompositor() + " : " + item.getInformacao();
-                }
-                mensagem_erro = "Artista inexistente";
+            String mensagem_erro= null;
+            switch (protocolo) {
+                case 13: //para musica
+                    for (Musica item : lista_musica) {
+                        if (item.getNome_musica().toLowerCase().equals(nome)) //pesquisar nome em minusculo
+                            return item.getNome_musica() + " -> " + item.getCompositor() + " : " + item.getDuracao();
+                    }
+                    mensagem_erro =  "Musica inexistente";
+                    break;
+                case 14: //para album
+                    for(Album item:lista_album){
+                        if(item.getNome_album().toLowerCase().equals(nome))
+                            return item.getNome_album() + " -> " + item.getData_lancamento() + " : " + item.getDescricao();
+                    }
+                    mensagem_erro =  "Album inexistente";
+                    break;
+                case 15: //para artista
+                    for(Artista item:lista_artistas){
+                        if(item.getNome_artista().toLowerCase().equals(nome))
+                            return item.getNome_artista() + " -> " + item.getCompositor() + " : " + item.getInformacao();
+                    }
+                    mensagem_erro = "Artista inexistente";
                 default:
                     break;
-        }
-        return mensagem_erro;
+            }
+            return mensagem_erro;
     }
     private boolean inserir_musica_lista(String nome, String compositor, String duracao) {
         for (Musica m : lista_musica) {
@@ -456,12 +458,17 @@ public class MulticastServer extends Thread implements Serializable {
             return false;
         }
 
-        private void encontraUtilizadorEditor (Utilizador u){
+        private boolean encontraUtilizadorEditor (Utilizador u, String privilegio){
             for (Utilizador anUser : user) {
                 if (anUser.getUsername().equals(u.getUsername())) {
-                    anUser.setEditor(true);
+                    if(privilegio.equals("1"))
+                       anUser.setEditor(true);
+                    else
+                        anUser.setEditor(false);
+                    return true;
                 }
             }
+            return false;
         }
         private void envia_musicas_server_RMI ( int inicio, int fim){
             MulticastSocket socket = null;

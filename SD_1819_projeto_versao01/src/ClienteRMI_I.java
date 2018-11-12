@@ -8,4 +8,5 @@ public interface ClienteRMI_I extends Remote {
     void check_registar(boolean b) throws RemoteException;
     void check_login(boolean b) throws RemoteException;
     void change_edir(boolean b) throws RemoteException;
+    void notificacao(String mensagem) throws RemoteException;
 }

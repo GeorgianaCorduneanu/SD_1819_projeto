@@ -14,6 +14,7 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     private static String MULTICAST_ADDRESS = "224.3.2.1";
     private static ClienteRMI_I cliente;
     private static String nome = "msg";
+    private static ArrayList<ClienteRMI_I> lista_clientes_online;
 
 
     private ServerRMIB() throws RemoteException {
@@ -21,16 +22,15 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
     }
 
     public static void main(String args[]) throws RemoteException {
+        lista_clientes_online = new ArrayList<>();
         location_s = "rmi://" + server_ip + ":" + server_port + "/" + nome;
         //System.getProperties().put("java.security.policy", "file:\\C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.getProperties().put("java.security.policy", "file:\\C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\src\\policy.all");
         System.setSecurityManager(new RMISecurityManager());
         //encontrar servio
         check_servidor();
-
         //para escrever no cliente
         write_on_server();
-
     }
 
     private static void imprime(String a, String ip, int port) {
@@ -262,5 +262,40 @@ public class ServerRMIB extends UnicastRemoteObject implements ServerRMI_I, Seri
             socket.close();
         }
         return lista_musica;
+    }
+
+    @Override
+    public void addClienteOnline(ClienteRMI_I c_i) throws RemoteException {
+        if(lista_clientes_online.isEmpty()){
+            lista_clientes_online.add(c_i);
+            return;
+        }
+        for (ClienteRMI_I item : lista_clientes_online) {
+            System.out.println(item.getUtilizador().getUsername());
+            if (item.getUtilizador().getUsername().equals(c_i.getUtilizador().getUsername()))
+                return;
+
+        }
+        lista_clientes_online.add(c_i);
+
+    }
+
+    @Override
+    public ArrayList<ClienteRMI_I> clientes_online() throws RemoteException {
+        return lista_clientes_online;
+    }
+
+    @Override
+    public void notifica_cliente(String nome, String mensagem) throws RemoteException {
+        for(ClienteRMI_I item:lista_clientes_online){
+            System.out.println(item.getUtilizador().getUsername());
+        }
+        for(int i=0 ; i<lista_clientes_online.size() ; i++){
+            if(lista_clientes_online.get(i).getUtilizador().getUsername().toLowerCase().equals(nome.toLowerCase())) {
+                lista_clientes_online.get(i).notificacao(mensagem);
+                System.out.println("Enviou notificacao");
+                return;
+            }
+        }
     }
 }
