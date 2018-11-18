@@ -97,7 +97,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
     }
     private static void login_cliente(String username, String passe){
         ClienteRMI cliente = null;
-        System.out.println("*** Registar ***");
+        System.out.println("*** Login ***");
         String msg;
         String [] msg_split;
         try {
@@ -108,6 +108,10 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
             msg_split = msg.split(";");
             if(msg_split[msg_split.length-1].equals("true"))
                 cliente_corrente.setEditor(true);
+            else if(msg.equals("Erro ao fazer login")) {
+                System.out.println(msg);
+                return;
+            }
             else
                 cliente_corrente.setEditor(false);
 
@@ -179,18 +183,19 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
            opcao = reader.nextInt();
            switch (opcao) {
                case 1:
+                   listar_musicas();
                    break;
                case 2: //consultar um album
                    break;
-               case 3:
+               case 3: //consultar artista
                    break;
-               case 4:
+               case 4: //upload de musica
                    break;
-               case 5:
+               case 5: //download de musica
                    break;
-               case 6:
+               case 6: //partilhar musica
                    break;
-               case 7:
+               case 7: //pesquisar musica
                    break;
                case 0:
                    System.out.println("Logout");
