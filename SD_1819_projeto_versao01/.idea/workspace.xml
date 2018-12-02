@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9035676a-9cf2-4c1d-a147-f96166bf0d81" name="Default Changelist" comment="" />
+    <list default="true" id="9035676a-9cf2-4c1d-a147-f96166bf0d81" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/SD_1819_projeto_meta2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/SD_1819_projeto_meta2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/action/login_action.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/model/login_bean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/struts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/struts.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/ClienteRMI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/ClienteRMI.class" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,13 +77,13 @@
           <entry key="project.open.time.60" value="1" />
           <entry key="project.open.time.61" value="1" />
           <entry key="project.open.time.68" value="1" />
-          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.70" value="1" />
           <entry key="project.open.time.82" value="1" />
           <entry key="project.open.time.86" value="1" />
           <entry key="project.open.time.9" value="1" />
           <entry key="project.open.time.97" value="1" />
-          <entry key="project.opened" value="33" />
+          <entry key="project.opened" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -142,7 +150,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1360">
+            <state relative-caret-position="568">
               <caret line="279" selection-start-line="279" selection-end-line="279" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -162,10 +170,9 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="187" column="43" selection-start-line="187" selection-start-column="43" selection-end-line="187" selection-end-column="43" />
+            <state>
+              <caret line="50" column="68" selection-start-line="50" selection-start-column="68" selection-end-line="50" selection-end-column="68" />
               <folding>
-                <element signature="method#menu_inicial#0;class#ClienteRMI#0" />
                 <element signature="method#login_cliente#0;class#ClienteRMI#0" />
                 <element signature="method#registar_cliente#0;class#ClienteRMI#0" />
                 <element signature="method#pesquisar#0;class#ClienteRMI#0" />
@@ -270,10 +277,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="295" />
-    <option name="y" value="159" />
-    <option name="width" value="878" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="676" />
+    <option name="width" value="697" />
     <option name="height" value="775" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -282,8 +288,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -320,6 +324,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -421,16 +427,17 @@
       <workItem from="1542125831895" duration="283000" />
       <workItem from="1542294873092" duration="596000" />
       <workItem from="1542313828986" duration="82000" />
+      <workItem from="1543752361446" duration="645000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116768000" />
+    <option name="totallyTimeSpent" value="117413000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22163388" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2246596" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -440,7 +447,7 @@
       <window_info anchor="bottom" id="Inspection Results" order="0" weight="0.32923076" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.29692307" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.3846154" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.3846154" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -567,24 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="279" selection-start-line="279" selection-end-line="279" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#imprime#0;class#ServerRMIB#0" />
-            <element signature="method#check_servidor#0;class#ServerRMIB#0" />
-            <element signature="method#write_on_server#0;class#ServerRMIB#0" />
-            <element signature="method#subscribe#0;class#ServerRMIB#0" />
-            <element signature="method#login#0;class#ServerRMIB#0" />
-            <element signature="method#enviaStringAoMulticast#0;class#ServerRMIB#0" />
-            <element signature="method#recebe_multicast_socket#0;class#ServerRMIB#0" />
-            <element signature="method#recebe_musicas#0;class#ServerRMIB#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerRMI_I.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -602,12 +591,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ServerRMIB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="279" selection-start-line="279" selection-end-line="279" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#imprime#0;class#ServerRMIB#0" />
+            <element signature="method#check_servidor#0;class#ServerRMIB#0" />
+            <element signature="method#write_on_server#0;class#ServerRMIB#0" />
+            <element signature="method#subscribe#0;class#ServerRMIB#0" />
+            <element signature="method#login#0;class#ServerRMIB#0" />
+            <element signature="method#enviaStringAoMulticast#0;class#ServerRMIB#0" />
+            <element signature="method#recebe_multicast_socket#0;class#ServerRMIB#0" />
+            <element signature="method#recebe_musicas#0;class#ServerRMIB#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="187" column="43" selection-start-line="187" selection-start-column="43" selection-end-line="187" selection-end-column="43" />
+        <state>
+          <caret line="50" column="68" selection-start-line="50" selection-start-column="68" selection-end-line="50" selection-end-column="68" />
           <folding>
-            <element signature="method#menu_inicial#0;class#ClienteRMI#0" />
             <element signature="method#login_cliente#0;class#ClienteRMI#0" />
             <element signature="method#registar_cliente#0;class#ClienteRMI#0" />
             <element signature="method#pesquisar#0;class#ClienteRMI#0" />
