@@ -1,6 +1,6 @@
 package menu_inicial.model;
 
-import menu_inicial.RMIServerInterface.ServerRMI_I;
+import menu_inicial.RMIServerInterface.RMIServerInterface;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -9,13 +9,15 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class Login_bean {
-    private ServerRMI_I server;
+    private RMIServerInterface server;
     private String username; // username and password supplied by the user
     private String password;
+    private String location_s;
 
     public Login_bean() {
+        location_s = "rmi://localhost:7000/server";
         try {
-            server = (ServerRMI_I) Naming.lookup("server");
+            server = (RMIServerInterface) Naming.lookup(location_s);
         }
         catch(NotBoundException|MalformedURLException|RemoteException e) {
             e.printStackTrace(); // what happens *after* we reach this line?

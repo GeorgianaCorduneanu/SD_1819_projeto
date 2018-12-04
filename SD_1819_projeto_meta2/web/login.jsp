@@ -14,7 +14,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Login</title>
+    <title>Login_Login</title>
 </head>
 <body>
     <c:choose>
@@ -26,14 +26,14 @@
         </c:otherwise>
     </c:choose>
 
-    <c:forEach items="${heyBean.allUsers}" var="value">
+    <c:forEach items="${login_bean.allUsers}" var="value">
         <c:out value="${value}" /><br>
     </c:forEach>
 
 <p><a href="<s:url action="index" />">Start</a></p>
 
 
-<c:forEach items="${primesBean.primes}" var="value">
+<c:forEach items="${login_bean.login}" var="value">
         <c:out value="${value}" /><br>
     </c:forEach>
 

@@ -14,15 +14,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Login_Index</title>
   </head>
   <body>
       <s:form action="login" method="post">
-          <s:text name="Username:" />
+          <s:text name="username" />
           <s:textfield name="username" /><br>
-          <s:text name="Password" /><br>
-          <s:textfield password="password"/><br>
+          <s:text name="password"/>
+          <s:password name="password" /><br>
           <s:submit />
       </s:form>
+
   </body>
 </html>
