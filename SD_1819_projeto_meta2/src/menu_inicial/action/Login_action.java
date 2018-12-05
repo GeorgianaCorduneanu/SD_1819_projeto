@@ -31,9 +31,9 @@ public class Login_action extends ActionSupport implements SessionAware {
         }
         else {
             System.out.println("nao encontrou");
-            return LOGIN;
+            return "insuccess";
         }
-        return LOGIN;
+        return "insuccess";
     }
 
     public void setUsername(String username) {
@@ -60,3 +60,12 @@ public class Login_action extends ActionSupport implements SessionAware {
         this.session = session;
     }
 }
+/*
+
+    <c:forEach items="${login_bean.login}" var="value">
+        <c:out value="${value}" /><br>
+        <jsp:useBean id="login_bean" scope="request" type="menu_inicial.model.Login_bean"/>
+    <c:forEach items="${login_bean.allUsers}" var="value">
+        <c:out value="${value}" /><br>
+    </c:forEach>
+    */

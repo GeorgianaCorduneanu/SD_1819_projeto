@@ -5,7 +5,7 @@
   Time: 11:23
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%--<%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <!--%@ page contentType="text/html;charset=UTF-8" language="java" % -->
@@ -26,4 +26,26 @@
       </s:form>
 
   </body>
+</html>--%>
+<%--
+  Created by IntelliJ IDEA.
+  User: ginjo
+  Date: 05/12/2018
+  Time: 02:57
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Menu Login Registo</title>
+</head>
+<body>
+    <s:form action="menu_registo" method="post">
+        <s:submit type="button" name="registo" label="REGISTO"/><br>
+        <s:submit type="button" name="login" label="LOGIN" action="menu_login"/><br>
+    </s:form>
+
+</body>
 </html>
+

@@ -12,10 +12,9 @@ public class Login_bean {
     private RMIServerInterface server;
     private String username; // username and password supplied by the user
     private String password;
-    private String location_s;
 
     public Login_bean() {
-        location_s = "rmi://localhost:7000/server";
+        String location_s = "rmi://localhost:7000/server";
         try {
             server = (RMIServerInterface) Naming.lookup(location_s);
         }

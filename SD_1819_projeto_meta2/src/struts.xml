@@ -6,10 +6,11 @@
 
 <struts>
     <!-- devMode equals debug information and reload everything for every request -->
-    <constant name="struts.devMode" value="true" />
+    <constant name="struts.devMode" value="false" />
     <constant name="struts.ui.theme" value="simple" />
 
     <package name="menu_inicial" extends="struts-default">
+
         <default-action-ref name="index" />
 
         <global-results>
@@ -23,7 +24,18 @@
 
         <action name="login" class="menu_inicial.action.Login_action" method="execute">
             <result name="success">/login.jsp</result>
-            <result name="login">/index.jsp</result>
+            <result name="insuccess">/menu_login_registo.jsp</result>
+        </action>
+       <!--<action name="menu_registo_login" class="menu_inicial.action.Menu_1_action" method="execute">
+            <result name="registo">index.jsp</result>
+            <result name="login">/menu_login_registo.jsp</result>
+            <result name="insuccess">/index.jsp</result>
+       </action>-->
+        <action name="menu_registo" class="menu_inicial.action.Menu_login_action">
+            <result name="success">menu_login_registo.jsp</result>
+        </action>
+        <action name="menu_login" class="menu_inicial.action.Menu_registo_action">
+            <result name="success"> index.jsp</result>
         </action>
         <action name="index">
             <result>/index.jsp</result>

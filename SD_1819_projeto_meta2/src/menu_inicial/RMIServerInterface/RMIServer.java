@@ -20,6 +20,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		users.put("fry",    "philip");
 		users.put("leela",  "turanga");
 		users.put("homer",  "simpson");
+		users.put("gi",     "gi");
 	}
 	
 	/**
