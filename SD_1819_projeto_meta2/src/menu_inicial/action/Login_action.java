@@ -11,6 +11,7 @@ public class Login_action extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 4L;
     private Map<String, Object> session;
     private String username = null, password = null;
+    boolean editor=false;
 
     @Override
     public String execute() {
@@ -18,20 +19,24 @@ public class Login_action extends ActionSupport implements SessionAware {
         if(this.username != null && !username.equals("") && this.password != null) {
                 this.getLogin_bean().setUsername(this.username);
                 this.getLogin_bean().setPassword(this.password);
+                //if(this.getLogin_bean().getUserMatchesPassword()) {/*tratar de remote exception*/
+
+            int aux = 0;//0-nao existe 1-utilizador sem privilegios 2-utilizador com privilegios
             try {
-                if(this.getLogin_bean().getUserMatchesPassword()) {/*tratar de remote exception*/
+                aux = this.getLogin_bean().getUserMatchesPassword();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            if(aux==1 || aux==2) {
                     session.put("username", username);
+                    if(aux==1)
+                        session.put("editor", false);
+                    else if(aux==2)
+                        session.put("editor", true);
                     session.put("loggedin", true); // this marks the user as logged in
                     System.out.println("Encontrou");
                     return SUCCESS;
                 }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            System.out.println("nao encontrou");
-            return "insuccess";
         }
         return "insuccess";
     }

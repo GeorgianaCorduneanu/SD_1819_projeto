@@ -27,8 +27,22 @@ public class Login_bean {
         return server.getAllUsers(); // are you going to throw all exceptions?
     }
 
-    public boolean getUserMatchesPassword() throws RemoteException {
+    /*public boolean getUserMatchesPassword() throws RemoteException {
         return server.userMatchesPassword(this.username, this.password);
+    }*/
+
+    public int getUserMatchesPassword() throws RemoteException {
+        String mensagem = server.login(this.username, this.password);
+        //String mensagem_cortada[] = mensagem.split(";");
+        System.out.println(mensagem + "\nErro ao fazer login");
+        if (mensagem.equals("Erro ao fazer login"))
+            return 0;
+        else if(mensagem.equals("Utilizador Encontrado ; false"))
+            return 1;
+        else if(mensagem.equals("Utilizador Encontrado ; true"))
+            return 2;
+
+        return 0;
     }
 
     public void setUsername(String username) {

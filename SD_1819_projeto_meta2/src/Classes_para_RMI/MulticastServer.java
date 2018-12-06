@@ -46,10 +46,10 @@ public class MulticastServer extends Thread implements Serializable {
         ficheiro_album = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\album.bin";
         ficheiro_musicas = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";*/
 
-        ficheiro_utilizador = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin";
-        ficheiro_album = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\album.bin";
-        ficheiro_artista = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\artista.bin";
-        ficheiro_musicas = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";
+        ficheiro_utilizador = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\data.bin";
+        ficheiro_album = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\album.bin";
+        ficheiro_artista = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\artista.bin";
+        ficheiro_musicas = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\musica.bin";
 
         // write_obj_user();
 
@@ -57,11 +57,11 @@ public class MulticastServer extends Thread implements Serializable {
         read_obj();
         if (!user.isEmpty()) {
             System.out.println("----USERS----");
-            /*for (Utilizador anUser : user) {
+            for (Utilizador anUser : user) {
                 //if (anUser.getUsername().equals("gi"))
                   //  user.get(user.indexOf(anUser)).setEditor(true);
                 System.out.println("Utilizador: " + anUser.getUsername() + " | password: " + anUser.getPassword() + "| Editor: " + anUser.getEditor());
-            }*/
+            }
             //write_obj_user();
             //read_obj();
             for (Utilizador anUser : user) {
@@ -536,68 +536,5 @@ public class MulticastServer extends Thread implements Serializable {
             }
         }
     }
-
-    /*
-    public void insere_dados(String [] mensagem, int numero_tabela){
-        //criar um statement para inserir dados na bd
-        Statement statement;
-       //try {
-           // statement = connection.prepareStatement();
-        //} catch (SQLException e) {
-           // e.printStackTrace();
-        }//
-        switch (numero_tabela){
-            case 1: //registo
-                //insere-se o codigo em sql
-                // statement.executeUpdate(Select nome from);
-                System.out.println(mensagem[1] + " : " + mensagem[2]);
-                break;
-            case 2: //artista
-                //insere-se o codigo em sql
-                // statement.executeUpdate();
-
-                break;
-            case 3: //musica
-                //insere-se o codigo em sql
-                // statement.executeUpdate();
-                break;
-                default:
-                    System.out.println("Not a correct number for table");
-                  break;
-        }
-    }
-
-    public Connection getConnection(){
-        Connection  connection = null;
-        String bd_hostname = "127.0.0.1";
-        String bd_name = "base_dados_2018_bd";
-        String bd_port = "3306";
-        String bd_user = "root";
-        String bd_password = "bd";
-        // register your mysql jdbc driver with the java application
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        String connection_url = "jdbc:mysql://"+ bd_hostname + ":"+ bd_port +"/" + bd_name + "?useSSL=false&autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        String schema;
-        //aqui fazemos a conexao com a base de dados
-        try {
-            //fazer a conexão do servidor base de dados com java
-            //connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/base_dados_2018_bd?useSSL=false&autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","bd");
-            connection = DriverManager.getConnection(connection_url, bd_user, bd_password);
-            System.out.println("Successful connection with server");
-            //obter a base de dados que tem no servidor
-            //schema = connection.getSchema(); //nao sei porque nao fucniona com schema, acho que
-            //e porque esta versao do java nao suporta shema
-            //mas funciona com getCatalog()
-            schema = connection.getCatalog();
-            System.out.println("Successful connection - Schema: " + schema);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }*/
 
 

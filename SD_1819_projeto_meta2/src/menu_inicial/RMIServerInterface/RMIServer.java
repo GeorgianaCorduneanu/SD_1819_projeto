@@ -81,9 +81,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
 	@Override
 	public String login(String nome, String passowrd) throws RemoteException {
-		boolean check = true;
 		MulticastSocket socket = null;
-		String[] msg_cortada;
 		try {
 			socket = new MulticastSocket();
 			// create socket without binding it (only for sending)
@@ -101,9 +99,10 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 			socket.close();
 		}
 		//recebe a: Utilizador Encontrado ; true|false
-		//recebe b: Utilizador não encontrado!
-		String mensagem;
-		return recebe_multicast_socket();
+		//recebe b: Erro ao fazer login
+		String mensagem=recebe_multicast_socket();
+        System.out.println(mensagem);
+		return mensagem;
 	}
 
 	@Override
@@ -131,7 +130,27 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
 	@Override
 	public String recebe_multicast_socket() throws RemoteException {
-		return null;
+        MulticastSocket socket = null;
+        // while(true) {
+        try {
+            socket = new MulticastSocket(PORT);
+            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+            socket.joinGroup(group);
+            byte[] buffer = new byte[1024];
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+            socket.setLoopbackMode(false);//false quando recebe
+            socket.receive(packet);
+            String message = new String(packet.getData(), 0, packet.getLength());
+            System.out.println(message);
+            System.out.println(packet.getLength());
+            return message;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            assert socket != null;
+            socket.close();
+        }
+        return null;
 	}
 
 	@Override

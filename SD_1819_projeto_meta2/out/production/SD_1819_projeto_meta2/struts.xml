@@ -24,7 +24,7 @@
 
         <action name="login" class="menu_inicial.action.Login_action" method="execute">
             <result name="success">/login.jsp</result>
-            <result name="insuccess">/menu_login_registo.jsp</result>
+            <result name="insuccess">/login.jsp</result>
         </action>
        <!--<action name="menu_registo_login" class="menu_inicial.action.Menu_1_action" method="execute">
             <result name="registo">index.jsp</result>
@@ -32,7 +32,7 @@
             <result name="insuccess">/index.jsp</result>
        </action>-->
         <action name="menu_registo" class="menu_inicial.action.Menu_login_action">
-            <result name="success">menu_login_registo.jsp</result>
+            <result name="success">login.jsp</result>
         </action>
         <action name="menu_login" class="menu_inicial.action.Menu_registo_action">
             <result name="success"> index.jsp</result>
