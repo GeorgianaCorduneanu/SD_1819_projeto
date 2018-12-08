@@ -37,9 +37,9 @@ public class Login_bean {
         System.out.println(mensagem + "\nErro ao fazer login");
         if (mensagem.equals("Erro ao fazer login"))
             return 0;
-        else if(mensagem.equals("Utilizador Encontrado ; false"))
+        else if(mensagem.equals("Login bem sucedido ;false"))
             return 1;
-        else if(mensagem.equals("Utilizador Encontrado ; true"))
+        else if(mensagem.equals("Login bem sucedido ;true"))
             return 2;
 
         return 0;

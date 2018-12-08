@@ -41,11 +41,10 @@
     <title>Menu Login Registo</title>
 </head>
 <body>
-    <s:form action="menu_registo" method="post">
-        <s:submit type="button" name="registo" label="REGISTO"/><br>
-        <s:submit type="button" name="login" label="LOGIN" action="menu_login"/><br>
+    <s:form method="post">
+        <s:submit type="button" name="registo" label="REGISTO" formaction="menu_registo"/>
+        <s:submit type="button" name="login" label="LOGIN" formaction="menu_login"/>
     </s:form>
-
 </body>
 </html>
 

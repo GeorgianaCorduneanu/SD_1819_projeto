@@ -115,14 +115,14 @@ public class MulticastServer extends Thread implements Serializable {
                             u = new Utilizador(u.getUsername(), u.getPassword(), true);
                             user.add(u);
                             write_obj_user();
+                            enviaServerRMI("Primeiro utilizador");
                             break;
-                        } else if(!verifica_utilizador(mensagem_cortada[1])) //caso nao encontre o utilizado
-                            {
-                                user.add(u);
-                                write_obj_user();
-                                enviaServerRMI("Utilizador nao existente");
-                                break;
-                            }
+                        } else if(!verifica_utilizador(mensagem_cortada[1])){ //caso nao encontre o utilizado
+                            user.add(u);
+                            write_obj_user();
+                            enviaServerRMI("Utilizador nao existente");
+                            break;
+                        }
 
                         System.out.println("Utilizador ja existente");
                         //  pacote.setMessage(409);

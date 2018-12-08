@@ -21,22 +21,35 @@
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="error" />
         </global-exception-mappings>
-
+        <!-- menu de login depois de carregar no botao login
+        sucesso vai para o menu editor ou nao
+        caso de insucesso fica na mesma pagina, tem que se por uma mensagem
+        a dizer que a palavra passe nao corresponde ao username
+         em caso de insucesso-->
         <action name="login" class="menu_inicial.action.Login_action" method="execute">
-            <result name="success">/login.jsp</result>
+            <result name="success">/login.jsp</result><!--para pôr a pagina de sucesso-->
             <result name="insuccess">/login.jsp</result>
         </action>
-       <!--<action name="menu_registo_login" class="menu_inicial.action.Menu_1_action" method="execute">
-            <result name="registo">index.jsp</result>
-            <result name="login">/menu_login_registo.jsp</result>
-            <result name="insuccess">/index.jsp</result>
-       </action>-->
-        <action name="menu_registo" class="menu_inicial.action.Menu_login_action">
-            <result name="success">login.jsp</result>
+
+        <!-- menu de registo depois de carregar no botao registo
+        em caso de sucesso vai para o login em caso de insucesso fica na pagina
+        tem que ser por uma mensagem a dizer que o utilizador ja existe-->
+        <action name="registo" class="menu_inicial.action.Registo_action" method="execute">
+            <result name="success">/login.jsp</result><!--para pôr a pagina de sucesso-->
+            <result name="insuccess">/registo.jsp</result>
         </action>
-        <action name="menu_login" class="menu_inicial.action.Menu_registo_action">
-            <result name="success"> index.jsp</result>
+
+        <!--botao de registo do menu inicial que vai logo para a pagina de registo-->
+        <action name="menu_registo" class="menu_inicial.action.Menu_botao_registo_action">
+            <result name="success">/registo.jsp</result>
         </action>
+
+        <!--botao de login do menu inicial que vai logo para a pagina de login-->
+        <action name="menu_login" class="menu_inicial.action.Menu_botao_login_action">
+            <result name="success">/login.jsp</result>
+        </action>
+
+        <!-- a acao index vai para o jsp indice-->
         <action name="index">
             <result>/index.jsp</result>
         </action>

@@ -38,12 +38,13 @@
     <title>Login_Index</title>
 </head>
 <body>
-<s:form action="login" method="post">
+<s:form method="post">
     <s:text name="username" />
     <s:textfield name="username" /><br>
     <s:text name="password"/>
     <s:password name="password" /><br>
-    <s:submit />
+    <s:submit type="button" label="VOLTAR" formaction="index"/>
+    <s:submit type="button" label="LOGIN" formaction="login"/>
 </s:form>
 
 </body>

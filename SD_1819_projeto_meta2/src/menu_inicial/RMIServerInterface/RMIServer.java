@@ -76,6 +76,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		//c_i.check_registar(check);
 		//recebe a: Utilizador nao existente
 		//recebe b: Utilizador ja existente
+		//recebe c: Primeiro utilizador
 		return recebe_multicast_socket();
 	}
 
@@ -98,7 +99,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 			assert socket != null;
 			socket.close();
 		}
-		//recebe a: Utilizador Encontrado ; true|false
+		//recebe a: Login bem sucedido ;true|false
 		//recebe b: Erro ao fazer login
 		String mensagem=recebe_multicast_socket();
         System.out.println(mensagem);
