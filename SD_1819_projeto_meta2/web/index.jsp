@@ -42,8 +42,8 @@
 </head>
 <body>
     <s:form method="post">
-        <s:submit type="button" name="registo" label="REGISTO" formaction="menu_registo"/>
-        <s:submit type="button" name="login" label="LOGIN" formaction="menu_login"/>
+        <s:submit type="button" name="registo" label="REGISTO" formaction="registo"/>
+        <s:submit type="button" name="login" label="LOGIN" formaction="login"/>
     </s:form>
 </body>
 </html>

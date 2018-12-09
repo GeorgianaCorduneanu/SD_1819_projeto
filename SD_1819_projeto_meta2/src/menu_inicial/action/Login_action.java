@@ -28,15 +28,17 @@ public class Login_action extends ActionSupport implements SessionAware {
                 e.printStackTrace();
             }
             if(aux==1 || aux==2) {
-                    session.put("username", username);
-                    if(aux==1)
-                        session.put("editor", false);
-                    else if(aux==2)
-                        session.put("editor", true);
-                    session.put("loggedin", true); // this marks the user as logged in
-                    System.out.println("Encontrou");
-                    return SUCCESS;
-                }
+                //String mensagem_resultado="success_normal";
+                session.put("username", username);
+                if(aux==1) {
+                    session.put("editor", false);
+                }else if(aux==2) {
+                    //mensagem_resultado="success_editor";
+                    session.put("editor", true);
+                }session.put("loggedin", true); // this marks the user as logged in
+                System.out.println("Encontrou");
+                return SUCCESS;
+            }
         }
         return "insuccess";
     }

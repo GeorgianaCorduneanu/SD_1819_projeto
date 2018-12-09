@@ -27,7 +27,7 @@
         a dizer que a palavra passe nao corresponde ao username
          em caso de insucesso-->
         <action name="login" class="menu_inicial.action.Login_action" method="execute">
-            <result name="success">/login.jsp</result><!--para pôr a pagina de sucesso-->
+            <result name="success">/menu.jsp</result><!--para pôr a pagina de sucesso-->
             <result name="insuccess">/login.jsp</result>
         </action>
 
@@ -39,19 +39,42 @@
             <result name="insuccess">/registo.jsp</result>
         </action>
 
-        <!--botao de registo do menu inicial que vai logo para a pagina de registo-->
-        <action name="menu_registo" class="menu_inicial.action.Menu_botao_registo_action">
-            <result name="success">/registo.jsp</result>
-        </action>
-
-        <!--botao de login do menu inicial que vai logo para a pagina de login-->
-        <action name="menu_login" class="menu_inicial.action.Menu_botao_login_action">
-            <result name="success">/login.jsp</result>
-        </action>
-
         <!-- a acao index vai para o jsp indice-->
-        <action name="index">
+        <action name="index" class="menu_inicial.action.Index_action">
             <result>/index.jsp</result>
+        </action>
+        <action name="menu" class="menu_inicial.action.Menu_action" method="execute">
+            <result name="album">album.action</result>
+            <result name="artista">/artista.jsp</result>
+            <result name="musica">/musica.jsp</result>
+            <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="musica" class="menu_inicial.action.Musica_action" method="execute">
+            <result name="pesquisar_musica">/musica.jsp</result>
+            <result name="adicionar_musica">/musica.jsp</result>
+            <result name="eliminar_musica">/musica.jsp</result>
+            <result name="editar_musica">/musica.jsp</result>
+            <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="artista" class="menu_inicial.action.Artista_action" method="execute">
+            <result name="pesquisar_artista">/artista.jsp</result>
+            <result name="adicionar_artista">/artista.jsp</result>
+            <result name="eliminar_artista">/artista.jsp</result>
+            <result name="editar_artista">/artista.jsp</result>
+            <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="album" class="menu_inicial.action.Album_action" method="execute">
+            <result name="pesquisar_musica">/album.jsp</result>
+            <result name="privacidade_playlist">/album.jsp</result>
+            <result name="listar_musica">/album.jsp</result>
+            <result name="upload_musica">/album.jsp</result>
+            <result name="dowload_musica">/album.jsp</result>
+            <result name="ver_playlist">/album.jsp</result>
+            <result name="criar_playlist">/album.jsp</result>
+            <result name="adicionar_musica">/album.jsp</result>
+            <result name="editar_musica">/album.jsp</result>
+            <result name="eliminar_musica">/album.jsp</result>
+            <result name="voltar">/menu.jsp</result>
         </action>
     </package>
 </struts>
