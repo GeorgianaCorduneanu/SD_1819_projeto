@@ -25,8 +25,8 @@
     <s:password name="password" /><br>
     <s:text name="Confirmacao da password"/>
     <s:password name="conf_password"/><br>
-    <s:submit type="button" label="VOLTAR" formaction="registar"/>
-    <s:submit type="button" label="REGISTAR" formaction="index"/>
+    <s:submit type="button" label="VOLTAR" formaction="index"/>
+    <s:submit type="button" label="REGISTAR" formaction="registo"/>
 </s:form>
 
 </body>

@@ -33,7 +33,6 @@ public class Login_action extends ActionSupport implements SessionAware {
                 if(aux==1) {
                     session.put("editor", false);
                 }else if(aux==2) {
-                    //mensagem_resultado="success_editor";
                     session.put("editor", true);
                 }session.put("loggedin", true); // this marks the user as logged in
                 System.out.println("Encontrou");
