@@ -16,11 +16,11 @@
     <s:form method="post" action="pesquisar">
         <s:label name="pesquisar_por" label="Pesquisar por: "/>
         <s:radio list="{'Artista', 'Musica', 'Album'}" name="pesquisar_tipo" multiple="false"/><br>
-        <s:text name="Escreva o titulo"/>
+        <s:text name="Escreva o nome: "/>
         <s:textfield name="string_pesquisar" /><br>
-       <%-- <s:property value="Pesquisar_action.resultado_pesquisa"/>--%>
+        <s:property value="Resultado_pesquisa"/><br><%--aqui chama a funcao getResultado_pesquisa--%>
         <s:submit type="button" value="true" name="pesquisar" label="Pesquisar" onclick="fazer_pesquisa()"/><br>
-        <s:submit type="button" value="true" name="voltar" label="VOLTAR"/><br>
+        <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/><br>
     </s:form>
 </body>
 </html>

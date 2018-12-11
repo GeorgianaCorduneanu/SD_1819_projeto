@@ -9,6 +9,7 @@ public class Pesquisar_action extends ActionSupport {
     private String resultado_pesquisa;
     private String string_pesquisar;
     private Pesquisar_bean pesquisar_bean;
+    private boolean voltar;
 
     @Override
     public String execute(){
@@ -24,7 +25,8 @@ public class Pesquisar_action extends ActionSupport {
         }if(pesquisar_tipo.equals("Musica")) {
             pesquisar(3, string_pesquisar);
             return "musica";
-        }
+        }if(voltar)
+            return "insuccess";
         return "insuccess";
     }
 
@@ -37,6 +39,8 @@ public class Pesquisar_action extends ActionSupport {
     }
 
     public Pesquisar_bean getPesquisar_bean() {
+        if(pesquisar_bean==null)
+            setPesquisar_bean(new Pesquisar_bean());
         return pesquisar_bean;
     }
 
@@ -53,7 +57,9 @@ public class Pesquisar_action extends ActionSupport {
             resultado_pesquisa = this.getPesquisar_bean().pesquisar(13, nome);
         }
     }
-
+    public void setVoltar(boolean voltar){
+        this.voltar = voltar;
+    }
     public void setString_pesquisar(String string_pesquisar) {
         this.string_pesquisar = string_pesquisar;
     }

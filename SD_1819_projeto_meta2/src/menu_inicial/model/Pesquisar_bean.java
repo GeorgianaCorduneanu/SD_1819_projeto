@@ -30,6 +30,8 @@ public class Pesquisar_bean {
         try {
             server.enviaStringAoMulticast(mensagem);
             resultado_pesquisa = server.recebe_multicast_socket();
+            if(resultado_pesquisa==null)
+                return resultado_pesquisa="Nao existe!";
         } catch (RemoteException e) {
             e.printStackTrace();
         }
