@@ -1,14 +1,17 @@
 package menu_inicial.action;
 import com.opensymphony.xwork2.ActionSupport;
-import menu_inicial.model.Pesquisar_bean;
+import menu_inicial.model.Login_bean;
+import org.apache.struts2.interceptor.SessionAware;
+
 import java.util.Map;
 
 
-public class Pesquisar_action extends ActionSupport {
+public class Pesquisar_action extends ActionSupport implements SessionAware {
     private String pesquisar_tipo;
     private String resultado_pesquisa;
     private String string_pesquisar;
-    private Pesquisar_bean pesquisar_bean;
+    private Login_bean login_bean;
+    private Map<String, Object> session;
     private boolean voltar;
 
     @Override
@@ -38,23 +41,21 @@ public class Pesquisar_action extends ActionSupport {
         return string_pesquisar;
     }
 
-    public Pesquisar_bean getPesquisar_bean() {
-        if(pesquisar_bean==null)
-            setPesquisar_bean(new Pesquisar_bean());
-        return pesquisar_bean;
+    public Login_bean getLogin_bean() {
+        if(session.containsKey("login_bean"))
+            return (Login_bean)session.get("login_bean");
+        else
+            return null;
     }
 
-    public void setPesquisar_bean(Pesquisar_bean pesquisar_bean) {
-        this.pesquisar_bean = pesquisar_bean;
-    }
 
     public void pesquisar(int tipo, String nome){
         if(tipo==1) //pesquisar album
-            resultado_pesquisa = this.getPesquisar_bean().pesquisar(14, nome);
+            resultado_pesquisa = this.getLogin_bean().pesquisar(14, nome);
         else if(tipo==2){ //artista
-            resultado_pesquisa = this.getPesquisar_bean().pesquisar(15, nome);
+            resultado_pesquisa = this.getLogin_bean().pesquisar(15, nome);
         }else if(tipo==3){//musica
-            resultado_pesquisa = this.getPesquisar_bean().pesquisar(13, nome);
+            resultado_pesquisa = this.getLogin_bean().pesquisar(13, nome);
         }
     }
     public void setVoltar(boolean voltar){
@@ -70,5 +71,10 @@ public class Pesquisar_action extends ActionSupport {
 
     public void setPesquisar_tipo(String pesquisar_tipo) {
         this.pesquisar_tipo = pesquisar_tipo;
+    }
+
+    @Override
+    public void setSession(Map<String, Object> map) {
+        this.session = map;
     }
 }

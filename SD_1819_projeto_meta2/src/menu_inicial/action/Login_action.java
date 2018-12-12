@@ -36,6 +36,7 @@ public class Login_action extends ActionSupport implements SessionAware {
                     session.put("editor", true);
                 }session.put("loggedin", true); // this marks the user as logged in
                 System.out.println("Encontrou");
+
                 return SUCCESS;
             }
         }
@@ -66,12 +67,3 @@ public class Login_action extends ActionSupport implements SessionAware {
         this.session = session;
     }
 }
-/*
-
-    <c:forEach items="${login_bean.login}" var="value">
-        <c:out value="${value}" /><br>
-        <jsp:useBean id="login_bean" scope="request" type="menu_inicial.model.Login_bean"/>
-    <c:forEach items="${login_bean.allUsers}" var="value">
-        <c:out value="${value}" /><br>
-    </c:forEach>
-    */

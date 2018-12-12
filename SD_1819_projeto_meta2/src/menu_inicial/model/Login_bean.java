@@ -12,6 +12,8 @@ public class Login_bean {
     private RMIServerInterface server;
     private String username; // username and password supplied by the user
     private String password;
+    private String resultado_pesquisa;
+    private String opcao_menu;
 
     public Login_bean() {
         String location_s = "rmi://localhost:7000/server";
@@ -44,6 +46,28 @@ public class Login_bean {
 
         return 0;
     }
+    public String pesquisar(int tipo, String nome){
+        /* 14 - multicast pesquisa por album
+           15 - multicast pesquisar por artista
+           13 - multicast pesquisar por musica
+         */
+        String mensagem = tipo + ";" + nome;
+        try {
+            server.enviaStringAoMulticast(mensagem);
+            resultado_pesquisa = server.recebe_multicast_socket();
+            if(resultado_pesquisa==null)
+                return resultado_pesquisa="Nao existe!";
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return resultado_pesquisa;
+    }
+    public String getOpcao_menu(){
+        return this.opcao_menu;
+    }
+    public void setOpcao_menu(String opcao_menu){
+        this.opcao_menu = opcao_menu;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -52,6 +76,7 @@ public class Login_bean {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getUsername(){
         return this.username;
     }

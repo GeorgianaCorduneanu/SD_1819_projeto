@@ -62,6 +62,11 @@
             <result name="editar_musica">/musica.jsp</result>
             <result name="insuccess">/menu.jsp</result>
         </action>
+        <action name="playlist" class="menu_inicial.action.Playlist_action" method="execute">
+            <result name="ver_playlist">/album_artista_musica.jsp</result>
+            <result name="editar_playlist">/album_artista_musica.jsp</result>
+            <result name="criar_playlist">/album_artista_musica.jsp</result>
+        </action>
         <action name="artista" class="menu_inicial.action.Artista_action" method="execute">
             <result name="pesquisar_artista">/artista.jsp</result>
             <result name="adicionar_artista">/artista.jsp</result>
