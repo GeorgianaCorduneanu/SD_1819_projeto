@@ -3,27 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9035676a-9cf2-4c1d-a147-f96166bf0d81" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/artifacts/SD_1819_projeto_meta2/SD_1819_projeto_meta2.war" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/artifacts/SD_1819_projeto_meta2/SD_1819_projeto_meta2.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/Classes_para_RMI/MulticastServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/Classes_para_RMI/MulticastServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/RMIServerInterface/RMIServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/RMIServerInterface/RMIServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/RMIServerInterface/RMIServerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/RMIServerInterface/RMIServerInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/action/Menu_action.class" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/action/Menu_action.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/model/Login_bean.class" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/model/Login_bean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/model/Registo_bean.class" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/menu_inicial/model/Registo_bean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/struts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/out/production/SD_1819_projeto_meta2/struts.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/Classes_para_RMI/MulticastServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/Classes_para_RMI/MulticastServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/RMIServerInterface/RMIServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/RMIServerInterface/RMIServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/RMIServerInterface/RMIServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/RMIServerInterface/RMIServerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/action/Menu_action.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/action/Menu_action.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/model/Login_bean.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/model/Login_bean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/model/Registo_bean.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/model/Registo_bean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/action/Privilegios_action.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/menu_inicial/action/Privilegios_action.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/struts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/src/struts.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/menu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/menu.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/pesquisar.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/pesquisar.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/privilegios.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../SD_1819_projeto_meta2/web/privilegios.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/ClienteRMI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/ClienteRMI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/MulticastServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SD_1819_projeto_versao01/MulticastServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ClienteRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClienteRMI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MulticastServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MulticastServer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,7 +49,7 @@
     <session id="833798454">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="33" />
+          <entry key="project.closed" value="35" />
           <entry key="project.open.time.105" value="1" />
           <entry key="project.open.time.122" value="1" />
           <entry key="project.open.time.13" value="1" />
@@ -83,6 +66,7 @@
           <entry key="project.open.time.39" value="1" />
           <entry key="project.open.time.41" value="1" />
           <entry key="project.open.time.43" value="1" />
+          <entry key="project.open.time.45" value="1" />
           <entry key="project.open.time.47" value="1" />
           <entry key="project.open.time.49" value="1" />
           <entry key="project.open.time.50" value="1" />
@@ -99,7 +83,7 @@
           <entry key="project.open.time.86" value="1" />
           <entry key="project.open.time.9" value="1" />
           <entry key="project.open.time.97" value="1" />
-          <entry key="project.opened" value="36" />
+          <entry key="project.opened" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -146,7 +130,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="364">
+                <state relative-caret-position="568">
                   <caret line="258" column="12" selection-start-line="258" selection-start-column="12" selection-end-line="258" selection-end-column="12" />
                   <folding>
                     <element signature="method#pesquisar#0;class#MulticastServer#0" />
@@ -303,7 +287,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
+    <option name="x" value="-7" />
     <option name="width" value="697" />
     <option name="height" value="775" />
   </component>
@@ -460,17 +444,18 @@
       <workItem from="1543752361446" duration="650000" />
       <workItem from="1544648034710" duration="3779000" />
       <workItem from="1544694386602" duration="1786000" />
+      <workItem from="1544717776714" duration="338000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122983000" />
+    <option name="totallyTimeSpent" value="123321000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.113464445" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11497731" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -586,6 +571,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="258" column="12" selection-start-line="258" selection-start-column="12" selection-end-line="258" selection-end-column="12" />
+          <folding>
+            <element signature="method#pesquisar#0;class#MulticastServer#0" />
+            <element signature="method#inserir_musica_lista#0;class#MulticastServer#0" />
+            <element signature="method#inserir_album_lista#0;class#MulticastServer#0" />
+            <element signature="method#inserir_artista_lista#0;class#MulticastServer#0" />
+            <element signature="method#edita_descricao_album#0;class#MulticastServer#0" />
+            <element signature="method#edita_data_album#0;class#MulticastServer#0" />
+            <element signature="method#elimina_musica_list#0;class#MulticastServer#0" />
+            <element signature="method#elimina_album_list#0;class#MulticastServer#0" />
+            <element signature="method#elimina_artista_list#0;class#MulticastServer#0" />
+            <element signature="method#write_obj_user#0;class#MulticastServer#0" />
+            <element signature="method#read_obj#0;class#MulticastServer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ClienteRMI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4471">
@@ -638,26 +643,6 @@
             <element signature="method#subscribe#0;class#ServerRMIB#0" />
             <element signature="method#login#0;class#ServerRMIB#0" />
             <element signature="method#recebe_multicast_socket#0;class#ServerRMIB#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MulticastServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="258" column="12" selection-start-line="258" selection-start-column="12" selection-end-line="258" selection-end-column="12" />
-          <folding>
-            <element signature="method#pesquisar#0;class#MulticastServer#0" />
-            <element signature="method#inserir_musica_lista#0;class#MulticastServer#0" />
-            <element signature="method#inserir_album_lista#0;class#MulticastServer#0" />
-            <element signature="method#inserir_artista_lista#0;class#MulticastServer#0" />
-            <element signature="method#edita_descricao_album#0;class#MulticastServer#0" />
-            <element signature="method#edita_data_album#0;class#MulticastServer#0" />
-            <element signature="method#elimina_musica_list#0;class#MulticastServer#0" />
-            <element signature="method#elimina_album_list#0;class#MulticastServer#0" />
-            <element signature="method#elimina_artista_list#0;class#MulticastServer#0" />
-            <element signature="method#write_obj_user#0;class#MulticastServer#0" />
-            <element signature="method#read_obj#0;class#MulticastServer#0" />
           </folding>
         </state>
       </provider>

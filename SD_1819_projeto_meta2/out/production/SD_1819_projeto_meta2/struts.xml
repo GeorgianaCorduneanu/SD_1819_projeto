@@ -50,9 +50,7 @@
             <result name="insuccess">/menu.jsp</result>
         </action>
         <action name="privilegios" class="menu_inicial.action.Privilegios_action" method="execute">
-            <result name="dar_privilegios">/privilegios.jsp</result>
-            <result name="remover_privilegios">/privilegios.jsp</result>
-            <result name="success">/privilegios.jsp</result>
+            <result name="success">/menu.jsp</result>
             <result name="insuccess">/privilegios.jsp</result>
         </action>
         <action name="pesquisar" class="menu_inicial.action.Pesquisar_action" method="execute">

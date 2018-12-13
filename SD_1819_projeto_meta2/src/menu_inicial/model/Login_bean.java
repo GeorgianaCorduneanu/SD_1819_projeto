@@ -49,6 +49,16 @@ public class Login_bean {
         }
         this.lista_todos_utilizadores = lista_todos_utilizadores;
     }
+    public void gerirPrivilegios(String nome, int tipo_privilegio){
+        //switch 3 de multicast
+        //opcao 1 dar privilegios
+        //opcao 0 retirar privilegios
+        try {
+            String mensagem = server.gerirPrivilegios(nome, tipo_privilegio);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
     private String listar(int tipo){
         //0 album

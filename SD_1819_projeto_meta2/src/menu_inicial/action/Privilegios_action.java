@@ -21,7 +21,16 @@ public class Privilegios_action extends ActionSupport implements SessionAware {
 
     public String execute(){
         login_bean = getLogin_bean();
-        return SUCCESS;
+        if(utilizador_privilegio!=null && privilegios_tipo!=null && mudar) {
+            System.out.println(utilizador_privilegio + " : " + privilegios_tipo + " : " + mudar);
+            if(privilegios_tipo.equals("Dar Privilegios")){
+                login_bean.gerirPrivilegios(utilizador_privilegio, 1);
+            }else if(privilegios_tipo.equals("Remover Privilegios")){
+                login_bean.gerirPrivilegios(utilizador_privilegio, 0);
+            }
+            return SUCCESS;
+        }
+        return "insuccess";
     }
 
 

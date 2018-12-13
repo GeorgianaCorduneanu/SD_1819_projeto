@@ -163,6 +163,21 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		users.put(nome, password);
 	}
 
+    @Override
+    public String gerirPrivilegios(String nome, int tipo) throws RemoteException {
+        //switch 3 de multicast
+        //opcao 1 dar privilegios
+        //opcao 0 retirar privilegios
+        String mensagem = "3;" + nome + ";" + tipo;
+        try {
+            enviaStringAoMulticast(mensagem);
+            mensagem = recebe_multicast_socket();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return mensagem;
+    }
+
   /*  @Override
     public List<String> listar(int tipo) {
         //0 album

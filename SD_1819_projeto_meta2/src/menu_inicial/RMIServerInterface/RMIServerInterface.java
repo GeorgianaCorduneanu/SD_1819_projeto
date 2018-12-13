@@ -16,4 +16,5 @@ public interface RMIServerInterface extends Remote {
 	String recebe_multicast_socket() throws RemoteException;
 	void addClienteOnline(String nome, String password) throws RemoteException;
    // List<String> listar(int tipo);
+    String gerirPrivilegios(String nome, int tipo) throws RemoteException;
 }
