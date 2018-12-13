@@ -19,7 +19,7 @@
             <s:submit type="button" value="true" name="artista" label="ARTISTA" formaction="menu"/>
             <s:submit type="button" value="true" name="album" label="ALBUM" formaction="menu"/>
             <s:submit type="button" value="true" name="pesquisar" label="PESQUISAR" formaction="menu"/>
-            <s:submit type="button" value="true" name="dar_privilegios" label="DAR PRIVILEGIOS" formaction="menu"/>
+            <s:submit type="button" value="true" name="privilegios" label="PRIVILEGIOS" formaction="menu"/>
             <s:submit type="button" name="logout" label="LOGOUT" formaction="index"/>
         </s:form>
     </s:if>

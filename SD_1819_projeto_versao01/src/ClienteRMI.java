@@ -226,6 +226,7 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                     + "[9]Download de música\n"
                     + "[10]Partilhar uma música\n"
                     + "[11]Pesquisar uma musica\n"
+                    + "[12]Listar utilizadores\n"
                     + "[0]Logout");
 
             opcao = reader.nextInt();
@@ -320,6 +321,9 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                 case 11://pesquisar musica numero 13
                     pesquisar(13);
                     break;
+                case 12:
+                    Scanner opcao_lista = new Scanner(System.in);
+                    listar(opcao_lista.nextInt());
                 case 0:
                     System.out.println("Logout");
                     break;
@@ -327,6 +331,19 @@ public class ClienteRMI extends UnicastRemoteObject implements ClienteRMI_I, Ser
                     System.out.println("Insira uma opção válida!");
             }
         }while (opcao != 0);
+    }
+    private static void listar(int tipo){
+        ArrayList<String> lista_final=new ArrayList<>();
+        String lista_recebe=null;
+        String mensagem = "16;" + tipo;//
+        try {
+            server_i.enviaStringAoMulticast(mensagem);
+            lista_recebe = server_i.recebe_multicast_socket();
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println(lista_recebe);
     }
     private static void pesquisar(int numero_protocolo){
         InputStreamReader input = new InputStreamReader(System.in);

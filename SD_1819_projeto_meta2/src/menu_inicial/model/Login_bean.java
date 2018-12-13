@@ -7,6 +7,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Login_bean {
     private RMIServerInterface server;
@@ -14,9 +15,13 @@ public class Login_bean {
     private String password;
     private String resultado_pesquisa;
     private String opcao_menu;
+    private String todos_utilizadores;
+    private List<String> lista_todos_utilizadores;
+  //  private List<String> lista_users;
 
     public Login_bean() {
         String location_s = "rmi://localhost:7000/server";
+        //lista_users = listar(3);
         try {
             server = (RMIServerInterface) Naming.lookup(location_s);
         }
@@ -25,10 +30,49 @@ public class Login_bean {
         }
     }
 
-    public ArrayList<String> getAllUsers() throws RemoteException {
-        return server.getAllUsers(); // are you going to throw all exceptions?
+    public List<String> getLista_todos_utilizadores() {
+        return lista_todos_utilizadores;
     }
 
+    public String getTodos_utilizadores(){
+        if(todos_utilizadores == null)
+            todos_utilizadores =listar(3);
+        getLista_users();
+        return todos_utilizadores;
+    }
+
+    public void getLista_users() {
+        ArrayList<String> lista_todos_utilizadores = new ArrayList<>();
+        String [] mensagem_cortada_recebida =todos_utilizadores.split(":");
+        for(int i=0 ; i<mensagem_cortada_recebida.length ; i++){
+            lista_todos_utilizadores.add(mensagem_cortada_recebida[i]);
+        }
+        this.lista_todos_utilizadores = lista_todos_utilizadores;
+    }
+
+    private String listar(int tipo){
+        //0 album
+        //1 artista
+        //2 musica
+        //3 utilizadores
+        //4 playlist
+        String mensagem = "16;" + tipo;//
+        try {
+            server.enviaStringAoMulticast(mensagem);
+            todos_utilizadores = server.recebe_multicast_socket();
+            System.out.println("Dentro de listar, todos utilizadores" + todos_utilizadores);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+/*
+        mensagem_cortada_recebida =lista_recebe.split(":");
+        for(int i=0 ; i<mensagem_cortada_recebida.length ; i++){
+            lista_final.add(mensagem_cortada_recebida[i]);
+        }
+        System.out.println(lista_recebe);
+        return lista_final;*/
+        return todos_utilizadores;
+    }
     /*public boolean getUserMatchesPassword() throws RemoteException {
         return server.userMatchesPassword(this.username, this.password);
     }*/

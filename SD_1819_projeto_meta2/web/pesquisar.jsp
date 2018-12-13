@@ -1,4 +1,3 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: ginjo
@@ -7,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
 <html>
 <head>
     <title>Pesquisar</title>
@@ -18,7 +18,9 @@
         <s:radio list="{'Artista', 'Musica', 'Album'}" name="pesquisar_tipo" multiple="false"/><br>
         <s:text name="Escreva o nome: "/>
         <s:textfield name="string_pesquisar" /><br>
-        <s:property value="Resultado_pesquisa"/><br><%--aqui chama a funcao getResultado_pesquisa--%>
+        <s:if test="%{#session.login_bean.resultado_pesquisa != null}">
+            <s:property value="Resultado_pesquisa"/><br><%--aqui chama a funcao getResultado_pesquisa--%>
+        </s:if>
         <s:submit type="button" value="true" name="pesquisar" label="Pesquisar" onclick="fazer_pesquisa()"/><br>
         <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/><br>
     </s:form>

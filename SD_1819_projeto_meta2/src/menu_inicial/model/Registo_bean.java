@@ -39,14 +39,6 @@ public class Registo_bean {
         return 0;
     }
 
-    public ArrayList<String> getAllUsers() throws RemoteException {
-        return server.getAllUsers(); // are you going to throw all exceptions?
-    }
-
-    /*public boolean getUserMatchesPassword() throws RemoteException {
-        return server.userMatchesPassword(this.username, this.password);
-    }*/
-
     public int getUserMatchesPassword() throws RemoteException {
         String mensagem = server.login(this.username, this.password);
         //String mensagem_cortada[] = mensagem.split(";");

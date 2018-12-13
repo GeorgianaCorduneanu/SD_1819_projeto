@@ -231,10 +231,16 @@ public class MulticastServer extends Thread implements Serializable {
                         break;
                     case "14": //pesquisar album
                         enviaServerRMI(pesquisar(14, mensagem_cortada[1]));
+                        break;
                     case "15":
                         enviaServerRMI(pesquisar(15, mensagem_cortada[1]));
+                        break;
+                    case "16":
+                        enviaServerRMI(listar(Integer.parseInt(mensagem_cortada[1])));
+                        break;
                     default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
+                        break;
                 }
             }
 
@@ -274,6 +280,42 @@ public class MulticastServer extends Thread implements Serializable {
                     break;
             }
             return mensagem_erro;
+    }
+    private String listar(int tipo){
+        //0 album
+        //1 artista
+        //2 musica
+        //3 utilizadores
+        //4 playlist
+        String mensagem_a_enviar=null;
+        switch (tipo){
+            case 0:
+                for(Album item:lista_album){
+                    mensagem_a_enviar += item.getNome_album();
+                }
+                break;
+            case 1:
+                for(Artista item:lista_artistas){
+                    mensagem_a_enviar += item.getNome_artista();
+                }
+                break;
+            case 2:
+                for(Musica item:lista_musica){
+                    mensagem_a_enviar += item.getNome_musica();
+                }
+                break;
+            case 3:
+                for(Utilizador item:user){
+                    mensagem_a_enviar += item.getUsername() + ":";
+                }
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
+        System.out.println(mensagem_a_enviar);
+        return mensagem_a_enviar;
     }
     private boolean inserir_musica_lista(String nome, String compositor, String duracao) {
         for (Musica m : lista_musica) {

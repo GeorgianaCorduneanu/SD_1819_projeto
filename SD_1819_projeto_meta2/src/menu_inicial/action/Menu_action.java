@@ -7,7 +7,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Map;
 
 public class Menu_action extends ActionSupport implements SessionAware {
-    private boolean musica, artista, album, pesquisar, dar_privilegios;
+    private boolean musica, artista, album, pesquisar, privilegios;
     private String pesquisar_tipo;
     private Map<String, Object> session;
     private Login_bean login_bean;
@@ -23,10 +23,9 @@ public class Menu_action extends ActionSupport implements SessionAware {
         }if(artista) {
             login_bean.setOpcao_menu("artista");
             return SUCCESS;
-        }if(dar_privilegios){
-            login_bean.setOpcao_menu("dar_privilegios");
+        }if(privilegios){
+            return "privilegios";
         }if(pesquisar) {
-            login_bean.setOpcao_menu("pesquisar");
             return "pesquisar";
         }
         return "insuccess";
@@ -37,12 +36,9 @@ public class Menu_action extends ActionSupport implements SessionAware {
         else
             return null;
     }
-    public void setDar_privilegios(boolean dar_privilegios) {
-        this.dar_privilegios = dar_privilegios;
 
-    }
-    public void setPesquisar_tipo(String pesquisar_tipo) {
-        this.pesquisar_tipo = pesquisar_tipo;
+    public void setPrivilegios(boolean privilegios) {
+        this.privilegios = privilegios;
     }
 
     public void setMusica(boolean musica){
@@ -55,6 +51,10 @@ public class Menu_action extends ActionSupport implements SessionAware {
 
     public void setAlbum(boolean album){
         this.album = album;
+    }
+
+    public void setPesquisar_tipo(String pesquisar_tipo) {
+        this.pesquisar_tipo = pesquisar_tipo;
     }
 
     public void setPesquisar(boolean pesquisar){this.pesquisar=pesquisar;}

@@ -13,6 +13,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
@@ -43,10 +44,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	}
 
 	//retorna todos os utilizadores que estiveram online
-	public ArrayList<String> getAllUsers() {
-		System.out.println("Looking up all users...");
-		return new ArrayList<String>(users.keySet());	
-	}
+
 
 	@Override
 	public String subscribe(String nome, String password) throws RemoteException {
@@ -165,7 +163,34 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		users.put(nome, password);
 	}
 
-	public static void main(String[] args) throws RemoteException {
+  /*  @Override
+    public List<String> listar(int tipo) {
+        //0 album
+        //1 artista
+        //2 musica
+        //3 utilizadores
+        //4 playlist
+        ArrayList<String> lista_final=new ArrayList<>();
+        String lista_recebe=null;
+        String mensagem = "16;" + tipo;//
+        String [] mensagem_cortada_recebida;
+        try {
+            enviaStringAoMulticast(mensagem);
+            lista_recebe = recebe_multicast_socket();
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        mensagem_cortada_recebida =lista_recebe.split(":");
+        for(int i=0 ; i<mensagem_cortada_recebida.length ; i++){
+            lista_final.add(mensagem_cortada_recebida[i]);
+        }
+        System.out.println(lista_recebe);
+        return lista_final;
+    }*/
+
+    public static void main(String[] args) throws RemoteException {
 		RMIServerInterface s = new RMIServer();
 		LocateRegistry.createRegistry(7000).rebind("server", s);
 		System.out.println("Server ready...");

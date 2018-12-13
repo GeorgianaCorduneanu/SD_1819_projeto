@@ -232,7 +232,9 @@ public class MulticastServer extends Thread implements Serializable {
                         enviaServerRMI(pesquisar(14, mensagem_cortada[1]));
                     case "15":
                         enviaServerRMI(pesquisar(15, mensagem_cortada[1]));
-                    default:
+                    case "16":
+                        enviaServerRMI(listar(Integer.parseInt(mensagem_cortada[1])));
+                        default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
                 }
             }
@@ -245,7 +247,42 @@ public class MulticastServer extends Thread implements Serializable {
             socket.close();
         }
     }
-
+    private String listar(int tipo){
+        //0 album
+        //1 artista
+        //2 musica
+        //3 utilizadores
+        //4 playlist
+        String mensagem_a_enviar=null;
+        switch (tipo){
+            case 0:
+                for(Album item:lista_album){
+                    mensagem_a_enviar += item.getNome_album();
+                }
+                break;
+            case 1:
+                for(Artista item:lista_artistas){
+                    mensagem_a_enviar += item.getNome_artista();
+                }
+                break;
+            case 2:
+                for(Musica item:lista_musica){
+                    mensagem_a_enviar += item.getNome_musica();
+                }
+                break;
+            case 3:
+                for(Utilizador item:user){
+                    mensagem_a_enviar += item.getUsername() + ":";
+                }
+                break;
+            case 4:
+                break;
+                default:
+                    break;
+        }
+        System.out.println(mensagem_a_enviar);
+        return mensagem_a_enviar;
+    }
     private String pesquisar(int protocolo, String nome){
             String mensagem_erro= null;
             switch (protocolo) {
