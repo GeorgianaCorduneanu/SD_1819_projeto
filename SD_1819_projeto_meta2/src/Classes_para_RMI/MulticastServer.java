@@ -287,7 +287,7 @@ public class MulticastServer extends Thread implements Serializable {
         //2 musica
         //3 utilizadores
         //4 playlist
-        String mensagem_a_enviar=null;
+        String mensagem_a_enviar="";
         switch (tipo){
             case 0:
                 for(Album item:lista_album){
@@ -306,6 +306,7 @@ public class MulticastServer extends Thread implements Serializable {
                 break;
             case 3:
                 for(Utilizador item:user){
+                    System.out.println(mensagem_a_enviar);
                     mensagem_a_enviar += item.getUsername() + ":";
                 }
                 break;

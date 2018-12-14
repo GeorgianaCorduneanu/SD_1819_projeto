@@ -30,6 +30,7 @@ public class Menu_action extends ActionSupport implements SessionAware {
         }
         return "insuccess";
     }
+
     public Login_bean getLogin_bean() {
         if(session.containsKey("login_bean"))
             return (Login_bean)session.get("login_bean");

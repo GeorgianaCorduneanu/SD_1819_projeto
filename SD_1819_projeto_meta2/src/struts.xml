@@ -57,13 +57,14 @@
             <result name="artista">/pesquisar.jsp</result>
             <result name="album">/pesquisar.jsp</result>
             <result name="musica">/pesquisar.jsp</result>
-            <result name="insuccess">/menu.jsp</result>
+            <result name="insuccess">/pesquisar.jsp</result>
         </action>
         <action name="musica" class="menu_inicial.action.Musica_action" method="execute">
             <result name="adicionar_musica">/musica.jsp</result>
             <result name="eliminar_musica">/musica.jsp</result>
             <result name="editar_musica">/musica.jsp</result>
-            <result name="insuccess">/menu.jsp</result>
+            <result name="success">/menu.jsp</result>
+            <result name="insuccess">/musica.jsp</result>
         </action>
         <action name="playlist" class="menu_inicial.action.Playlist_action" method="execute">
             <result name="ver_playlist">/album_artista_musica.jsp</result>
@@ -74,12 +75,15 @@
             <result name="adicionar_artista">/artista.jsp</result>
             <result name="eliminar_artista">/artista.jsp</result>
             <result name="editar_artista">/artista.jsp</result>
-            <result name="insuccess">/menu.jsp</result>
+            <result name="insuccess">/artista.jsp</result>
+            <result name="success">/menu.jsp</result>
         </action>
         <action name="album" class="menu_inicial.action.Album_action" method="execute">
             <result name="adicionar_album">/album.jsp</result>
             <result name="eliminar_album">/album.jsp</result>
             <result name="editar_album">/album.jsp</result>
+            <result name="success">/menu.jsp</result>
+            <result name="insuccess">/album.jsp</result>
             <result name="voltar">/menu.jsp</result>
         </action>
     </package>

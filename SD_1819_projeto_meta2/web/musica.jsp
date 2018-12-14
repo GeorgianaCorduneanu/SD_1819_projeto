@@ -13,17 +13,23 @@
     <title>Menu Musica</title>
 </head>
 <body>
-    <s:if test="%{# session.editor == true }">
-        <s:form method="post">
-            <s:submit type="button" value="true" name="adicionar_musica" label="Adicionar Musica" formaction="musica"/><br>
-            <s:submit type="button" value="true" name="eliminar_musica" label="Eliminar Musica" formaction="musica"/><br>
-            <s:submit type="button" value="true" name="editar_musica" label="Editar Musica" formaction="musica"/><br>
-            <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/><br>
-            <s:submit type="button" value="true" name="upload_musica" label="Fazer Upload" formaction="album_editor"/><br>
-            <s:submit type="button" value="true" name="download_musica" label="Fazer Download" formaction="album_editor"/><br>
-            <s:submit type="button" value="true" name="partilhar_musica" label="Partilhar uma Musica" formaction="album_editor"/><br>
-
+    <s:if test="%{#session.login_bean.Opcao_menu == 'adicionar_musica'}">
+        <s:form method="post" action="musica">
+            <s:text name="Nome da Musica: "/>
+            <s:textfield name="nomeDaMusica"/><br>
+            <s:text name="Nome do Compositor: "/>
+            <s:textfield name="nomeDoCompositor"/><br>
+            <s:text name="Durancao da Musica: "/>
+            <s:textfield name="duracaoDaMusica"/><br>
+            <s:submit type="button" label="Adicionar"/>
+            <s:submit type="button" label="Voltar" value="voltar" formaction="menu"/>
         </s:form>
     </s:if>
+    <s:elseif test="%{#session.login_bean.Opcao_menu == 'eliminar_musica'}">
+
+    </s:elseif>
+    <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_musica'}">
+
+    </s:elseif>
 </body>
 </html>

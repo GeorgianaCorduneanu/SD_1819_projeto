@@ -13,13 +13,22 @@
     <title>Menu Artista</title>
 </head>
 <body>
-    <s:if test="%{# session.editor == true }">
-        <s:form method="post">
-            <s:submit type="button" value="true" name="adicionar_artista" label="Adicionar Artista" formaction="artista"/><br>
-            <s:submit type="button" value="true" name="eliminar_artista" label="Eliminar Artista" formaction="artista"/><br>
-            <s:submit type="button" value="true" name="editar_artista" label="Editar Artista" formaction="artista"/><br>
-            <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/><br>
+    <s:if test="%{#session.login_bean.Opcao_menu == 'adicionar_artista'}">
+        <s:form method="post" action="artista">
+            <s:text name="Nome do Artista: "/>
+            <s:textfield name="nomeDoArtista"/><br>
+            <s:radio list="{'Compositor', 'Nao Compositor'}" name="tipoCompositor" multiple="false"/><br>
+            <s:text name="Informacao Adicional"/>
+            <s:textfield name="informacaoAdicional"/>
+            <s:submit type="button" label="Adicionar" value="true" name="botaoAdicionar"/>
+            <s:submit type="button" label="Voltar" value="voltar" formaction="menu"/>
         </s:form>
     </s:if>
+    <s:elseif test="%{#session.login_bean.Opcao_menu == 'eliminar_artista'}">
+
+    </s:elseif>
+    <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_artista'}">
+
+    </s:elseif>
 </body>
 </html>

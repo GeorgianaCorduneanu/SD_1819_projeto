@@ -59,7 +59,37 @@ public class Login_bean {
             e.printStackTrace();
         }
     }
-
+    public String inserir_musica(String nomeDaMusica, String nomeDoCompositor, String duracaoDaMusica){
+            String mensagem = "5;" + nomeDaMusica + ";" + nomeDoCompositor + ";" + duracaoDaMusica;
+        try {
+            server.enviaStringAoMulticast(mensagem);
+            mensagem = server.recebe_multicast_socket();
+            System.out.println(mensagem);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return mensagem;
+    }
+    public String inserirAlbum(String nomeDoAlbum, String descricao, String dataLancamento){
+        String mensagem = "7;" + nomeDoAlbum + ";" + descricao + ";" + dataLancamento;
+        try {
+            server.enviaStringAoMulticast(mensagem);
+            mensagem = server.recebe_multicast_socket();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return mensagem;
+    }
+    public String inserirArtista(String nomeDoArtista, boolean tipo_compositor, String informcacaAdicional){
+        String mensagem = "6;" + nomeDoArtista + ";" + tipo_compositor + ";" + informcacaAdicional;
+        try {
+            server.enviaStringAoMulticast(mensagem);
+            mensagem = server.recebe_multicast_socket();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return mensagem;
+    }
     private String listar(int tipo){
         //0 album
         //1 artista
@@ -67,6 +97,7 @@ public class Login_bean {
         //3 utilizadores
         //4 playlist
         String mensagem = "16;" + tipo;//
+        todos_utilizadores = "";
         try {
             server.enviaStringAoMulticast(mensagem);
             todos_utilizadores = server.recebe_multicast_socket();

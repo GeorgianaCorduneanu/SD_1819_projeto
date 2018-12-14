@@ -27,6 +27,7 @@ public class Pesquisar_action extends ActionSupport implements SessionAware {
             return "artista";
         }if(pesquisar_tipo.equals("Musica")) {
             pesquisar(3, string_pesquisar);
+            System.out.println("o que pesquisou: " + 3);
             return "musica";
         }if(voltar)
             return "insuccess";
@@ -34,7 +35,8 @@ public class Pesquisar_action extends ActionSupport implements SessionAware {
     }
 
     public String getResultado_pesquisa() {
-        return resultado_pesquisa;
+
+        return this.resultado_pesquisa;
     }
 
     public String getString_pesquisar() {
@@ -51,12 +53,13 @@ public class Pesquisar_action extends ActionSupport implements SessionAware {
 
     public void pesquisar(int tipo, String nome){
         if(tipo==1) //pesquisar album
-            resultado_pesquisa = this.getLogin_bean().pesquisar(14, nome);
+            this.resultado_pesquisa = this.getLogin_bean().pesquisar(14, nome);
         else if(tipo==2){ //artista
-            resultado_pesquisa = this.getLogin_bean().pesquisar(15, nome);
+            this.resultado_pesquisa = this.getLogin_bean().pesquisar(15, nome);
         }else if(tipo==3){//musica
-            resultado_pesquisa = this.getLogin_bean().pesquisar(13, nome);
+            this.resultado_pesquisa = this.getLogin_bean().pesquisar(13, nome);
         }
+        System.out.println("Resultado pesquisa: " + resultado_pesquisa);
     }
     public void setVoltar(boolean voltar){
         this.voltar = voltar;

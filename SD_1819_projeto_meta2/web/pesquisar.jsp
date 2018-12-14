@@ -15,10 +15,10 @@
 <body>
     <s:form method="post" action="pesquisar">
         <s:label name="pesquisar_por" label="Pesquisar por: "/>
-        <s:radio list="{'Artista', 'Musica', 'Album'}" name="pesquisar_tipo" multiple="false"/><br>
         <s:text name="Escreva o nome: "/>
+        <s:radio list="{'Artista', 'Musica', 'Album'}" name="pesquisar_tipo" multiple="false"/><br>
         <s:textfield name="string_pesquisar" /><br>
-        <s:if test="%{#session.login_bean.resultado_pesquisa != null}">
+        <s:if test="%{resultado_pesquisa != null}">
             <s:property value="Resultado_pesquisa"/><br><%--aqui chama a funcao getResultado_pesquisa--%>
         </s:if>
         <s:submit type="button" value="true" name="pesquisar" label="Pesquisar" onclick="fazer_pesquisa()"/><br>

@@ -178,6 +178,25 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return mensagem;
     }
 
+    /*@Override
+    public String pesquisar(int tipo, String nome) throws RemoteException {
+        14 - multicast pesquisa por album
+           15 - multicast pesquisar por artista
+           13 - multicast pesquisar por musica
+
+        String resultado_pesquisa;
+        String mensagem = tipo + ";" + nome;
+        try {
+            enviaStringAoMulticast(mensagem);
+            resultado_pesquisa = recebe_multicast_socket();
+            if(resultado_pesquisa==null)
+                return resultado_pesquisa="Nao existe!";
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }*/
+
   /*  @Override
     public List<String> listar(int tipo) {
         //0 album

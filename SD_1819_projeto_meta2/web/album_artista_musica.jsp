@@ -43,6 +43,7 @@
         </s:form>
     </s:elseif>
     <s:else>
+
         <s:form method="post">
             <s:submit type="button" value="true" name="upload_musica" label="Fazer Upload" formaction="musica"/><br>
             <s:submit type="button" value="true" name="download_musica" label="Fazer Download" formaction="musica"/><br>
