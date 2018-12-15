@@ -31,35 +31,23 @@ public class Artista implements Serializable {
         return nome_artista;
     }
 
-    public void setNome_artista(String nome_artista, Utilizador u) {
-        if(u.getEditor()){
-            if(lista_utilizadores_editar_artista.contains(u) == false)
-                lista_utilizadores_editar_artista.add(u);
-            this.nome_artista = nome_artista;
-        }
+    public void setNome_artista(String nome_artista) {
+       this.nome_artista = nome_artista;
     }
 
     public String getInformacao() {
         return informacao;
     }
 
-    public void setInformacao(String informacao, Utilizador u) {
-        if(u.getEditor()){
-            if(lista_utilizadores_editar_artista.contains(u)==false)
-                lista_utilizadores_editar_artista.add(u);
-            this.informacao = informacao;
-        }
+    public void setInformacao(String informacao) {
+        this.informacao = informacao;
     }
 
     public Boolean getCompositor() {
         return compositor;
     }
 
-    public void setCompositor(Boolean compositor, Utilizador u) {
-        if(u.getEditor()){
-            if(lista_utilizadores_editar_artista.contains(u)== false)
-                lista_utilizadores_editar_artista.add(u);
-            this.compositor = compositor;
-        }
+    public void setCompositor(Boolean compositor) {
+        this.compositor = compositor;
     }
 }

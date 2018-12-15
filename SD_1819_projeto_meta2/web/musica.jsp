@@ -31,14 +31,25 @@
                 <s:action name="musica" executeResult="true"></s:action>
             </s:if>
             <s:else>
-                <s:combobox list="listaMusicas" label="Selecione um utilizador" name="radioListaMusicas" emptyOption="false"  headerKey="-1" headerValue="--- Please Select ---"/><br>
+                <s:combobox list="listaMusicas" label="Selecione uma Musica" name="radioListaMusicas" emptyOption="false"  headerKey="-1" headerValue="--- Please Select ---"/><br>
                 <s:submit type="button" value="true" name="botaoEliminar" label="Eliminar"/>
                 <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/>
             </s:else>
         </s:form>
     </s:elseif>
     <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_musica'}">
-
+        <s:form method="post" action="musica">
+            <s:if test="%{todasMusicas == null}">
+                <s:action name="musica" executeResult="true"></s:action>
+            </s:if>
+            <s:else>
+                <s:radio list="{'Nome da Musica','Nome do Compositor', 'Duracao da Musica'}" name="radioMusicaEditar" multiple="false"/><br>
+                <s:combobox list="listaMusicas" label="Selecione um utilizador" name="radioListaMusicas" emptyOption="false"  headerKey="-1" headerValue="--- Please Select ---"/>
+                <s:textfield name="componenteMudar"/><br>
+                <s:submit type="button" value="true" name="botaoEditar" label="Editar" />
+                <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/>
+            </s:else>
+        </s:form>
     </s:elseif>
 </body>
 </html>

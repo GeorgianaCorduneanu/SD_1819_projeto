@@ -37,7 +37,18 @@
         </s:form>
     </s:elseif>
     <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_artista'}">
-
+        <s:form method="post" action="artista">
+            <s:if test="%{todosArtistas == null}">
+                <s:action name="artista" executeResult="true"/>
+            </s:if>
+            <s:else>
+                <s:radio list="{'Nome','Descricao'}" name="radioTipoData"/><br>
+                <s:combobox list="listaArtistas" label="Selecione um utilizador" name="radioListaArtistas" emptyOption="false"  headerKey="-1" headerValue="--- Please Select ---"/>
+                <s:textfield name="componenteMudar"/><br>
+                <s:submit type="button" value="true" name="botaoMudar" label="Editar"/>
+                <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/>
+            </s:else>
+        </s:form>
     </s:elseif>
 </body>
 </html>
