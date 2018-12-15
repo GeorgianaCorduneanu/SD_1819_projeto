@@ -4,13 +4,15 @@ import com.opensymphony.xwork2.ActionSupport;
 import menu_inicial.model.Login_bean;
 import org.apache.struts2.interceptor.SessionAware;
 
+import java.util.List;
 import java.util.Map;
 
 public class Musica_action extends ActionSupport implements SessionAware {
-    private boolean adicionar_musica, eliminar_musica, editar_musica;
-    private String nomeDaMusica, nomeDoCompositor, duracaoDaMusica;
+    private boolean adicionar_musica, eliminar_musica, editar_musica, botaoEliminar;
+    private String nomeDaMusica, nomeDoCompositor, duracaoDaMusica, radioListaMusicas, todasMusicas;
     private Map<String, Object> session;
     private Login_bean login_bean;
+    private List<String> listaMusicas;
 
     public String execute(){
         login_bean = getLogin_bean();
@@ -19,12 +21,14 @@ public class Musica_action extends ActionSupport implements SessionAware {
             mensagemDevolve = login_bean.inserir_musica(nomeDaMusica, nomeDoCompositor, duracaoDaMusica);
             if(mensagemDevolve.equals("Musica adicionada"))
                 return SUCCESS;
-        }
-        if(adicionar_musica) {
+        }else if(radioListaMusicas!=null && botaoEliminar){
+            mensagemDevolve = login_bean.eliminar(8,radioListaMusicas);
+            if(mensagemDevolve.equals("Musica eliminada"))
+                return SUCCESS;
+        }else if(adicionar_musica) {
             mensagemDevolve = "adicionar_musica";
             login_bean.setOpcao_menu(mensagemDevolve);
             System.out.println(mensagemDevolve);
-
             return mensagemDevolve;
         }else if(eliminar_musica) {
             mensagemDevolve = "eliminar_musica";
@@ -41,8 +45,42 @@ public class Musica_action extends ActionSupport implements SessionAware {
         return "insuccess";
     }
 
+    public String getTodasMusicas() {
+        todasMusicas = login_bean.getTodasMusicas();
+        System.out.println(todasMusicas);
+        return todasMusicas;
+    }
+
+    public void setTodasMusicas(String todasMusicas) {
+        this.todasMusicas = todasMusicas;
+    }
+
+    public boolean isBotaoEliminar() {
+        return botaoEliminar;
+    }
+
+    public void setBotaoEliminar(boolean botaoEliminar) {
+        this.botaoEliminar = botaoEliminar;
+    }
+
+    public String getRadioListaMusicas() {
+        return radioListaMusicas;
+    }
+
+    public void setRadioListaMusicas(String radioListaMusicas) {
+        this.radioListaMusicas = radioListaMusicas;
+    }
+
     public String getNomeDaMusica() {
         return nomeDaMusica;
+    }
+
+    public List<String> getListaMusicas() {
+        return listaMusicas=login_bean.getLista_todos_utilizadores();
+    }
+
+    public void setListaMusicas(List<String> listaMusicas) {
+        this.listaMusicas = listaMusicas;
     }
 
     public void setNomeDaMusica(String nomeDaMusica) {

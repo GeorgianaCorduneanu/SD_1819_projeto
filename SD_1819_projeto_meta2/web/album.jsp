@@ -30,7 +30,16 @@
         </s:form>
     </s:if>
     <s:elseif test="%{#session.login_bean.Opcao_menu == 'eliminar_album'}">
-
+        <s:form method="post" action="album">
+            <s:if test="%{todosAlbuns == null}">
+                <s:action name="album" executeResult="true"></s:action>
+            </s:if>
+            <s:else>
+                <s:combobox list="listaTodosAlbuns" label="Selecione um utilizador" name="radioListaAlbuns" emptyOption="false"  headerKey="-1" headerValue="--- Please Select ---"/><br>
+                <s:submit type="button" value="true" name="botaoEliminar" label="Eliminar"/>
+                <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/>
+            </s:else>
+        </s:form>
     </s:elseif>
     <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_album'}">
 

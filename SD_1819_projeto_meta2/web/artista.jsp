@@ -25,7 +25,16 @@
         </s:form>
     </s:if>
     <s:elseif test="%{#session.login_bean.Opcao_menu == 'eliminar_artista'}">
-
+        <s:form method="post" action="artista">
+            <s:if test="%{todosArtistas == null}">
+                <s:action name="artista" executeResult="true"></s:action>
+            </s:if>
+            <s:else>
+                <s:combobox list="listaArtistas" label="Selecione um utilizador" name="radioListaArtistas" emptyOption="false"  headerKey="-1" headerValue="--- Please Select ---"/><br>
+                <s:submit type="button" value="true" name="botaoEliminar" label="Eliminar"/>
+                <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/>
+            </s:else>
+        </s:form>
     </s:elseif>
     <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_artista'}">
 

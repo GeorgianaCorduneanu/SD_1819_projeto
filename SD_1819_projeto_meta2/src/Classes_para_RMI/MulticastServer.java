@@ -291,17 +291,17 @@ public class MulticastServer extends Thread implements Serializable {
         switch (tipo){
             case 0:
                 for(Album item:lista_album){
-                    mensagem_a_enviar += item.getNome_album();
+                    mensagem_a_enviar += item.getNome_album() + ":";
                 }
                 break;
             case 1:
                 for(Artista item:lista_artistas){
-                    mensagem_a_enviar += item.getNome_artista();
+                    mensagem_a_enviar += item.getNome_artista() + ":";
                 }
                 break;
             case 2:
                 for(Musica item:lista_musica){
-                    mensagem_a_enviar += item.getNome_musica();
+                    mensagem_a_enviar += item.getNome_musica() + ":";
                 }
                 break;
             case 3:

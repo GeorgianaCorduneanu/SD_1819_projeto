@@ -4,13 +4,16 @@ import com.opensymphony.xwork2.ActionSupport;
 import menu_inicial.model.Login_bean;
 import org.apache.struts2.interceptor.SessionAware;
 
+import java.util.List;
 import java.util.Map;
 
 public class Artista_action extends ActionSupport implements SessionAware {
-    private boolean adicionar_artista, eliminar_artista, editar_artista, botaoAdicionar;
+    private boolean adicionar_artista, eliminar_artista, editar_artista, botaoAdicionar, botaoEliminar;
     private Map<String, Object> session;
-    private String informacaoAdicional, nomeDoArtista, tipoCompositor;
+    private String informacaoAdicional, nomeDoArtista, tipoCompositor, radioListaArtistas;
     private Login_bean login_bean;
+    private String todosArtistas;
+    private List<String> listaArtistas;
 
     public String execute(){
         String mensagem;
@@ -22,6 +25,10 @@ public class Artista_action extends ActionSupport implements SessionAware {
                 mensagem = login_bean.inserirArtista(nomeDoArtista, false, informacaoAdicional);
             }
             if(mensagem.equals("Artista Adicionado"))
+                return SUCCESS;
+        }else if(radioListaArtistas != null && botaoEliminar){
+            mensagem = login_bean.eliminar(10,radioListaArtistas);
+            if(mensagem.equals("Artista eliminado"))
                 return SUCCESS;
         }else if(adicionar_artista){
             mensagem = "adicionar_artista";
@@ -37,6 +44,38 @@ public class Artista_action extends ActionSupport implements SessionAware {
             return mensagem;
         }
         return "insuccess";
+    }
+
+    public boolean isBotaoEliminar() {
+        return botaoEliminar;
+    }
+
+    public void setBotaoEliminar(boolean botaoEliminar) {
+        this.botaoEliminar = botaoEliminar;
+    }
+
+    public String getRadioListaArtistas() {
+        return radioListaArtistas;
+    }
+
+    public void setRadioListaArtistas(String radioListaArtistas) {
+        this.radioListaArtistas = radioListaArtistas;
+    }
+
+    public String getTodosArtistas() {
+        return todosArtistas = login_bean.getTodosArtistas();
+    }
+
+    public void setTodosArtistas(String todosArtistas) {
+        this.todosArtistas = todosArtistas;
+    }
+
+    public List<String> getListaArtistas() {
+        return listaArtistas = login_bean.getLista_todos_utilizadores();
+    }
+
+    public void setListaArtistas(List<String> listaArtistas) {
+        this.listaArtistas = listaArtistas;
     }
 
     public boolean isBotaoAdicionar() {

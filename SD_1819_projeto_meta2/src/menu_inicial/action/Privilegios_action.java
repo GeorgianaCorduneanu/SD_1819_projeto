@@ -59,7 +59,6 @@ public class Privilegios_action extends ActionSupport implements SessionAware {
     }
 
     public String getTodos_utilizadores() {
-        System.out.println("dentro de getTodosUtilizadores: " + login_bean.getTodos_utilizadores());
         todos_utilizadores = login_bean.getTodos_utilizadores();
         System.out.println(todos_utilizadores);
         return todos_utilizadores;

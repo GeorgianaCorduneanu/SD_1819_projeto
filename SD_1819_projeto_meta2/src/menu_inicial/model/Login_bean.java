@@ -29,18 +29,57 @@ public class Login_bean {
             e.printStackTrace(); // what happens *after* we reach this line?
         }
     }
-
+    public String eliminar(int tipo,String nome){
+        //tipo para multicast 8 musica tipo para bean 2
+        //tipo para multicast 10 artista tipo para bean 1
+        //tipo para multicast 9 album tipo para bean 0
+        String mensagem;
+        mensagem = tipo + ";" + nome;
+        try {
+            server.enviaStringAoMulticast(mensagem);
+            mensagem = server.recebe_multicast_socket();
+            /*if(mensagem.equals("Musica eliminada")) {
+                getTodasMusicas();
+                getLista_users();
+            }*/
+            if(tipo == 8)
+                listar(2);
+           if(tipo == 10)
+               listar(1);
+           if(tipo == 9)
+               listar(0);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return mensagem;
+    }
     public List<String> getLista_todos_utilizadores() {
         return lista_todos_utilizadores;
     }
 
     public String getTodos_utilizadores(){
         if(todos_utilizadores == null)
-            todos_utilizadores =listar(3);
+            todos_utilizadores = listar(3);
         getLista_users();
         return todos_utilizadores;
     }
-
+    public String getTodasMusicas(){
+        //if(todos_utilizadores==null)
+            todos_utilizadores=listar(2);
+        getLista_users();
+        return todos_utilizadores;
+    }
+    public String getTodosArtistas(){
+        //if(todos_utilizadores==null)
+            todos_utilizadores = listar(1);
+        getLista_users();
+        return todos_utilizadores;
+    }
+    public String getTodosAlbuns(){
+        todos_utilizadores = listar(0);
+        getLista_users();
+        return todos_utilizadores;
+    }
     public void getLista_users() {
         ArrayList<String> lista_todos_utilizadores = new ArrayList<>();
         String [] mensagem_cortada_recebida =todos_utilizadores.split(":");
