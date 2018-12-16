@@ -19,10 +19,13 @@
         </s:if>
         <s:else>
             <s:radio list="{'Dar Privilegios', 'Remover Privilegios'}" name="privilegios_tipo" multiple="false"/><br>
-            <s:combobox list="lista_todos_utilizadores" label="Selecione um utilizador" name="utilizador_privilegio" emptyOption="false"  headerKey="-1" headerValue="--- Please Select ---"/>
+            <s:combobox list="lista_todos_utilizadores" label="Selecione um utilizador" name="utilizador_privilegio" emptyOption="false" headerKey="-1" headerValue="--- Please Select ---"/>
             <s:submit type="button" value="true" name="mudar" label="Mudar"/>
             <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/><br>
         </s:else>
    </s:form>
 </body>
+    <div>
+    <div id="container"><div id="history"></div></div>
+</div>
 </html>

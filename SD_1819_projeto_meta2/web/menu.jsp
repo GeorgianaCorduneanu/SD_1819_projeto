@@ -36,7 +36,8 @@
             console.log(event.reason);
         }
         function onOpen(event) {
-            writeToHistory('Connected to ' + window.location.host + '.');
+            var username = "<%=(String) session.getAttribute("username")%>";
+            websocket.send("login;" + username);
         }
         function onMessage(message) {
             writeToHistory(message.data);

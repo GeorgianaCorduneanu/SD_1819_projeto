@@ -1,5 +1,6 @@
 package menu_inicial.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import menu_inicial.model.Login_bean;
 import org.apache.struts2.interceptor.SessionAware;
@@ -36,6 +37,8 @@ public class Login_action extends ActionSupport implements SessionAware {
                     session.put("editor", true);
                 }session.put("loggedin", true); // this marks the user as logged in
                 System.out.println("Encontrou");
+                //Map session_st;
+                ActionContext.getContext().setSession(session);
 
                 return SUCCESS;
             }

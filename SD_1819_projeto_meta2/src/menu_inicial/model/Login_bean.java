@@ -232,4 +232,12 @@ public class Login_bean {
     public String getUsername(){
         return this.username;
     }
+
+    public void inserirNotificacao(String user, String notificacao){
+        try {
+            server.inserirNotificacao(user, notificacao);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }
