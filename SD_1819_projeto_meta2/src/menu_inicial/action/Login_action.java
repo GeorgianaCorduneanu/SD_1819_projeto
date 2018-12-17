@@ -1,6 +1,5 @@
 package menu_inicial.action;
 
-import com.github.scribejava.core.model.Token;
 import com.opensymphony.xwork2.ActionSupport;
 import menu_inicial.model.Login_bean;
 import org.apache.struts2.interceptor.SessionAware;
@@ -31,9 +30,6 @@ public class Login_action extends ActionSupport implements SessionAware {
             if(aux==1 || aux==2) {
                 //String mensagem_resultado="success_normal";
                 session.put("username", username);
-                Token accessToken = new Token(menu_inicial.model.Login_bean.getAcessTokenByUsername(username),"");
-                System.out.println("DEBUG: "+accessToken);
-                session.put("accessToken",accessToken);
                 if(aux==1) {
                     session.put("editor", false);
                 }else if(aux==2) {

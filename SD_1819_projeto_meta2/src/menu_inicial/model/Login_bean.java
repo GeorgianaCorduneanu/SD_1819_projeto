@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Login_bean {
-    private static RMIServerInterface server;
+    private RMIServerInterface server;
     private String username; // username and password supplied by the user
     private String password;
     private String resultado_pesquisa;
@@ -129,26 +129,6 @@ public class Login_bean {
         }
         return mensagem;
     }
-    public String guardaAcessKey(String username, String acessKey,String mail){
-        String mensagem = "17;"+ username +";"+acessKey+";"+mail;
-        try {
-            server.enviaStringAoMulticast(mensagem);
-            mensagem = server.recebe_multicast_socket();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return mensagem;
-    }
-    public String guardaMusicaID(String musica,String fileID){
-        String mensagem = "19;"+ musica +";"+ fileID;
-        try {
-            server.enviaStringAoMulticast(mensagem);
-            mensagem = server.recebe_multicast_socket();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return mensagem;
-    }
     private String listar(int tipo){
         //0 album
         //1 artista
@@ -173,7 +153,6 @@ public class Login_bean {
         return lista_final;*/
         return todos_utilizadores;
     }
-
     /*public boolean getUserMatchesPassword() throws RemoteException {
         return server.userMatchesPassword(this.username, this.password);
     }*/
@@ -206,60 +185,6 @@ public class Login_bean {
             e.printStackTrace();
         }
         return resultado_pesquisa;
-    }
-    public String getAcessToken(){
-        String acessToken;
-        String mensagem = "18;" + getUsername();
-        try{
-            server.enviaStringAoMulticast(mensagem);
-            acessToken = server.recebe_multicast_socket();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            System.out.println("DEBUG : ERRO GETACESSTOKEN");
-            return "erro";
-        }
-        System.out.println("DEBUG : RETORNOU BEM");
-        return acessToken;
-    }
-    public static String getAcessTokenByUsername(String username){
-        String acessToken;
-        String mensagem = "18;" + username;
-        try{
-            server.enviaStringAoMulticast(mensagem);
-            acessToken = server.recebe_multicast_socket();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            System.out.println("DEBUG : ERRO GETACESSTOKEN");
-            return "erro";
-        }
-        System.out.println("DEBUG : RETORNOU BEM");
-        return acessToken;
-    }
-    public String getFileIDByMusic(String musica){
-        String id;
-        String mensagem = "20;" + musica;
-        try{
-            server.enviaStringAoMulticast(mensagem);
-            id = server.recebe_multicast_socket();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return "erro";
-        }
-        return id;
-    }
-    public String verificaMail1(String mail){
-        System.out.println("ENTROUUUUUUUUUUUUUUUUUU");
-        String mensagem =  "21;"+mail;
-        String resposta;
-        try{
-            server.enviaStringAoMulticast(mensagem);
-            resposta = server.recebe_multicast_socket();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return "erro|VerificaMail";
-        }
-        System.out.println("DEBUG : RETORNOU BEM");
-        return resposta;
     }
     public String getOpcao_menu(){
         return this.opcao_menu;

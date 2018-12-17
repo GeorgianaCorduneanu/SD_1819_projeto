@@ -41,15 +41,15 @@ public class MulticastServer extends Thread implements Serializable {
         String mensagem;
         Utilizador u;
         Utilizador v_ut;
-        ficheiro_utilizador = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin";
+        /*ficheiro_utilizador = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin";
         ficheiro_artista = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\artista.bin";
         ficheiro_album = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\album.bin";
-        ficheiro_musicas = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";
-/*
+        ficheiro_musicas = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";*/
+
         ficheiro_utilizador = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\data.bin";
         ficheiro_album = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\album.bin";
         ficheiro_artista = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\artista.bin";
-        ficheiro_musicas = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\musica.bin";*/
+        ficheiro_musicas = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\musica.bin";
 
         // write_obj_user();
 
@@ -104,7 +104,6 @@ public class MulticastServer extends Thread implements Serializable {
                 String message = new String(packet.getData(), 0, packet.getLength());
                 System.out.println("Recebeu a mensagem: " + message);
                 mensagem_cortada = message.split(";");
-
 
                 switch (mensagem_cortada[0]) {
                     case "1": // registo
@@ -238,30 +237,6 @@ public class MulticastServer extends Thread implements Serializable {
                         break;
                     case "16":
                         enviaServerRMI(listar(Integer.parseInt(mensagem_cortada[1])));
-                        break;
-                    case "17":
-                        if(guardaAcessKey(mensagem_cortada[1],mensagem_cortada[2],mensagem_cortada[3])){
-                            enviaServerRMI("success");
-                        }else{
-                            enviaServerRMI("insuccess");
-                        }
-                    case "18":
-                        enviaServerRMI(getAcessToken(mensagem_cortada[1]));
-                        break;
-                    case "19":
-                        if(guarda_MusicaID(mensagem_cortada[1],mensagem_cortada[2])){
-                            System.out.println("--------------ENVIOU---------");
-                            enviaServerRMI("success");
-                        }else {
-                            System.out.println("------------Enviou mas MAL---------");
-                            enviaServerRMI("insuccess");
-                        }
-                        break;
-                    case "20":
-                        enviaServerRMI(getFileIDByMusic(mensagem_cortada[1]));
-                        break;
-                    case "21":
-                        enviaServerRMI(verificaMail(mensagem_cortada[1]));
                         break;
                     default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
@@ -453,197 +428,35 @@ public class MulticastServer extends Thread implements Serializable {
             }
             return false;
         }
-        private String verificaMail(String mail) {
-            String line;
-            String filename = "C:\\Users\\gonca\\Desktop\\SD\\acessKeys.txt";
-            String[] par, par2;
-            BufferedReader br = null;
-            FileReader fr = null;
-            try {
-                fr = new FileReader(filename);
-                br = new BufferedReader(fr);
-                line = br.readLine();
-                par = line.split("&&&&&");
-                System.out.println("PAR: " + par);
-                for (int i = 0; i < par.length; i++) {
-                    par2 = par[i].split(";;;;");
-                    System.out.println("PAR2: " + par2);
-                    if (par2[2].equals(mail)) {
-                        return "true;" + par2[0];
-                    }
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (br != null)
-                        br.close();
-                    if (fr != null)
-                        fr.close();
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                    return "erro";
-                }
-            }
-            return "false;";
-        }
-        private String getFileIDByMusic(String musica){
-            String line;
-            String filename = "C:\\Users\\gonca\\Desktop\\SD\\musicasAssocia.txt";
-            String[] par, par2;
-            BufferedReader br = null;
-            FileReader fr = null;
-            System.out.println("DEBUG---MUSICA--:"+musica);
-            try {
-                fr = new FileReader(filename);
-                br = new BufferedReader(fr);
-                line = br.readLine();
-                par = line.split("&&&&&");
-                System.out.println("PAR: "+par);
-                for (int i = 0; i < par.length; i++) {
-                    par2 = par[i].split(";;;;;");
-                    System.out.println("PAR2: "+par2);
-                    if (par2[0].equals(musica)) {
-                        return par2[1];
-                    }
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (br != null)
-                        br.close();
-                    if (fr != null)
-                        fr.close();
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                    return "erro";
-                }
 
-            }
-            return "erro:Nao encontrou musica";
-        }
-
-        private String getAcessToken(String username) {
-            String line;
-            String filename = "C:\\Users\\gonca\\Desktop\\SD\\acessKeys.txt";
-            String[] par, par2;
-            BufferedReader br = null;
-            FileReader fr = null;
-            try {
-                fr = new FileReader(filename);
-                br = new BufferedReader(fr);
-                line = br.readLine();
-                par = line.split("&&&&&");
-                System.out.println("PAR: "+par);
-                for (int i = 0; i < par.length; i++) {
-                    par2 = par[i].split(";;;;");
-                    System.out.println("PAR2: "+par2);
-                    if (par2[0].equals(username)) {
-                        return par2[1];
-                    }
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (br != null)
-                        br.close();
-                    if (fr != null)
-                        fr.close();
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                    return "erro";
-                }
-
-            }
-            return "erro:Nao encontrou user";
-        }
-        private boolean guardaAcessKey(String username, String acessKey,String mail) {
-            String filename = "C:\\Users\\gonca\\Desktop\\SD\\acessKeys.txt";
-            BufferedWriter bw = null;
-            FileWriter fw = null;
-            try {
-                fw = new FileWriter(filename,true);
-                bw = new BufferedWriter(fw);
-                bw.append(username + ";;;;" + acessKey+ ";;;;"+mail+"&&&&&");
-
-            } catch (IOException e) {
-                System.out.println(e);
-                return false;
-            } finally {
-                try {
-                    if (bw != null)
-                        bw.close();
-                    if (fw != null)
-                        fw.close();
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                    return false;
-                }
-            }
-            return true;
-        }
-        private boolean guarda_MusicaID(String musica, String fileID){
-            String filename = "C:\\Users\\gonca\\Desktop\\SD\\musicasAssocia.txt";
-            BufferedWriter bw = null;
-            FileWriter fw = null;
-            System.out.println("DEBUG GUARDA_MUSICA_ID: "+musica+";"+fileID);
-            try {
-                fw = new FileWriter(filename,true);
-                bw = new BufferedWriter(fw);
-                bw.append(musica + ";;;;;" + fileID+"&&&&&");
-
-            } catch (IOException e) {
-                System.out.println(e);
-                return false;
-            } finally {
-                try {
-                    if (bw != null)
-                        bw.close();
-                    if (fw != null)
-                        fw.close();
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                    return false;
-                }
-            }
-            return true;
-        }
         private void write_obj_user () {
-        try {
-            FileOutputStream fos = new FileOutputStream(ficheiro_utilizador);
-            FileOutputStream fos_artista = new FileOutputStream(ficheiro_artista);
-            FileOutputStream fos_album = new FileOutputStream(ficheiro_album);
-            FileOutputStream fos_musica = new FileOutputStream(ficheiro_musicas);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            ObjectOutputStream oos_album = new ObjectOutputStream(fos_album);
-            ObjectOutputStream oos_musica = new ObjectOutputStream(fos_musica);
-            ObjectOutputStream oos_artista = new ObjectOutputStream(fos_artista);
-            oos_album.flush();
-            oos_artista.flush();
-            oos.flush();
-            oos_musica.flush();
-            oos.writeObject(user);
-            oos_album.writeObject(lista_album);
-            oos_musica.writeObject(lista_musica);
-            oos_artista.writeObject(lista_artistas);
-            oos.close();
-            oos_album.close();
-            oos_artista.close();
-            oos_musica.close();
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
+            try {
+                FileOutputStream fos = new FileOutputStream(ficheiro_utilizador);
+                FileOutputStream fos_artista = new FileOutputStream(ficheiro_artista);
+                FileOutputStream fos_album = new FileOutputStream(ficheiro_album);
+                FileOutputStream fos_musica = new FileOutputStream(ficheiro_musicas);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                ObjectOutputStream oos_album = new ObjectOutputStream(fos_album);
+                ObjectOutputStream oos_musica = new ObjectOutputStream(fos_musica);
+                ObjectOutputStream oos_artista = new ObjectOutputStream(fos_artista);
+                oos_album.flush();
+                oos_artista.flush();
+                oos.flush();
+                oos_musica.flush();
+                oos.writeObject(user);
+                oos_album.writeObject(lista_album);
+                oos_musica.writeObject(lista_musica);
+                oos_artista.writeObject(lista_artistas);
+                oos.close();
+                oos_album.close();
+                oos_artista.close();
+                oos_musica.close();
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
-    }
 
         private void read_obj () {
             try {
@@ -752,7 +565,7 @@ public class MulticastServer extends Thread implements Serializable {
                 InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
                 //System.out.println("sending to rmi server: " + message);
-                TimeUnit.MILLISECONDS.sleep(125);
+                TimeUnit.MILLISECONDS.sleep(75);
                 socket.send(packet);
                 System.out.println("Mensagem enviada msg: " + message);
 
