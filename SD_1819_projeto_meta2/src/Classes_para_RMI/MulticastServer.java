@@ -41,18 +41,17 @@ public class MulticastServer extends Thread implements Serializable {
         String mensagem;
         Utilizador u;
         Utilizador v_ut;
-        ficheiro_utilizador = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_meta2\\data.bin";
-        ficheiro_artista = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_meta2\\artista.bin";
-        ficheiro_album = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_meta2\\album.bin";
-        ficheiro_musicas = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_meta2\\musica.bin";
+        /*ficheiro_utilizador = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\data.bin";
+        ficheiro_artista = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\artista.bin";
+        ficheiro_album = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\album.bin";
+        ficheiro_musicas = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";*/
 
-        /*
         ficheiro_utilizador = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\data.bin";
         ficheiro_album = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\album.bin";
         ficheiro_artista = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\artista.bin";
         ficheiro_musicas = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\musica.bin";
-        */
-        //write_obj_user();
+
+        // write_obj_user();
 
         //this.connection = getConnection(); //obter a conexão com a base de dados
         read_obj();
