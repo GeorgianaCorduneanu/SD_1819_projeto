@@ -8,6 +8,7 @@
     <!-- devMode equals debug information and reload everything for every request -->
     <constant name="struts.devMode" value="false" />
     <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.action.excludePattern" value="/ws"/>
 
     <package name="menu_inicial" extends="struts-default">
 
@@ -65,11 +66,6 @@
             <result name="editar_musica">/musica.jsp</result>
             <result name="success">/menu.jsp</result>
             <result name="insuccess">/musica.jsp</result>
-        </action>
-        <action name="playlist" class="menu_inicial.action.Playlist_action" method="execute">
-            <result name="ver_playlist">/album_artista_musica.jsp</result>
-            <result name="editar_playlist">/album_artista_musica.jsp</result>
-            <result name="criar_playlist">/album_artista_musica.jsp</result>
         </action>
         <action name="artista" class="menu_inicial.action.Artista_action" method="execute">
             <result name="adicionar_artista">/artista.jsp</result>

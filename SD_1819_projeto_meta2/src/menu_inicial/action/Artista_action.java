@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Artista_action extends ActionSupport implements SessionAware {
-    private boolean adicionar_artista, eliminar_artista, editar_artista, botaoAdicionar, botaoEliminar;
+    private boolean adicionar_artista, eliminar_artista, editar_artista, botaoAdicionar, botaoEliminar, botaoMudar;
     private Map<String, Object> session;
-    private String informacaoAdicional, nomeDoArtista, tipoCompositor, radioListaArtistas;
+    private String informacaoAdicional, nomeDoArtista, tipoCompositor, radioListaArtistas, radioTipoData, componenteMudar;
     private Login_bean login_bean;
     private String todosArtistas;
     private List<String> listaArtistas;
@@ -26,10 +26,24 @@ public class Artista_action extends ActionSupport implements SessionAware {
             }
             if(mensagem.equals("Artista Adicionado"))
                 return SUCCESS;
-        }else if(radioListaArtistas != null && botaoEliminar){
-            mensagem = login_bean.eliminar(10,radioListaArtistas);
-            if(mensagem.equals("Artista eliminado"))
+        }else if(radioListaArtistas != null && botaoEliminar) {
+            mensagem = login_bean.eliminar(10, radioListaArtistas);
+            if (mensagem.equals("Artista eliminado"))
                 return SUCCESS;
+        }else if(radioListaArtistas!=null && botaoMudar && radioTipoData!=null && componenteMudar!=""){
+            if(radioTipoData.equals("Nome")){
+                mensagem = "21;" + radioListaArtistas + ";" + componenteMudar;
+                mensagem = login_bean.editar(1, mensagem);
+                System.out.println(mensagem);
+                if(mensagem.equals("Artista editado"))
+                    return SUCCESS;
+            }else if(radioTipoData.equals("Descricao")){
+                mensagem = "22;" + radioListaArtistas + ";" + componenteMudar;
+                mensagem = login_bean.editar(1, mensagem);
+                System.out.println(mensagem);
+                if(mensagem.equals("Artista editado"))
+                    return SUCCESS;
+            }
         }else if(adicionar_artista){
             mensagem = "adicionar_artista";
             login_bean.setOpcao_menu(mensagem);
@@ -44,6 +58,30 @@ public class Artista_action extends ActionSupport implements SessionAware {
             return mensagem;
         }
         return "insuccess";
+    }
+
+    public String getRadioTipoData() {
+        return radioTipoData;
+    }
+
+    public void setRadioTipoData(String radioTipoData) {
+        this.radioTipoData = radioTipoData;
+    }
+
+    public String getComponenteMudar() {
+        return componenteMudar;
+    }
+
+    public void setComponenteMudar(String componenteMudar) {
+        this.componenteMudar = componenteMudar;
+    }
+
+    public boolean isBotaoMudar() {
+        return botaoMudar;
+    }
+
+    public void setBotaoMudar(boolean botaoMudar) {
+        this.botaoMudar = botaoMudar;
     }
 
     public boolean isBotaoEliminar() {
@@ -62,13 +100,29 @@ public class Artista_action extends ActionSupport implements SessionAware {
         this.radioListaArtistas = radioListaArtistas;
     }
 
-    public String getTodosArtistas() {
+    /*public String getTodosArtistas() {
         return todosArtistas = login_bean.getTodosArtistas();
     }
 
     public void setTodosArtistas(String todosArtistas) {
         this.todosArtistas = todosArtistas;
+    }*/
+
+    public String getTodosArtistas() {
+        return todosArtistas=login_bean.getTodosArtistas();
     }
+
+    public void setTodosArtistas(String todosArtistas) {
+        this.todosArtistas = todosArtistas;
+    }
+
+    /*public List<String> getListaArtistas() {
+        return listaArtistas = login_bean.getLista_todos_utilizadores();
+    }
+
+    public void setListaArtistas(List<String> listaArtistas) {
+        this.listaArtistas = listaArtistas;
+    }*/
 
     public List<String> getListaArtistas() {
         return listaArtistas = login_bean.getLista_todos_utilizadores();

@@ -36,10 +36,7 @@
             <s:submit type="button" value="true" name="upload_musica" label="Fazer Upload" formaction="musica"/><br>
             <s:submit type="button" value="true" name="download_musica" label="Fazer Download" formaction="musica"/><br>
             <s:submit type="button" value="true" name="partilhar_musica" label="Partilhar uma Musica" formaction="musica"/><br>
-            <s:submit type="button" value="true" name="criar_playlist" label="Criar Playlist" formaction="musica"/><br>
-            <s:submit type="button" value="true" name="ver_playlist" label="Ver Playlist" formaction="musica"/><br>
-            <s:submit type="button" value="true" name="editar_playlist" label="Editar PLaylist" fomraction="musica"/><br>
-            <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/><br>
+           <s:submit type="button" value="true" name="voltar" label="VOLTAR" formaction="menu"/><br>
         </s:form>
     </s:elseif>
     <s:else>

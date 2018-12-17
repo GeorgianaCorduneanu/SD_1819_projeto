@@ -1,7 +1,5 @@
 package Classes_para_RMI;
 
-import com.sun.org.apache.xpath.internal.operations.Mult;
-
 import java.io.*;
 import java.net.MulticastSocket;
 import java.net.DatagramPacket;
@@ -9,6 +7,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.concurrent.TimeUnit;
 
 public class MulticastServer extends Thread implements Serializable {
@@ -19,10 +18,12 @@ public class MulticastServer extends Thread implements Serializable {
     private ArrayList<Artista> lista_artistas = new ArrayList<>();
     private ArrayList<Album> lista_album = new ArrayList<>();
     private ArrayList<Musica> lista_musica = new ArrayList<>();
+    private ArrayList<String> lista_notificacao = new ArrayList<>();
     private String ficheiro_utilizador;
     private String ficheiro_musicas;
     private String ficheiro_album;
     private String ficheiro_artista;
+    private String ficheiro_notificacao;
 
     public static void main(String[] args) {
         MulticastServer server = new MulticastServer();
@@ -46,6 +47,7 @@ public class MulticastServer extends Thread implements Serializable {
         ficheiro_album = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\album.bin";
         ficheiro_musicas = "C:\\Users\\gonca\\Desktop\\SD_1819_projeto\\SD_1819_projeto_versao01\\musica.bin";*/
 
+        ficheiro_notificacao = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\data.bin";
         ficheiro_utilizador = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\data.bin";
         ficheiro_album = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\album.bin";
         ficheiro_artista = "C:\\Users\\ginjo\\Documents\\SD_1819_projeto\\SD_1819_projeto_meta2\\artista.bin";
@@ -73,6 +75,14 @@ public class MulticastServer extends Thread implements Serializable {
             for (Artista art : lista_artistas) {
                 System.out.println("Nome Artista: " + art.getNome_artista() + "| compositor: " + art.getCompositor() + "| Informacao: " + art.getInformacao());
             }
+        }
+        if(!lista_notificacao.isEmpty()){
+            System.out.println("----NOTIFICACAO-----");
+            for(String item:lista_notificacao){
+                System.out.println(item);
+            }
+        }else{
+            System.out.println("Noa tem notificacao");
         }
         if (!lista_musica.isEmpty()) {
             System.out.println("----MUSICAS----");
@@ -213,18 +223,10 @@ public class MulticastServer extends Thread implements Serializable {
                         write_obj_user();
                         break;
                     case "11"://edita descricao album
-                        if(edita_descricao_album(mensagem_cortada[1],mensagem_cortada[2],mensagem_cortada[3])){
-                            enviaServerRMI("A editar descricao dum album");
-                        }else
-                            enviaServerRMI("Upps algo errado!");
-                        write_obj_user();
+                        enviaServerRMI(edita_descricao_album(mensagem_cortada[1], mensagem_cortada[2]));
                         break;
                     case "12"://edita data album
-                        if(edita_data_album(mensagem_cortada[1],mensagem_cortada[2],mensagem_cortada[3])){
-                            enviaServerRMI("A editar data dum album");
-                        }else
-                            enviaServerRMI("Upps algo errado!");
-                        write_obj_user();
+                        enviaServerRMI(edita_data_album(mensagem_cortada[1], mensagem_cortada[2]));
                         break;
                     case "13"://pesquisar uma musica
                         enviaServerRMI(pesquisar(13,mensagem_cortada[1]));
@@ -237,6 +239,33 @@ public class MulticastServer extends Thread implements Serializable {
                         break;
                     case "16":
                         enviaServerRMI(listar(Integer.parseInt(mensagem_cortada[1])));
+                        break;
+                    case "17":
+                        enviaServerRMI(editarNomeDaMusica(mensagem_cortada[1], mensagem_cortada[2]));
+                        break;
+                    case "18":
+                        enviaServerRMI(editarNomeDoCompositor(mensagem_cortada[1], mensagem_cortada[2]));
+                        break;
+                    case "19":
+                        enviaServerRMI(editarDuracaoDaMusica(mensagem_cortada[1], mensagem_cortada[2]));
+                        break;
+                    case "20":
+                        enviaServerRMI(editaNomeDoAlbum(mensagem_cortada[1], mensagem_cortada[2]));
+                        break;
+                    case "21":
+                        enviaServerRMI(editarNomeDoArtista(mensagem_cortada[1], mensagem_cortada[2]));
+                        break;
+                    case "22":
+                        enviaServerRMI(editarInformacaoDoArtista(mensagem_cortada[1], mensagem_cortada[2]));
+                        break;
+                    case "23":
+                        inserirNotificacao(mensagem_cortada[1], mensagem_cortada[2]);
+                        break;
+                    case "24":
+                        eliminarNotificacao(mensagem_cortada[1]);
+                        break;
+                    case "25":
+                        enviaServerRMI(verNotificacao(mensagem_cortada[1]));
                         break;
                     default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
@@ -252,7 +281,51 @@ public class MulticastServer extends Thread implements Serializable {
             socket.close();
         }
     }
-
+    private String editarInformacaoDoArtista(String nomeDoArtista, String informacaoDoArtista){
+        for(Artista item:lista_artistas){
+            if(item.getNome_artista().equals(nomeDoArtista)){
+                item.setInformacao(informacaoDoArtista);
+                return "Artista editado";
+            }
+        }
+        return "Artista nao editado";
+    }
+    private String editarNomeDoArtista(String nomeDoArtistaAntigo, String nomeDoArtistaNovo){
+        for(Artista item:lista_artistas){
+            if(item.getNome_artista().equals(nomeDoArtistaAntigo)){
+                item.setNome_artista(nomeDoArtistaNovo);
+                return "Artista editado";
+            }
+        }
+        return "Artista nao editado";
+    }
+    private String editarDuracaoDaMusica(String nomeDaMusica, String duracaoDaMusicaNova){
+        for(Musica item:lista_musica){
+            if(item.getNome_musica().equals(nomeDaMusica)){
+                item.setDuracao(duracaoDaMusicaNova);
+                return "Musica editada";
+            }
+        }
+        return "Musica nao editada";
+    }
+    private String editarNomeDoCompositor(String nomeDaMusica, String nomeDoCompositorNovo){
+        for(Musica item:lista_musica){
+            if(item.getNome_musica().equals(nomeDaMusica)){
+                item.setCompositor(nomeDoCompositorNovo);
+                return "Musica editada";
+            }
+        }
+        return "Musica nao editada";
+    }
+    private String editarNomeDaMusica(String nomeDaMusicaAntiga, String nomeDaMusicaNova){
+        for(Musica item:lista_musica){
+            if(item.getNome_musica().equals(nomeDaMusicaAntiga)) {
+                item.setNome_musica(nomeDaMusicaNova);
+                return "Musica editada";
+            }
+        }
+        return "Musica nao editada";
+    }
     private String pesquisar(int protocolo, String nome){
             String mensagem_erro= null;
             switch (protocolo) {
@@ -330,6 +403,33 @@ public class MulticastServer extends Thread implements Serializable {
         return true;
     }
 
+    private void inserirNotificacao(String nome, String mensagem){
+        String notificacao = nome + ";" + mensagem;
+        lista_notificacao.add(notificacao);
+    }
+    private void eliminarNotificacao(String nome){
+        String [] notificacaoSeparada;
+        if(lista_notificacao.isEmpty())
+            return;
+        try {
+            for (String item : lista_notificacao) {
+                notificacaoSeparada = item.split(";");
+                if (notificacaoSeparada[0].equals(nome))
+                    lista_notificacao.remove(item);
+            }
+        }catch (ConcurrentModificationException c){}
+    }
+    private String verNotificacao(String nome){
+        String listaFinal="";
+        String [] notificacaoSeparada;
+        for(String item:lista_notificacao){
+            notificacaoSeparada = item.split(";");
+            if(notificacaoSeparada[0].equals(nome)){
+                listaFinal += notificacaoSeparada[1] + ";";
+            }
+        }
+        return listaFinal;
+    }
     private boolean inserir_album_lista(String nome, String descricao, String data) {
         for (Album a : lista_album) {
             if (a.getNome_album().equals(nome)) {
@@ -354,8 +454,18 @@ public class MulticastServer extends Thread implements Serializable {
         return true;
     }
 
-    private boolean edita_descricao_album(String nome, String descricao, String nome_user) {
-        int i = 0;
+    private String editaNomeDoAlbum(String nomeDoAlbumAntigo, String nomeDoAlbumNovo){
+        for(Album item:lista_album){
+            if(item.getNome_album().equals(nomeDoAlbumAntigo)){
+                item.setNome_album(nomeDoAlbumNovo);
+                return "Album editado";
+            }
+        }
+        return "Album nao editado";
+    }
+
+    private String edita_descricao_album(String nome, String descricao) {
+        /*int i = 0;
         Utilizador aux = null;
         for (Utilizador u : user) {
             if (u.getUsername().equals(nome_user)) {
@@ -370,11 +480,18 @@ public class MulticastServer extends Thread implements Serializable {
             }
             i++;
         }
-        return false;
+        return false;*/
+        for(Album item:lista_album){
+            if(item.getNome_album().equals(nome)){
+                item.setDescricao(descricao);
+                return "Album editado";
+            }
+        }
+        return "Album nao editado";
     }
 
-    private boolean edita_data_album(String nome, String data, String nome_user) {
-        int i = 0;
+    private String edita_data_album(String nome, String data) {
+        /*int i = 0;
         Utilizador aux = null;
         for (Utilizador u : user) {
             if (u.getUsername().equals(nome_user)) {
@@ -390,8 +507,15 @@ public class MulticastServer extends Thread implements Serializable {
             }
 
             return false;
+        }*/
+        for(Album item:lista_album){
+            if(item.getNome_album().equals(nome)){
+                item.setData_lancamento(data);
+                return "Album editado";
+            }
         }
-
+        return "Album nao editado";
+    }
 
     private boolean elimina_musica_list(String nome){
         int i = 0;
@@ -435,14 +559,18 @@ public class MulticastServer extends Thread implements Serializable {
                 FileOutputStream fos_artista = new FileOutputStream(ficheiro_artista);
                 FileOutputStream fos_album = new FileOutputStream(ficheiro_album);
                 FileOutputStream fos_musica = new FileOutputStream(ficheiro_musicas);
+                FileOutputStream fos_notificacao = new FileOutputStream(ficheiro_notificacao);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
                 ObjectOutputStream oos_album = new ObjectOutputStream(fos_album);
                 ObjectOutputStream oos_musica = new ObjectOutputStream(fos_musica);
                 ObjectOutputStream oos_artista = new ObjectOutputStream(fos_artista);
+                ObjectOutputStream oos_notificacao = new ObjectOutputStream(fos_notificacao);
                 oos_album.flush();
                 oos_artista.flush();
                 oos.flush();
                 oos_musica.flush();
+                oos_notificacao.flush();
+                oos_notificacao.writeObject(lista_notificacao);
                 oos.writeObject(user);
                 oos_album.writeObject(lista_album);
                 oos_musica.writeObject(lista_musica);
@@ -451,6 +579,7 @@ public class MulticastServer extends Thread implements Serializable {
                 oos_album.close();
                 oos_artista.close();
                 oos_musica.close();
+                oos_notificacao.close();
             } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {

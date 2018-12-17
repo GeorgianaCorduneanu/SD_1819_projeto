@@ -29,6 +29,24 @@ public class Login_bean {
             e.printStackTrace(); // what happens *after* we reach this line?
         }
     }
+
+    public String editar(int tipo, String mensagem){
+        //0 album
+        //1 artista
+        //2 musica
+        //3 utilizadores
+        //4 playlist
+        String msg="";
+        try {
+            server.enviaStringAoMulticast(mensagem);
+            msg = server.recebe_multicast_socket();
+            listar(tipo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return msg;
+    }
+
     public String eliminar(int tipo,String nome){
         //tipo para multicast 8 musica tipo para bean 2
         //tipo para multicast 10 artista tipo para bean 1
@@ -53,33 +71,38 @@ public class Login_bean {
         }
         return mensagem;
     }
+
     public List<String> getLista_todos_utilizadores() {
         return lista_todos_utilizadores;
     }
 
     public String getTodos_utilizadores(){
-        if(todos_utilizadores == null)
+        //if(todos_utilizadores == null)
             todos_utilizadores = listar(3);
         getLista_users();
         return todos_utilizadores;
     }
+
     public String getTodasMusicas(){
         //if(todos_utilizadores==null)
             todos_utilizadores=listar(2);
         getLista_users();
         return todos_utilizadores;
     }
+
     public String getTodosArtistas(){
         //if(todos_utilizadores==null)
             todos_utilizadores = listar(1);
         getLista_users();
         return todos_utilizadores;
     }
+
     public String getTodosAlbuns(){
         todos_utilizadores = listar(0);
         getLista_users();
         return todos_utilizadores;
     }
+
     public void getLista_users() {
         ArrayList<String> lista_todos_utilizadores = new ArrayList<>();
         String [] mensagem_cortada_recebida =todos_utilizadores.split(":");
@@ -88,6 +111,7 @@ public class Login_bean {
         }
         this.lista_todos_utilizadores = lista_todos_utilizadores;
     }
+
     public void gerirPrivilegios(String nome, int tipo_privilegio){
         //switch 3 de multicast
         //opcao 1 dar privilegios
@@ -98,6 +122,7 @@ public class Login_bean {
             e.printStackTrace();
         }
     }
+
     public String inserir_musica(String nomeDaMusica, String nomeDoCompositor, String duracaoDaMusica){
             String mensagem = "5;" + nomeDaMusica + ";" + nomeDoCompositor + ";" + duracaoDaMusica;
         try {
@@ -109,6 +134,7 @@ public class Login_bean {
         }
         return mensagem;
     }
+
     public String inserirAlbum(String nomeDoAlbum, String descricao, String dataLancamento){
         String mensagem = "7;" + nomeDoAlbum + ";" + descricao + ";" + dataLancamento;
         try {
@@ -119,6 +145,7 @@ public class Login_bean {
         }
         return mensagem;
     }
+
     public String inserirArtista(String nomeDoArtista, boolean tipo_compositor, String informcacaAdicional){
         String mensagem = "6;" + nomeDoArtista + ";" + tipo_compositor + ";" + informcacaAdicional;
         try {
@@ -129,6 +156,7 @@ public class Login_bean {
         }
         return mensagem;
     }
+
     private String listar(int tipo){
         //0 album
         //1 artista
@@ -140,7 +168,7 @@ public class Login_bean {
         try {
             server.enviaStringAoMulticast(mensagem);
             todos_utilizadores = server.recebe_multicast_socket();
-            System.out.println("Dentro de listar, todos utilizadores" + todos_utilizadores);
+            System.out.println("Dentro de listar, todos utilizadores: " + todos_utilizadores);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -153,9 +181,6 @@ public class Login_bean {
         return lista_final;*/
         return todos_utilizadores;
     }
-    /*public boolean getUserMatchesPassword() throws RemoteException {
-        return server.userMatchesPassword(this.username, this.password);
-    }*/
 
     public int getUserMatchesPassword() throws RemoteException {
         String mensagem = server.login(this.username, this.password);
@@ -170,6 +195,7 @@ public class Login_bean {
 
         return 0;
     }
+
     public String pesquisar(int tipo, String nome){
         /* 14 - multicast pesquisa por album
            15 - multicast pesquisar por artista
@@ -186,9 +212,11 @@ public class Login_bean {
         }
         return resultado_pesquisa;
     }
+
     public String getOpcao_menu(){
         return this.opcao_menu;
     }
+
     public void setOpcao_menu(String opcao_menu){
         this.opcao_menu = opcao_menu;
     }
@@ -203,5 +231,13 @@ public class Login_bean {
 
     public String getUsername(){
         return this.username;
+    }
+
+    public void inserirNotificacao(String user, String notificacao){
+        try {
+            server.inserirNotificacao(user, notificacao);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

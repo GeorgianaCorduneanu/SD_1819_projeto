@@ -23,6 +23,15 @@ public class Album implements Serializable {
         }
         System.out.println("Musica inexistente");
     }
+
+    public void setData_lancamento(String data_lancamento) {
+        this.data_lancamento = data_lancamento;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public void add_musica(Musica m){
         lista_musicas.add(m);
     }
@@ -58,12 +67,13 @@ public class Album implements Serializable {
         return nome_album;
     }
 
-    public void setNome_album(String nome_album, Utilizador u) {
-        if(u.getEditor()){
+    public void setNome_album(String nome_album) {
+        /*if(u.getEditor()){
             if(lista_utilizadores_editar_album.add(u)==false)
                 lista_utilizadores_editar_album.add(u);
             this.nome_album = nome_album;
-        }
+        }*/
+        this.nome_album = nome_album;
     }
 
 }

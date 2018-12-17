@@ -4,11 +4,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import menu_inicial.model.Login_bean;
 import org.apache.struts2.interceptor.SessionAware;
 import sun.awt.windows.ThemeReader;
+import ws.WebSocketAnnotation;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Privilegios_action extends ActionSupport implements SessionAware {
     private String privilegios_tipo;
@@ -28,6 +29,33 @@ public class Privilegios_action extends ActionSupport implements SessionAware {
             }else if(privilegios_tipo.equals("Remover Privilegios")){
                 login_bean.gerirPrivilegios(utilizador_privilegio, 0);
             }
+
+            WebSocketAnnotation ws = new WebSocketAnnotation();
+            Set<WebSocketAnnotation> listaUsers = ws.getUsers1();
+
+            for(WebSocketAnnotation item:listaUsers){
+                if(item.getUsername().equals(utilizador_privilegio)) {
+                    String mensagem = "privilegios;Os teus privilegios foram mudados";
+                    System.out.println("Antes de enviar para inserir na notificacao: " + mensagem);
+                    login_bean.inserirNotificacao(utilizador_privilegio, mensagem);
+                    try {
+                        item.getSession().getBasicRemote().sendText(mensagem);
+                        return SUCCESS;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(mensagem);
+                }
+            }
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+            String mensagem;
+            if(privilegios_tipo.equals("Dar Privilegios"))
+                mensagem = "Teus privilegios foram mudados, parabens es editor [ " + sdf.format(cal.getTime()) + " ]" + ", " + login_bean.getUsername();
+            else
+                mensagem = "Teus privilegios foram mudados, lamento ja nao es editor [ " + sdf.format(cal.getTime()) + " ]" + ", " + login_bean.getUsername();
+            System.out.println("Antes de enviar para inserir na notificacao: " + mensagem + ", " + login_bean.getUsername());
+            login_bean.inserirNotificacao(utilizador_privilegio, mensagem);
             return SUCCESS;
         }
         return "insuccess";

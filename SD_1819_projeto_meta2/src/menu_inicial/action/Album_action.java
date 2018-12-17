@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Album_action extends ActionSupport implements SessionAware {
-    private boolean adicionar_album, eliminar_album, editar_album, botao_adicionar, botaoEliminar;
-    private String nomeDoAlbum, descricaoDoAlbum, dia, mes, ano, todosAlbuns, radioListaAlbuns;
+    private boolean adicionar_album, eliminar_album, editar_album, botao_adicionar, botaoEliminar, botaoEditar, botaoMudar;
+    private String nomeDoAlbum, descricaoDoAlbum, dia, mes, ano, todosAlbuns, radioListaAlbuns, radioTipoData, componenteMudar;
     private Map<String, Object> session;
     private Login_bean login_bean;
     private List<String> listaTodosAlbuns;
@@ -22,11 +22,31 @@ public class Album_action extends ActionSupport implements SessionAware {
             mensagem =login_bean.inserirAlbum(nomeDoAlbum, descricaoDoAlbum, data);
             if(mensagem.equals("Album adicionado"))
                 return SUCCESS;
-        }else if(radioListaAlbuns!=null && botaoEliminar){
-            mensagem = login_bean.eliminar(9,radioListaAlbuns);
+        }else if(radioListaAlbuns!=null && botaoEliminar) {
+            mensagem = login_bean.eliminar(9, radioListaAlbuns);
             System.out.println(radioListaAlbuns);
-            if(mensagem.equals("Album eliminado"))
+            if (mensagem.equals("Album eliminado"))
                 return SUCCESS;
+        }else if(radioListaAlbuns!=null && botaoMudar && radioTipoData!=null && !componenteMudar.equals("")){
+            if(radioTipoData.equals("Nome")){
+                mensagem = "20;" + radioListaAlbuns + ";" + componenteMudar;
+                mensagem = login_bean.editar(0, mensagem);
+                System.out.println(mensagem);
+                if(mensagem.equals("Album editado"))
+                    return SUCCESS;
+            }else if(radioTipoData.equals("Descricao")){
+                mensagem = "11;" + radioListaAlbuns + ";" + componenteMudar;
+                mensagem = login_bean.editar(0, mensagem);
+                System.out.println(mensagem);
+                if(mensagem.equals("Album editado"))
+                    return SUCCESS;
+            }else if(radioTipoData.equals("Data")){
+                mensagem = "12;" + radioListaAlbuns + ";" + componenteMudar;
+                mensagem = login_bean.editar(0, mensagem);
+                System.out.println(mensagem);
+                if(mensagem.equals("Album editado"))
+                    return SUCCESS;
+            }
         }else if(adicionar_album) {
             mensagem = "adicionar_album";
             login_bean.setOpcao_menu(mensagem);
@@ -41,6 +61,38 @@ public class Album_action extends ActionSupport implements SessionAware {
             return mensagem;
         }
         return "insuccess";
+    }
+
+    public String getComponenteMudar() {
+        return componenteMudar;
+    }
+
+    public void setComponenteMudar(String componenteMudar) {
+        this.componenteMudar = componenteMudar;
+    }
+
+    public boolean isBotaoMudar() {
+        return botaoMudar;
+    }
+
+    public void setBotaoMudar(boolean botaoMudar) {
+        this.botaoMudar = botaoMudar;
+    }
+
+    public String getRadioTipoData() {
+        return radioTipoData;
+    }
+
+    public void setRadioTipoData(String radioTipoData) {
+        this.radioTipoData = radioTipoData;
+    }
+
+    public boolean isBotaoEditar() {
+        return botaoEditar;
+    }
+
+    public void setBotaoEditar(boolean botaoEditar) {
+        this.botaoEditar = botaoEditar;
     }
 
     public String getRadioListaAlbuns() {

@@ -38,13 +38,45 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	}
 
 	//retorna verdadeira quando a pass esta certa para o username
+	@Override
 	public boolean userMatchesPassword(String user, String password) throws RemoteException {
 		System.out.println("Looking up " + user + "...");
 		return users.containsKey(user) && users.get(user).equals(password);
 	}
 
 	//retorna todos os utilizadores que estiveram online
+	@Override
+	public void inserirNotificacao(String user, String notificacao){
+		String mensagem = "23;" + user + ";" + notificacao;
+		try {
+			System.out.println("Mensagem para inserir notificacao:" + mensagem);
+			enviaStringAoMulticast(mensagem);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
 
+	@Override
+	public void eliminarNOtificacao(String user){
+		String mensagem = "24;" + user;
+		try {
+			enviaStringAoMulticast(mensagem);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public String verNotificacao(String user){
+		String mensagem = "25;" + user;
+		try {
+			enviaStringAoMulticast(mensagem);
+			mensagem = recebe_multicast_socket();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return mensagem;
+	}
 
 	@Override
 	public String subscribe(String nome, String password) throws RemoteException {
@@ -177,52 +209,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         }
         return mensagem;
     }
-
-    /*@Override
-    public String pesquisar(int tipo, String nome) throws RemoteException {
-        14 - multicast pesquisa por album
-           15 - multicast pesquisar por artista
-           13 - multicast pesquisar por musica
-
-        String resultado_pesquisa;
-        String mensagem = tipo + ";" + nome;
-        try {
-            enviaStringAoMulticast(mensagem);
-            resultado_pesquisa = recebe_multicast_socket();
-            if(resultado_pesquisa==null)
-                return resultado_pesquisa="Nao existe!";
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
-
-  /*  @Override
-    public List<String> listar(int tipo) {
-        //0 album
-        //1 artista
-        //2 musica
-        //3 utilizadores
-        //4 playlist
-        ArrayList<String> lista_final=new ArrayList<>();
-        String lista_recebe=null;
-        String mensagem = "16;" + tipo;//
-        String [] mensagem_cortada_recebida;
-        try {
-            enviaStringAoMulticast(mensagem);
-            lista_recebe = recebe_multicast_socket();
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        mensagem_cortada_recebida =lista_recebe.split(":");
-        for(int i=0 ; i<mensagem_cortada_recebida.length ; i++){
-            lista_final.add(mensagem_cortada_recebida[i]);
-        }
-        System.out.println(lista_recebe);
-        return lista_final;
-    }*/
 
     public static void main(String[] args) throws RemoteException {
 		RMIServerInterface s = new RMIServer();
