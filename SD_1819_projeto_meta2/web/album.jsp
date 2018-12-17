@@ -21,9 +21,9 @@
             <s:text name = "dia&emsp;&emsp;"/>
             <s:text name = "mes&emsp;&emsp;"/>
             <s:text name = "ano"/><br>
-            <s:textfield name="dia" size="1"/>
-            <s:textfield name="mes" size="1"/>
-            <s:textfield name="ano" size="1"/><br>
+            <s:textfield name="dia" size="1" type="number"/>
+            <s:textfield name="mes" size="1" type="number"/>
+            <s:textfield name="ano" size="1" type="number"/><br>
 
             <s:submit type="button" label="Adicionar" value="true" name="botao_adicionar"/>
             <s:submit type="button" label="Voltar" value="voltar" formaction="menu"/>

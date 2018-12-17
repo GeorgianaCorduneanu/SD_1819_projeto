@@ -36,7 +36,7 @@
             </s:else>
         </s:form>
     </s:elseif>
-    <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_artista'}">
+    <s:elseif test="%{#session.login_bean.Opcao_menu == 'editar_artista' }">
         <s:form method="post" action="artista">
             <s:if test="%{todosArtistas == null}">
                 <s:action name="artista" executeResult="true"/>

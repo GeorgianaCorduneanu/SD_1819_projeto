@@ -267,6 +267,15 @@ public class MulticastServer extends Thread implements Serializable {
                     case "25":
                         enviaServerRMI(verNotificacao(mensagem_cortada[1]));
                         break;
+                    case "26":
+                        enviaServerRMI(criticarAlbum(mensagem_cortada[1], mensagem_cortada[2], mensagem_cortada[3], mensagem_cortada[4]));
+                        break;
+                    case "27"://lista de pessoas que criticaram o album
+                        enviaServerRMI(getListaPessoasCriticaramAlbum(mensagem_cortada[1]));
+                        break;
+                    case "28"://pontuacao media do album
+                        enviaServerRMI(getPontuacaoMediaAlbum(mensagem_cortada[1]));
+                        break;
                     default:
                         System.out.println("Nenhuma das opcoes: " + "|" + mensagem_cortada[0] + "|");
                         break;
@@ -280,6 +289,45 @@ public class MulticastServer extends Thread implements Serializable {
             assert socket != null;
             socket.close();
         }
+    }
+    private String getPontuacaoMediaAlbum(String nomeAlbum){
+        String pontuacao = "0";
+        for(Album item:lista_album){
+            if(item.getNome_album().equals(nomeAlbum))
+                pontuacao =  String.valueOf(item.getPontuacaoMedia());
+        }
+        return pontuacao;
+    }
+
+    private String getListaPessoasCriticaramAlbum(String nomeAlbum){
+        String mensagem ="";
+        ArrayList<String> listaPessoasCriticaram = new ArrayList<>();
+        for(Album item:lista_album) {
+            if (item.getNome_album().equals(nomeAlbum)) {
+                for(Critica itemC : item.getListaCriticas()){
+                    if(!listaPessoasCriticaram.contains(itemC.getUsername())) {
+                        listaPessoasCriticaram.add(itemC.getUsername());
+                        mensagem += itemC.getUsername() + ";";
+                    }
+                }
+            }
+        }
+        return mensagem;
+    }
+
+    private String criticarAlbum(String nomeAlbum, String critica, String pontuacao, String username){
+        int pontuacao_int = Integer.parseInt(pontuacao);
+        Critica c = new Critica(critica, pontuacao_int, username);
+
+        for(Album item:lista_album){
+            if(item.getNome_album().equals(nomeAlbum)){
+                item.add(c);
+                System.out.println("Adicionou: " + nomeAlbum + " , " + critica + " ; " + pontuacao + " ; "  + username);
+                write_obj_user();
+                return "Critica Adicionada";
+            }
+        }
+        return "Critica nao Adicionada";
     }
     private String editarInformacaoDoArtista(String nomeDoArtista, String informacaoDoArtista){
         for(Artista item:lista_artistas){
@@ -326,6 +374,7 @@ public class MulticastServer extends Thread implements Serializable {
         }
         return "Musica nao editada";
     }
+
     private String pesquisar(int protocolo, String nome){
             String mensagem_erro= null;
             switch (protocolo) {
@@ -337,9 +386,17 @@ public class MulticastServer extends Thread implements Serializable {
                     mensagem_erro =  "Musica inexistente";
                     break;
                 case 14: //para album
+                    String mensagemEnviar="";
                     for(Album item:lista_album){
                         if(item.getNome_album().toLowerCase().equals(nome))
-                            return item.getNome_album() + " -> " + item.getData_lancamento() + " : " + item.getDescricao();
+                            mensagemEnviar = "Nome, " + item.getNome_album() + ", Data Lancamento,  " + item.getData_lancamento() + ", Descricao,  " + item.getDescricao() + ", Pontuacao Media, " + item.getPontuacaoMedia();
+                        if(item.getListaCriticas()==null)
+                            return mensagemEnviar;
+                        for(Critica itemC : item.getListaCriticas()){
+                            mensagemEnviar += "\n";
+                            mensagemEnviar += "Critica: " + itemC.getJustificacao() + ", " + itemC.getPontuacao();
+                        }
+                        return mensagemEnviar;
                     }
                     mensagem_erro =  "Album inexistente";
                     break;
@@ -354,6 +411,7 @@ public class MulticastServer extends Thread implements Serializable {
             }
             return mensagem_erro;
     }
+
     private String listar(int tipo){
         //0 album
         //1 artista
@@ -391,6 +449,7 @@ public class MulticastServer extends Thread implements Serializable {
         System.out.println(mensagem_a_enviar);
         return mensagem_a_enviar;
     }
+
     private boolean inserir_musica_lista(String nome, String compositor, String duracao) {
         for (Musica m : lista_musica) {
             if (m.getCompositor().equals(compositor) && m.getNome_musica().equals(nome)) {
@@ -419,6 +478,7 @@ public class MulticastServer extends Thread implements Serializable {
             }
         }catch (ConcurrentModificationException c){}
     }
+
     private String verNotificacao(String nome){
         String listaFinal="";
         String [] notificacaoSeparada;
@@ -430,6 +490,7 @@ public class MulticastServer extends Thread implements Serializable {
         }
         return listaFinal;
     }
+
     private boolean inserir_album_lista(String nome, String descricao, String data) {
         for (Album a : lista_album) {
             if (a.getNome_album().equals(nome)) {

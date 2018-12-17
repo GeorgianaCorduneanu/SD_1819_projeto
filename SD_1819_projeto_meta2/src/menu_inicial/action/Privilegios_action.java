@@ -37,12 +37,13 @@ public class Privilegios_action extends ActionSupport implements SessionAware {
                 if(item.getUsername().equals(utilizador_privilegio)) {
                     String mensagem = "privilegios;Os teus privilegios foram mudados";
                     System.out.println("Antes de enviar para inserir na notificacao: " + mensagem);
-                    login_bean.inserirNotificacao(utilizador_privilegio, mensagem);
+                    //login_bean.inserirNotificacao(utilizador_privilegio, mensagem);
                     try {
                         item.getSession().getBasicRemote().sendText(mensagem);
                         return SUCCESS;
                     } catch (IOException e) {
                         e.printStackTrace();
+                    } catch (IllegalStateException ignored){//caso o utilizador tenha saido da sessao
                     }
                     System.out.println(mensagem);
                 }

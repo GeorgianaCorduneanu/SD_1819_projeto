@@ -30,6 +30,46 @@ public class Login_bean {
         }
     }
 
+    public String getListaPessoasCriticaramAlbum(String nomeAlbum){
+        String mensagem="";
+        try {
+            mensagem = server.getListaPessoasCriticaram(nomeAlbum);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return mensagem;
+    }
+    public String getPontuacaoMediaAlbum(String nomeAlbum){
+        String mensagem = "";
+
+        try {
+            mensagem = server.getPontuacaoMedia(nomeAlbum);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return mensagem;
+    }
+
+    public String criticarAlbum(String nomeAlbum, String critica, String pontuacao){
+        String mensagem="Critica nao Adicionada";
+        try {
+            mensagem = server.criticarAlbum(nomeAlbum, critica, pontuacao, username);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return mensagem;
+    }
+
+    public void eliminarNotificacao(){
+        try {
+            server.eliminarNOtificacao(username);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String editar(int tipo, String mensagem){
         //0 album
         //1 artista

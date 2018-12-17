@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Utilizador implements Serializable {
     private String username, password;
     private Boolean editor;
-    private ArrayList<Playlist> lista_playlists;
     private ArrayList<Musica> lista_musica_upload;
 
     Utilizador(){}
@@ -34,34 +33,6 @@ public class Utilizador implements Serializable {
     }
     private void set_privacidade_upload(Boolean b, Musica m){
         m.getUpload().setPrivacidade(b);
-    }
-
-    public ArrayList<Playlist> getLista_playlists() {
-        return lista_playlists;
-    }
-
-    public void setLista_playlists(ArrayList<Playlist> lista_playlists) {
-        this.lista_playlists = lista_playlists;
-    }
-
-    public void remove_musica_playlist(Musica m, Playlist p){
-        p.remove_musica(m);
-    }
-    public void add_musica_playlist(Musica m, Playlist p){
-        p.add_musica(m);
-    }
-
-    public void add_playlist(Playlist playlist){
-        lista_playlists.add(playlist);
-    }
-    public void remove_playlist(Playlist playlist){
-        for(Playlist item : lista_playlists){
-            if(item.equals(playlist)){
-                lista_playlists.remove(item);
-                return;
-            }
-        }
-        System.out.println("Playlist inexistente");
     }
 
     public String getPassword() {

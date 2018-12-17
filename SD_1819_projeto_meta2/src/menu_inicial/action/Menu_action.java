@@ -7,7 +7,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Map;
 
 public class Menu_action extends ActionSupport implements SessionAware {
-    private boolean musica, artista, album, pesquisar, privilegios;
+    private boolean musica, artista, album, pesquisar, privilegios, criticarAlbum;
     private String pesquisar_tipo;
     private Map<String, Object> session;
     private Login_bean login_bean;
@@ -27,6 +27,8 @@ public class Menu_action extends ActionSupport implements SessionAware {
             return "privilegios";
         }if(pesquisar) {
             return "pesquisar";
+        }if(criticarAlbum){
+            return "criticarAlbum";
         }
         return "insuccess";
     }
@@ -36,6 +38,14 @@ public class Menu_action extends ActionSupport implements SessionAware {
             return (Login_bean)session.get("login_bean");
         else
             return null;
+    }
+
+    public boolean isCriticarAlbum() {
+        return criticarAlbum;
+    }
+
+    public void setCriticarAlbum(boolean criticarAlbum) {
+        this.criticarAlbum = criticarAlbum;
     }
 
     public void setPrivilegios(boolean privilegios) {

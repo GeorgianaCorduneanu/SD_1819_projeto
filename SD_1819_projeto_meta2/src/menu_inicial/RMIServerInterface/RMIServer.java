@@ -36,7 +36,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		users.put("homer",  "simpson");
 		users.put("gi",     "gi");
 	}
-
 	//retorna verdadeira quando a pass esta certa para o username
 	@Override
 	public boolean userMatchesPassword(String user, String password) throws RemoteException {
@@ -56,7 +55,32 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		}
 	}
 
-	@Override
+    @Override
+    public String getListaPessoasCriticaram(String nomeAlbum) throws RemoteException {
+        String mensagem = "27;" + nomeAlbum;
+        enviaStringAoMulticast(mensagem);
+        mensagem = recebe_multicast_socket();
+        return mensagem;
+    }
+
+    @Override
+    public String getPontuacaoMedia(String nomeAlbum) throws RemoteException {
+        String mensagem = "28;" + nomeAlbum;
+
+        enviaStringAoMulticast(mensagem);
+        mensagem = recebe_multicast_socket();
+        return mensagem;
+    }
+
+    @Override
+    public String criticarAlbum(String nomeAlbum, String critica, String pontuacao, String username) throws RemoteException {
+        String mensagem = "26;" + nomeAlbum + ";" + critica + ";" + pontuacao + ";" + username;
+	    enviaStringAoMulticast(mensagem);
+	    mensagem = recebe_multicast_socket();
+	    return mensagem;
+    }
+
+    @Override
 	public void eliminarNOtificacao(String user){
 		String mensagem = "24;" + user;
 		try {

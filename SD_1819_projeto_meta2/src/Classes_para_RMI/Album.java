@@ -7,13 +7,45 @@ public class Album implements Serializable {
     private String nome_album, descricao, data_lancamento;
     private ArrayList<Musica> lista_musicas;
     private ArrayList<Utilizador> lista_utilizadores_editar_album;
+    private ArrayList<Critica> listaCriticas;
+    private int pontuacaoMedia;
     Album(){}
 
     Album(String nome_album, String descricao, String data_lancamento){
         this.nome_album = nome_album;
         this.data_lancamento = data_lancamento;
         this.descricao = descricao;
+        this.pontuacaoMedia = 0;
+        this.listaCriticas = new ArrayList<>();
     }
+    private void calculaPontuacaoMedia(){
+        int soma = 0;
+        for(Critica item:listaCriticas){
+            soma += item.getPontuacao();
+        }
+        setPontuacaoMedia(soma/listaCriticas.size());
+    }
+    public void add(Critica c){
+        listaCriticas.add(c);
+        calculaPontuacaoMedia();
+    }
+
+    public ArrayList<Critica> getListaCriticas() {
+        return listaCriticas;
+    }
+
+    public void setListaCriticas(ArrayList<Critica> listaCriticas) {
+        this.listaCriticas = listaCriticas;
+    }
+
+    public int getPontuacaoMedia() {
+        return pontuacaoMedia;
+    }
+
+    public void setPontuacaoMedia(int pontuacaoMedia) {
+        this.pontuacaoMedia = pontuacaoMedia;
+    }
+
     public void remover_musica(Musica m){
         for(Musica item:lista_musicas){
             if(item.equals(m)){

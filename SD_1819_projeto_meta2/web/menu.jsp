@@ -37,7 +37,7 @@
         }
         function onOpen(event) {
             var username = "<%=(String) session.getAttribute("username")%>";
-            websocket.send("login;" + username);
+                websocket.send("login;" + username);
         }
         function onMessage(message) {
             writeToHistory(message.data);
@@ -66,6 +66,7 @@
             <s:submit type="button" value="true" name="musica" label="MUSICA" formaction="menu"/>
             <s:submit type="button" value="true" name="artista" label="ARTISTA" formaction="menu"/>
             <s:submit type="button" value="true" name="album" label="ALBUM" formaction="menu"/>
+            <s:submit type="button" value="true" name="criticarAlbum" label="Criticar Album" formaction="menu"/>
             <s:submit type="button" value="true" name="pesquisar" label="PESQUISAR" formaction="menu"/>
             <s:submit type="button" value="true" name="privilegios" label="PRIVILEGIOS" formaction="menu"/>
             <s:submit type="button" name="logout" label="LOGOUT" formaction="index"/>
@@ -73,6 +74,7 @@
     </s:if>
     <s:elseif test="%{ #session.editor == false}">
         <s:form method="post">
+            <s:submit type="button" value="true" name="criticarAlbum" label="Criticar Album" formaction="menu"/>
             <s:submit type="button" value="true" name="musica" label="MUSICA" formaction="menu"/>
             <s:submit type="button" value="true" name="pesquisar" label="PESQUISAR" formaction="menu"/>
             <s:submit type="button" name="logout" label="LOGOUT" formaction="index"/>

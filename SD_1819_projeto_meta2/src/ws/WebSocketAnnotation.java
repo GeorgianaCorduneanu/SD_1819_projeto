@@ -71,35 +71,21 @@ public class WebSocketAnnotation{
         //e uma classe diferente com um rpopostio diferente
         //quando a ligacao e estabelecida e a sessao e passada por argumento
         //guarda.se a sessao num dos atributos da classe
-        this.session = session;
-
-        //Login_bean login_bean = new Login_bean();
-        //System.out.println(login_bean.getUsername());
-        //HttpSession session_s = ServletActionContext.getRequest().getSession(false);
-        /*System.out.println(session_s);
-        System.out.println(session_s.getAttribute("username"));*/
-        /*System.out.println();
-        System.out.println(ActionContext.getContext().getSession());
-        System.out.println(session.getBasicRemote());
-        System.out.println(session.getContainer());
-        System.out.println(session.getId());
-        System.out.println(session.getPathParameters().keySet());
-        System.out.println(session.getUserProperties());*/
-        System.out.println(session.getOpenSessions());
-        System.out.println(session.getUserProperties());
-       // String message = "*" + username + "* connected.";
-       // sendMessage(message); //trata de enviar a astring para o cliente
-    }
+        /*if(getSession().)
+            this.session = getSession();
+        else*/
+            this.session = session;
+ }
 
     @OnClose
     public void end() {
         //fecha-se os recursos que devem ser fechados
     	// clean up once the WebSocket connection is closed
-        try {
+       /* try {
             server.eliminarNOtificacao(username);
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @OnMessage
@@ -111,38 +97,66 @@ public class WebSocketAnnotation{
         System.out.println("recebeu algo: " + message);
         String [] recebe = message.split(";");
         if(recebe[0].equals("login")){
+
+            /*for(WebSocketAnnotation item:users1) {
+                if (!item.getUsername().equals(this.username) && i == users1.size() - 1)
+
+                    users1.add(this);
+            }
+            if(this.username==null){
+                this.username = recebe[1];
+                users1.add(this);
+            }
+            if(!this.username.equals(recebe[1])){
+                this.username = recebe[1];
+                users1.add(this);
+            }*/
+            /*int i=0;
+
+            for(WebSocketAnnotation item:users1){
+                System.out.println(item.getUsername() + " : " + recebe[1]);
+                if(item.getUsername().equals(recebe[1]))
+                    i++;
+            }
+            if(i==1){
+                    this.username = recebe[1];
+                    start(this.session);
+            }else {
+                this.username = recebe[1];
+                users1.add(this);
+            }*/
+            for(WebSocketAnnotation item:users1){
+                if(item.getUsername().equals(recebe[1]))
+                    users1.remove(item);
+            }
             this.username = recebe[1];
             users1.add(this);
             //fazer para receber notificacoes antigas
             try {
                 this.session.getBasicRemote().sendText(username + "Esta na ws");
                 String historicoNotificacao = server.verNotificacao(username);
-                String [] notificacaoHistoricoSeparadas = historicoNotificacao.split(":");
+                String [] notificacaoHistoricoSeparadas = historicoNotificacao.split(";");
                 for(String item:notificacaoHistoricoSeparadas){
-                    this.session.getBasicRemote().sendText(item + "\n");
-
+                    this.session.getBasicRemote().sendText(item);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(recebe[0].equals("privilegios")){
+        }else if(recebe[0].equals("privilegios") || recebe[0].equals("critica")){
             System.out.println("recebeu privileios");
             try {
                 for (WebSocketAnnotation item : users1) {
                     //caso o utilizador esteja online
                     System.out.println("Caso o utilizador esteja onliine");
-                    if (item.getUsername().equals(recebe[2])) {
-                        item.getSession().getBasicRemote().sendText(recebe[1] + "\n");
-
-                        System.out.println(item.getUsername());
+                    if (item.username.equals(recebe[2])) {
+                        item.session.getBasicRemote().sendText(recebe[1] + "\n");
+                        System.out.println(item.username);
                         return;
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(recebe[0].equals("critica")){
-
         }
     }
 

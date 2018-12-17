@@ -5,6 +5,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import menu_inicial.model.Login_bean;
 import org.apache.struts2.interceptor.SessionAware;
 
+import javax.servlet.http.HttpSession;
 import java.rmi.RemoteException;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class Login_action extends ActionSupport implements SessionAware {
     @Override
     public String execute() {
         // any username is accepted without confirmation (should check using RMI)
-        if(this.username != null && !username.equals("") && this.password != null) {
+        if(this.username != null && !username.equals("") && this.password != null && !this.password.equals("")) {
                 this.getLogin_bean().setUsername(this.username);
                 this.getLogin_bean().setPassword(this.password);
                 //if(this.getLogin_bean().getUserMatchesPassword()) {/*tratar de remote exception*/
@@ -56,8 +57,9 @@ public class Login_action extends ActionSupport implements SessionAware {
 
     public Login_bean getLogin_bean() {
         //verificar se alguém já tem a sessao iniciada
-        if(!session.containsKey("login_bean"))
+        if(!session.containsKey("login_bean")) {
             this.setLogin_bean(new Login_bean());
+        }
         return (Login_bean) session.get("login_bean");
     }
 
