@@ -41,9 +41,10 @@
     <title>Menu Login Registo</title>
 </head>
 <body>
-    <s:form method="post">
-        <s:submit type="button" name="registo" label="REGISTO" formaction="registo"/>
-        <s:submit type="button" name="login" label="LOGIN" formaction="login"/>
+    <s:form method="post" action="index">
+        <s:submit type="button" value="true" name="registo" label="REGISTO" formaction="registo"/>
+        <s:submit type="button" value="true" name="login" label="LOGIN" formaction="login"/>
+        <s:submit type="button" value="true" name="dbxauth" label="DROPBOX" formaction="dbxauth"/>
     </s:form>
 </body>
 </html>

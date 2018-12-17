@@ -20,6 +20,10 @@
             <s:submit type="button" value="true" name="album" label="ALBUM" formaction="menu"/>
             <s:submit type="button" value="true" name="pesquisar" label="PESQUISAR" formaction="menu"/>
             <s:submit type="button" value="true" name="privilegios" label="PRIVILEGIOS" formaction="menu"/>
+            <s:submit type="button" value="true" name="play" label="PLAY MUSICA" formaction="menu"/>
+            <s:submit type="button" value="true" name="share" label="PARTILHAR MUSICA" formaction="menu"/>
+            <s:submit type="button" value="true" name="associar" label="ASSOCIAR MUSICA" formaction="menu"/>
+            <s:submit type="button" value="true" name="dbxauth" label="DROPBOX" formaction="menu"/>
             <s:submit type="button" name="logout" label="LOGOUT" formaction="index"/>
         </s:form>
     </s:if>
@@ -27,6 +31,9 @@
         <s:form method="post">
             <s:submit type="button" value="true" name="musica" label="MUSICA & PLAYLIST" formaction="menu"/>
             <s:submit type="button" value="true" name="pesquisar" label="PESQUISAR" formaction="menu"/>
+            <s:submit type="button" value="true" name="upload" label="UPLOAD MUSICA" formaction="menu"/>
+            <s:submit type="button" value="true" name="download" label="DOWNLOAD MUSICA" formaction="menu"/>
+            <s:submit type="button" value="true" name="dropboxauth" label="DROPBOX" formaction="menu"/>
             <s:submit type="button" name="logout" label="LOGOUT" formaction="index"/>
         </s:form>
     </s:elseif>

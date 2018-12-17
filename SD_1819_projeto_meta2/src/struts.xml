@@ -40,14 +40,33 @@
         </action>
 
         <!-- a acao index vai para o jsp indice-->
-        <action name="index" class="menu_inicial.action.Index_action">
-            <result>/index.jsp</result>
+        <action name="index" class="menu_inicial.action.Index_action" method="execute">
+            <result name="login">/login.jsp</result>
+            <result name="registo">/registo.jsp</result>
+            <result name="dbxauth" type="redirect">${url}</result>
+            <result name="insuccess">/index.jsp</result>
         </action>
         <action name="menu" class="menu_inicial.action.Menu_action" method="execute">
             <result name="success">/album_artista_musica.jsp</result>
             <result name="pesquisar">/pesquisar.jsp</result>
             <result name="privilegios">/privilegios.jsp</result>
+            <result name="dbxauth" type="redirect">${url}</result>
+            <result name="associar">/associar.jsp</result>
+            <result name="share">share.jsp</result>
+            <result name="play">playback.jsp</result>
             <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="share" class="menu_inicial.action.Share_action" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="insuccess">/share.jsp</result>
+        </action>
+        <action name="associar" class="menu_inicial.action.Associar_action" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="insuccess">/associar.jsp</result>
+        </action>
+        <action name="play2" class="menu_inicial.action.Play_action" method="execute">
+            <result name="redirect" type="redirect">${url}</result>
+            <result name="insuccess">/playback.jsp</result>
         </action>
         <action name="privilegios" class="menu_inicial.action.Privilegios_action" method="execute">
             <result name="success">/menu.jsp</result>
@@ -85,6 +104,12 @@
             <result name="success">/menu.jsp</result>
             <result name="insuccess">/album.jsp</result>
             <result name="voltar">/menu.jsp</result>
+        </action>
+        <action name="dbxRedirect" class="menu_inicial.action.DropboxAuthRedirect_action" method="execute">
+            <result name="success">menu.jsp</result>
+            <result name="success1">menu.jsp</result>
+            <result name="login">index.jsp</result>
+            <result name="insuccess">error.jsp</result>
         </action>
     </package>
 </struts>
