@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <!-- devMode equals debug information and reload everything for every request -->
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.ui.theme" value="simple" />
+
+    <package name="menu_inicial" extends="struts-default">
+
+        <default-action-ref name="index" />
+
+        <global-results>
+            <result name="error">/error.jsp</result>
+        </global-results>
+
+        <!-- all exceptions not caught by the application will lead to error.jsp -->
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error" />
+        </global-exception-mappings>
+        <!-- menu de login depois de carregar no botao login
+        sucesso vai para o menu editor ou nao
+        caso de insucesso fica na mesma pagina, tem que se por uma mensagem
+        a dizer que a palavra passe nao corresponde ao username
+         em caso de insucesso-->
+        <action name="login" class="menu_inicial.action.Login_action" method="execute">
+            <result name="success">/menu.jsp</result><!--para pôr a pagina de sucesso-->
+            <result name="insuccess">/login.jsp</result>
+        </action>
+
+        <!-- menu de registo depois de carregar no botao registo
+        em caso de sucesso vai para o login em caso de insucesso fica na pagina
+        tem que ser por uma mensagem a dizer que o utilizador ja existe-->
+        <action name="registo" class="menu_inicial.action.Registo_action" method="execute">
+            <result name="success">/login.jsp</result><!--para pôr a pagina de sucesso-->
+            <result name="insuccess">/registo.jsp</result>
+        </action>
+
+        <!-- a acao index vai para o jsp indice-->
+        <action name="index" class="menu_inicial.action.Index_action">
+            <result>/index.jsp</result>
+        </action>
+        <action name="menu" class="menu_inicial.action.Menu_action" method="execute">
+            <result name="success">/album_artista_musica.jsp</result>
+            <result name="pesquisar">/pesquisar.jsp</result>
+            <result name="privilegios">/privilegios.jsp</result>
+            <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="privilegios" class="menu_inicial.action.Privilegios_action" method="execute">
+            <result name="dar_privilegios">/privilegios.jsp</result>
+            <result name="remover_privilegios">/privilegios.jsp</result>
+            <result name="success">/privilegios.jsp</result>
+            <result name="insuccess">/privilegios.jsp</result>
+        </action>
+        <action name="pesquisar" class="menu_inicial.action.Pesquisar_action" method="execute">
+            <result name="artista">/pesquisar.jsp</result>
+            <result name="album">/pesquisar.jsp</result>
+            <result name="musica">/pesquisar.jsp</result>
+            <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="musica" class="menu_inicial.action.Musica_action" method="execute">
+            <result name="adicionar_musica">/musica.jsp</result>
+            <result name="eliminar_musica">/musica.jsp</result>
+            <result name="editar_musica">/musica.jsp</result>
+            <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="playlist" class="menu_inicial.action.Playlist_action" method="execute">
+            <result name="ver_playlist">/album_artista_musica.jsp</result>
+            <result name="editar_playlist">/album_artista_musica.jsp</result>
+            <result name="criar_playlist">/album_artista_musica.jsp</result>
+        </action>
+        <action name="artista" class="menu_inicial.action.Artista_action" method="execute">
+            <result name="adicionar_artista">/artista.jsp</result>
+            <result name="eliminar_artista">/artista.jsp</result>
+            <result name="editar_artista">/artista.jsp</result>
+            <result name="insuccess">/menu.jsp</result>
+        </action>
+        <action name="album" class="menu_inicial.action.Album_action" method="execute">
+            <result name="adicionar_album">/album.jsp</result>
+            <result name="eliminar_album">/album.jsp</result>
+            <result name="editar_album">/album.jsp</result>
+            <result name="voltar">/menu.jsp</result>
+        </action>
+    </package>
+</struts>
